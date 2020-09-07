@@ -16,7 +16,7 @@
 | Student Name | Student Email | GitHub Username |
 |    :---:     |     :---:     |     :---:       |
 | Ricardo Carretero      |     rcarretero@mail.sfsu.edu          |     Dasfiter-S            |
-| member2      |               |                 |
+| Valeria Vallejo        |     vvallejo1@mail.sfsu.edu           |     valeriavallejo        |
 | member3      |               |                 |
 | member4      |               |                 |
 | member5      |               |                 |
