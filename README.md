@@ -15,7 +15,7 @@
 
 | Student Name | Student Email | GitHub Username |
 |    :---:     |     :---:     |     :---:       |
-| member1      |               |                 |
+| Ricardo Carretero      |     rcarretero@mail.sfsu.edu          |     Dasfiter-S            |
 | member2      |               |                 |
 | member3      |               |                 |
 | member4      |               |                 |
