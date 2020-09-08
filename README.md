@@ -20,6 +20,6 @@
 | Jonathan Pak           |     jpak3@mail.sfsu.edu               |     jpak2018              |
 | Chris Manaoat          |     cmanaoat@mail.sfsu.edu            |     cjmanaoat             |
 | Alicia Ramirez         |     aramirez23@mail.sfsu.edu          |     aramirez23            |
-| member6      |               |                 |
+| Chandler Cruz          |     ccruz9@mail.sfsu.edu              |     chandlercruz          |
 
 ## NO code needs to be stored in the root of your repository. You may rename the application folder if you like to your team's application name. But all source code related to your team's application should be stored inside the application folder.
