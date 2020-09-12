@@ -1,0 +1,7 @@
+#folders
+venv/
+#static/*
+#!static/.gitkeep
+
+#individual files
+templates/base.html
