@@ -7,8 +7,12 @@ def home():
     return render_template("index.html")
 
 @app.route("/aboutHome")
-def aboutPage():
+def aboutHome():
     return render_template("aboutHome.html")
+
+@app.route("/<aboutName>")
+def aboutPage(aboutName):
+    return render_template({aboutName})
 
 if __name__ == '__main__':
     app.run(debug = True)
