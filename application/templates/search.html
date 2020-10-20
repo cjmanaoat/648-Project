@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Search</h1>
+<center>
+    {% for item in data %}
+    <tr>
+        <td> {{item[0]}} - {{item[1]}}</td>
+        </br>
+    </tr>
+    {% endfor %}
+</center>
+{% endblock %}
