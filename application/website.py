@@ -3,11 +3,16 @@ from flaskext.mysql import MySQL
 
 app = Flask(__name__)
 
-# mysql = MySQL()
-# mysql.init_app(app)
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'trademartadmin'
+app.config['MYSQL_DATABASE_DB'] = 'Trademart'
+app.config['MYSQL_DATABASE_HOST'] = 'trademart.c9x2rihy8ycd.us-west-1.rds.amazonaws.com'
 
-# conn = mysql.connect()
-# cursor = conn.cursor()
+
+mysql = MySQL()
+mysql.init_app(app)
+conn = mysql.connect()
+cursor = conn.cursor()
 
 @app.route("/")
 def home():
@@ -19,26 +24,30 @@ def aboutHome():
 
 @app.route("/aboutHome/<aboutName>")
 def aboutPage(aboutName):
-    print(aboutName)
+    # print(aboutName)
     url = "/aboutHome/"+aboutName
-    print(url)
+    # print(url)
     return render_template({url})
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
-    # if request.method == "POST":
-        # book = request.form['book']
-        # # search by author or book
-        # cursor.execute("SELECT name, author from Book WHERE name LIKE %s OR author LIKE %s", (book, book))
-        # conn.commit()
-        # data = cursor.fetchall()
-        # # all in the search box will return all the tuples
-        # if len(data) == 0 and book == 'all': 
-        #     cursor.execute("SELECT name, author from Book")
-        #     conn.commit()
-        #     data = cursor.fetchall()
-        # return render_template('search.html', data=data)
+    if request.method == "POST":
+        print("inpost")
+        searchItem = request.form['item']
+        filter1 = request.form['category-select']
+        print("item: ", searchItem)
+        print("filter: ", filter1)
+        cursor.execute("SELECT * FROM Category")
+        conn.commit()
+        data = cursor.fetchall()
+        # all in the search box will return all the tuples
+        if len(data) == 0: 
+            cursor.execute("SELECT * FROM Category")
+            conn.commit()
+            data = cursor.fetchall()
+        return render_template('search.html', data=data)
     return render_template('search.html')
+
 
 if __name__ == '__main__':
     app.run(debug = True)
