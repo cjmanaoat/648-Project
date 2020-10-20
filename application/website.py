@@ -18,16 +18,18 @@ cursor = conn.cursor()
 def home():
     return render_template("index.html")
 
-@app.route("/aboutHome")
+@app.route("/aboutHome/")
 def aboutHome():
+    #print("in main home")
     return render_template("/aboutHome/aboutHome.html")
 
 @app.route("/aboutHome/<aboutName>")
 def aboutPage(aboutName):
-    # print(aboutName)
-    url = "/aboutHome/"+aboutName
+    #print("in separate about page")
+    #print(aboutName)
+    url = "aboutHome/"+aboutName
     # print(url)
-    return render_template({url})
+    return render_template(url)
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
