@@ -10,8 +10,12 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
+
+</head>
+
+<body>
   <!-- navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light" style="background-color:midnightblue;">
+  <nav id="nav-bar" class="navbar navbar-expand-lg navbar-light" style="background-color:midnightblue;">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -19,30 +23,35 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <!-- dropdown 1 -->
-      <ul class="navbar-nav">
-        <div style="margin-right: 25px">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false" style="background-color: aliceblue;">
-              Dropdown
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="aboutHome">About</a>
-            </div>
-          </li>
-        </div>
+      <ul class="navbar-nav mr-auto">
+        <!-- <div style=""> -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" style="background-color: aliceblue;">
+            <span class="navbar-toggler-icon"></span>
+            <!-- <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-justify" fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
+            </svg> -->
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/aboutHome">About</a>
+          </div>
+        </li>
+        <!-- </div> -->
       </ul>
 
       <!-- Home/Site name button -->
-      <div class="navbar-nav" style="margin-right: 25px;">
-        <a class="navbar-brand text-white" href="#" style="font-size: 50px;">SFSU Trade Mart</a>
+      <div class="navbar-nav mr-auto" style="">
+        <a class="navbar-brand text-white" href="/" style="font-size: 50px;">SFSU Trade Mart</a>
       </div>
 
       <!-- search -->
-      <div class="" style="margin-right: 100px;">
+      <div class="mx-auto" style="">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown">
@@ -51,10 +60,10 @@
                 All
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
+                <a class="dropdown-item" href="#">Category</a>
+                <a class="dropdown-item" href="#">Item</a>
+                <a class="dropdown-item" href="#">ISBN</a>
+                <a class="dropdown-item" href="#">Class</a>
               </div>
             </li>
           </ul>
@@ -68,23 +77,22 @@
       </div>
 
       <!-- side buttons -->
-      <li class="nav-item mx-auto">
-        <a class="nav-link" href="#" style="color: white; font-size: 25px">Create Listing</a>
-      </li>
-      <li class="nav-item mx-auto">
-        <a class="nav-link" href="#" style="color: white; font-size: 25px">Sign In/Register</a>
-      </li>
-      <li class="nav-item mx-auto">
-        <a class="nav-link" href="#" style="color: white; font-size: 25px">Notifications</a>
-      </li>
-      <!-- <div>
-                          <button type="button" class="btn btn-primary mx-auto" style="height: 62px">Create Listing</button>
-                          <button type="button" class="btn btn-primary mx-auto">Sign In/<br>Register</button>
-                          <button type="button" class="btn btn-primary mx-auto" style="height: 62px;">Notifications</button>
-                      </div> -->
+      <div class="row ml-auto">
+        <li class="nav-item mx-auto">
+          <a class="nav-link" href="#" style="color: white; font-size: 25px">Create Listing</a>
+        </li>
+        <li class="nav-item mx-auto">
+          <a class="nav-link" href="#" style="color: white; font-size: 25px">Sign In/Register</a>
+        </li>
+        <li class="nav-item mx-auto">
+          <a class="nav-link" href="#" style="color: white; font-size: 25px">Notifications</a>
+        </li>
+      </div>
     </div>
   </nav>
+  <!-- end navbar -->
 
+  <!-- title -->
   <div class="container-fluid" style="background-color: rgba(0,0,255,.1)">
     <h1>
       <center> Software Engineering class SFSU <br>
@@ -94,9 +102,9 @@
       </center>
     </h1>
   </div>
-</head>
+  <!-- end title -->
 
-<body>
+  <!-- contents -->
   <div class="container" style="border-style: none; height: 100vh; border-top: 0;">
     <!-- title -->
     <div class="row justify-content-md-center">
@@ -147,31 +155,8 @@
         </center>
       </div>
     </div>
-
-    <!--navigation bottom-->
-    <!-- <div class="row justify-content-md-center align-items-center" style="">
-            <div class="column" style="">
-                <button type="button" class="btn btn-primary " href="#carouselExampleIndicators" data-slide="prev">
-                    Prev
-                </button>
-            </div>
-            <div class="column" style="width: 50px">
-
-                <center>
-                    # <br>
-                    of <br>
-                    #
-                </center>
-            </div>
-
-            <div class="column" style="">
-                <button type="button" class="btn btn-primary" href="#carouselExampleIndicators" data-slide="next">
-                    Next
-                </button>
-            </div>
-        </div> -->
   </div>
-
+  <!-- end contents -->
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

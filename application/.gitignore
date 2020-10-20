@@ -2,6 +2,8 @@
 venv/
 #static/*
 #!static/.gitkeep
+node_modules/
 
 #individual files
 templates/base.html
+templates/oldcode.html
