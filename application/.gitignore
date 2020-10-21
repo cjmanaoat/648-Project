@@ -1,10 +1,8 @@
 #folders
 venv/
-#static/*
-#!static/.gitkeep
 node_modules/
 templates(original)
 
 #individual files
-# templates/base.html
 templates/oldcode.html
+templates/captchaTest.html
