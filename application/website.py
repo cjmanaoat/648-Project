@@ -34,17 +34,31 @@ def aboutPage(aboutName):
 @app.route('/search', methods=['GET', 'POST'])
 def search():
     if request.method == "POST":
-        print("inpost")
-        searchItem = request.form['item']
-        filter1 = request.form['category-select']
+        #print("in post")
+        searchItem = request.form['item'].lower()
+        filterCategory = request.form['category-select'].lower()
         print("item: ", searchItem)
-        print("filter: ", filter1)
-        cursor.execute("SELECT * FROM Category")
+        print("filter: ", filterCategory)
+        if filterCategory=="all":
+            cursor.execute("\
+                SELECT list_title\
+                FROM Listing L \
+                WHERE L.list_title LIKE %s", \
+                (searchItem))
+        else:
+            cursor.execute("\
+                SELECT list_title \
+                FROM Listing L \
+                WHERE L.list_category=%s \
+                    AND L.list_title LIKE %s \
+                    OR L.list_category LIKE %s", \
+                    (filterCategory, searchItem, filterCategory))
         conn.commit()
         data = cursor.fetchall()
         # all in the search box will return all the tuples
         if len(data) == 0: 
-            cursor.execute("SELECT * FROM Category")
+            cursor.execute("\
+                SELECT list_title FROM Listing L")
             conn.commit()
             data = cursor.fetchall()
         return render_template('search.html', data=data)
