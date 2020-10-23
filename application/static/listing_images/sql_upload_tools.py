@@ -1,11 +1,22 @@
-
-def read_file(filename):
-    with open(filename, 'rb') as f:
-        photo = f.read()
-    return photo
-
+import argparse
 import mysql.connector
 from mysql.connector import Error
+
+parser = argparse.ArgumentParser(description="Parser for updating blob images")
+parser.add_argument("user", help="Username for logging into the DB", type=str)
+parser.add_argument("password", help="DB Password", type=str)
+parser.add_argument("list_id", help="Listing ID that needs picture", type=int)
+parser.add_argument("path", help='Path to image', type=str)
+p_args = parser.parse_args()
+
+def read_file(filename):
+    with open(filename, 'rb') as file:
+        image = file.read()
+    return image
+
+def write_file(data, filename):
+    with open(filename, 'wb') as file:
+        file.write(data)
 
 def update_blob(list_id, filename):
     # read file
@@ -18,12 +29,11 @@ def update_blob(list_id, filename):
 
     args = (data, list_id)
 
-
     try:
         conn =  mysql.connector.connect(host='trademart.c9x2rihy8ycd.us-west-1.rds.amazonaws.com',
                 database='Trademart',
-                user='root',
-                password='trademartadmin')
+                user=p_args.user,
+                password=p_args.password)
         cursor = conn.cursor()
         cursor.execute(query, args)
         conn.commit()
@@ -33,8 +43,36 @@ def update_blob(list_id, filename):
         cursor.close()
         conn.close()
 
+# read blob data to a file so we can actually use the image
+def read_blob:
+    query "SELECT image FROM Listing WHERE id = %s"
+
+    db_config = read_db_config()
+
+    try:
+        # get blob data from listing
+        conn =  mysql.connector.connect(host='trademart.c9x2rihy8ycd.us-west-1.rds.amazonaws.com',
+                database='Trademart',
+                user=p_args.user,
+                password=p_args.password)
+        cursor = conn.cursor()
+        cursor.execute(query, (p_args.list_id,))
+        image = cursor.fetchone()[0]
+
+        #write blob data into a file
+        write_file(image, filename)
+
+    except Error as e:
+        print(e)
+
+    finally:
+        cursor.close()
+        conn.close()
+
 def main():
-    update_blob(19273, "/home/ubuntu/dbtest/images/textbook3.jpg")
+    update_blob(p_args.list_id, p_args.path)
+
+   #read_blob(19273, "converted_images\imagename.jpg")
 
 if __name__ == '__main__':
     main()
