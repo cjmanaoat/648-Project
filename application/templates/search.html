@@ -1,12 +1,79 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Search</h1>
-<center>
-    {% for item in data %}
-    <tr>
-        <td> {{item[3]}} - {{item[12]}}</td>
+<head>
+    <style>
+    div.list-group_a {
+      position: relative;
+      left: auto;
+      width: 100px;
+      height: 120px;
+    } 
+    div.dropdown_a {
+      position: absolute;
+      right: 100px;
+      width: 100px;
+      height: 120px;
+    } 
+    div.footer_1 {
+      text-align: center;
+      bottom: 0;
+      width: 100%;
+      position: fixed;
+
+    }
+    </style>
+    </head>
+
+<div class="dropdown_a">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Sorted By
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+      <button class="dropdown-item" type="button">Best Match</button>
+      <button class="dropdown-item" type="button">Prices Low to High</button>
+      <button class="dropdown-item" type="button">Prices High to Low</button>
+    </div>
+  </div>
+<div class="list-group_a">
+    <button type="button" class="list-group-item list-group-item-action" disabled>Items</button>
+    <button type="button" class="list-group-item list-group-item-action">Books</button>
+    <button type="button" class="list-group-item list-group-item-action">Electronics</button>
+    <button type="button" class="list-group-item list-group-item-action">Furniture</button>
+    <button type="button" class="list-group-item list-group-item-action" disabled>Services</button>
+    <button type="button" class="list-group-item list-group-item-action">Tutoring</button>
+    <button type="button" class="list-group-item list-group-item-action">Editing</button>
+  </div>
+  <center>
+    {% for listing in data %}
+    {% set fileName = listing[2]|string %}
+    {% set path = "static/listing_images/" + fileName+".jpg" %}
+    <tr> 
+        <td><img src = "{{path}}" width="100" height="100"> </td>
+        <br>
+        <td> {{listing[0]}} </td>
         </br>
-    </tr>
+        <td> ${{listing[3]}}</td>
+        <br>
     {% endfor %}
+    </tr>
+   
 </center>
+<!-- 
+ This will later be used to figure out Pages for the Search result Page 
+<div class="footer_1">
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      <li class="page-item disabled">
+        <a class="page-link" href="#" tabindex="-1">Previous</a>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item">
+        <a class="page-link" href="#">Next</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+-->
 {% endblock %}
