@@ -1,5 +1,6 @@
 from flask import Flask, redirect, url_for, render_template, request
 from flaskext.mysql import MySQL
+<<<<<<< HEAD
 import sys
 
 app = Flask(__name__)
@@ -13,10 +14,16 @@ app.config['MYSQL_DATABASE_DB'] = 'Trademart'
 app.config['MYSQL_DATABASE_HOST'] = 'trademart.c9x2rihy8ycd.us-west-1.rds.amazonaws.com'
 >>>>>>> 7e3875210a4bfcfbc9a752f88568b0acf71c97c4
 
+=======
+
+app = Flask(__name__)
+
+>>>>>>> 55be20a9250692053c1de82f8301288ec25aef25
 mysql = MySQL()
 mysql.init_app(app)
 conn = mysql.connect()
 cursor = conn.cursor()
+<<<<<<< HEAD
 # end sql config
 
 <<<<<<< HEAD
@@ -39,12 +46,23 @@ def home():
     return render_template("index.html", data=data, pathPrefix=pathPrefix)
 
 # main about page
+=======
+
+
+@app.route("/")
+def home():
+    return render_template("index.html")
+
+>>>>>>> 55be20a9250692053c1de82f8301288ec25aef25
 @app.route("/aboutHome/")
 def aboutHome():
     #print("in main home")
     return render_template("/aboutHome/aboutHome.html")
 
+<<<<<<< HEAD
 # about page per member
+=======
+>>>>>>> 55be20a9250692053c1de82f8301288ec25aef25
 @app.route("/aboutHome/<aboutName>")
 def aboutPage(aboutName):
     #print("in separate about page")
@@ -53,7 +71,10 @@ def aboutPage(aboutName):
     # print(url)
     return render_template(url)
 
+<<<<<<< HEAD
 #search page
+=======
+>>>>>>> 55be20a9250692053c1de82f8301288ec25aef25
 @app.route('/search', methods=['GET', 'POST'])
 @app.route('/*/search', methods=['GET', 'POST'])
 def search():
@@ -65,6 +86,9 @@ def search():
         print("filter: ", filterCategory)
         if filterCategory=="all":   #case where only item provided, will search for item in any category
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 55be20a9250692053c1de82f8301288ec25aef25
             cursor.execute("\
                 SELECT list_title,image, list_id, suggest_price\
                 FROM Trademart.Listing \
@@ -89,6 +113,7 @@ def search():
         if len(data) == 0: # no item provided. lists all items
             cursor.execute("\
                 SELECT list_title,image, list_id, suggest_price FROM Trademart.Listing")
+<<<<<<< HEAD
 =======
             cursor.execute("SELECT *\
                 FROM Listing L \
@@ -109,6 +134,8 @@ def search():
             cursor.execute("SELECT * \
                 FROM Listing L")
 >>>>>>> 7e3875210a4bfcfbc9a752f88568b0acf71c97c4
+=======
+>>>>>>> 55be20a9250692053c1de82f8301288ec25aef25
             conn.commit()
             data = cursor.fetchall()
             for listing in data:
@@ -120,6 +147,7 @@ def search():
         return render_template('search.html', data=data)
     return render_template('search.html')
 
+<<<<<<< HEAD
 # home page
 @app.route("/captchatest")
 def captcha():
@@ -135,6 +163,8 @@ def blob2Img(listing):
     with open(path, "wb") as file:
         file.write(listing[2])
 
+=======
+>>>>>>> 55be20a9250692053c1de82f8301288ec25aef25
 
 if __name__ == '__main__':
     app.run(debug = True)
