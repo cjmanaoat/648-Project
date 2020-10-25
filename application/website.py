@@ -4,11 +4,14 @@ import sys
 
 app = Flask(__name__)
 
+<<<<<<< HEAD
 # sql config
 app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'trademartadmin'
 app.config['MYSQL_DATABASE_DB'] = 'Trademart'
 app.config['MYSQL_DATABASE_HOST'] = 'trademart.c9x2rihy8ycd.us-west-1.rds.amazonaws.com'
+=======
+>>>>>>> jpak
 
 mysql = MySQL()
 mysql.init_app(app)
@@ -16,7 +19,11 @@ conn = mysql.connect()
 cursor = conn.cursor()
 # end sql config
 
+<<<<<<< HEAD
 # home page
+=======
+
+>>>>>>> jpak
 @app.route("/")
 def home():
     cursor.execute("SELECT list_title, suggest_price, image, list_id \
@@ -57,6 +64,7 @@ def search():
         print("item: ", searchItem)
         print("filter: ", filterCategory)
         if filterCategory=="all":   #case where only item provided, will search for item in any category
+<<<<<<< HEAD
             cursor.execute("SELECT *\
                 FROM Listing L \
                 WHERE L.list_title LIKE %s\
@@ -75,8 +83,40 @@ def search():
         if len(data) == 0: # no item provided. lists all items
             cursor.execute("SELECT * \
                 FROM Listing L")
+=======
+            cursor.execute("\
+                SELECT list_title,image, list_id, suggest_price\
+                FROM Trademart.Listing \
+                WHERE list_title LIKE %s", \
+                (searchItem))
+        else:   #case where item and narrowed category is selected.
+            cursor.execute("\
+                SELECT list_title,image, list_id, suggest_price\
+                FROM Trademart.Listing \
+                WHERE list_category=%s \
+                    AND list_title LIKE %s \
+                    OR list_category LIKE %s", \
+                    (filterCategory, searchItem, filterCategory))
+        conn.commit()
+        data = cursor.fetchall()
+        for listing in data:
+            fileName = str(listing[2]) + ".jpg"
+            path = "static/listing_images"+fileName
+            print(path)
+            with open(path, "wb") as file:
+                file.write(listing[1])
+        if len(data) == 0: # no item provided. lists all items
+            cursor.execute("\
+                SELECT list_title,image, list_id, suggest_price FROM Trademart.Listing")
+>>>>>>> jpak
             conn.commit()
             data = cursor.fetchall()
+            for listing in data:
+                fileName = str(listing[2]) + ".jpg"
+                path = "static/listing_images"+fileName
+                print(path)
+                with open(path, "wb") as file:
+                    file.write(listing[1])
         return render_template('search.html', data=data)
     return render_template('search.html')
 
