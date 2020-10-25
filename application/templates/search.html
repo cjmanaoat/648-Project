@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+<<<<<<< HEAD
 <head>
     <style>
     div.list-group_a {
@@ -51,6 +52,13 @@
         <td><img src = "{{path}}" width="100" height="100"> </td>
         <br>
         <td> {{listing[0]}} </td>
+=======
+<h1>Search</h1>
+<center>
+    {% for item in data %}
+    <tr>
+        <td> {{item[3]}} - {{item[12]}}</td>
+>>>>>>> 7e3875210a4bfcfbc9a752f88568b0acf71c97c4
         </br>
         <td> ${{listing[3]}}</td>
         <br>

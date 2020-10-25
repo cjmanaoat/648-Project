@@ -13,6 +13,9 @@
     <!-- css files -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/navbar.css') }}">
 
+    <!-- google reCaptcha  -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 </head>
 
 <body>
@@ -34,27 +37,10 @@
                         <span class="navbar-toggler-icon"></span>
                     </a>
                     <div class="dropdown-menu" style="width: max-content;" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/aboutHome">About</a>
                     </div>
                 </li>
-
-                <!-- <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                        style="background-color: aliceblue;">
-                        <span class="navbar-toggler-icon"></span>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/aboutHome">About</a>
-                    </div>
-                </li> -->
-
             </ul>
 
             <!-- Home/Site name button -->
@@ -65,7 +51,7 @@
             <!-- search -->
             <div class="mx-auto">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <form class="form-inline my-2 my-lg-0" method="post" action="search">
+                    <form class="form-inline my-2 my-lg-0" method="post" action="/search">
                         <div id=category-dropdown>
                             <select name="category-select">
                                 <option selected>All</option>
@@ -78,7 +64,9 @@
                         </div>
                         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
                             style="width: 320px;" name="item">
-                        <button class="btn my-2 my-sm-0" type="submit" style="background-color: orange;">Search</button>
+                        <button id="example" type="submit" class="btn my-2 my-sm-0" style="background-color: orange;">
+                            Search
+                        </button>
                     </form>
                 </div>
             </div>
