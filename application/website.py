@@ -58,22 +58,23 @@ def search():
         print("filter: ", filterCategory)
         if filterCategory=="all":   #case where only item provided, will search for item in any category
             cursor.execute("SELECT list_title, suggest_price, image, list_id\
-                FROM Trademart.Listing \
-                WHERE list_title LIKE %s", \
-                (searchItem))
+                FROM Listing L\
+                WHERE L.list_title LIKE %s\
+                    OR L.list_category LIKE %s\OR L.list_desc LIKE %s", \
+                    (("%" + searchItem + "%"), ("%" + searchItem + "%"), ("%" + searchItem + "%"))
         else:   #case where item and narrowed category is selected.
             cursor.execute("SELECT list_title, suggest_price, image, list_id\
-                FROM Trademart.Listing \
-                WHERE list_category=%s \
-                    AND list_title LIKE %s \
-                    OR list_category LIKE %s", \
-                    (filterCategory, searchItem, filterCategory))
+                FROM Listing L\
+                WHERE L.list_category=%s\
+                    AND L.list_title LIKE %s\
+                    OR L.list_category LIKE %s", \
+                    (filterCategory, ('%' + searchItem + '%'), filterCategory))
         conn.commit()
         data = cursor.fetchall()
         for listing in data:
             blob2Img(listing)
         if len(data) == 0: # no item provided. lists all items
-            cursor.execute("SELECT list_title, suggest_price, image, list_id")
+            cursor.execute("SELECT list_title, suggest_price, image, list_id FROM Trademart.Listing")
             conn.commit()
             data = cursor.fetchall()
             for listing in data:
