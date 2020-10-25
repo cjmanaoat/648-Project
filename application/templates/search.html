@@ -45,14 +45,14 @@
   </div>
   <center>
     {% for listing in data %}
-    {% set fileName = listing[3]|string %}
+    {% set fileName = listing[2]|string %}
     {% set path = "static/listing_images/" + fileName+".jpg" %}
     <tr> 
         <td><img src = "{{path}}" width="100" height="100"> </td>
         <br>
         <td> {{listing[0]}} </td>
         </br>
-        <td> ${{listing[1]}}</td>
+        <td> ${{listing[3]}}</td>
         <br>
     {% endfor %}
     </tr>
