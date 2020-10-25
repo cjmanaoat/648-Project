@@ -4,20 +4,11 @@ import sys
 
 app = Flask(__name__)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> jpak
 # sql config
 app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'trademartadmin'
 app.config['MYSQL_DATABASE_DB'] = 'Trademart'
 app.config['MYSQL_DATABASE_HOST'] = 'trademart.c9x2rihy8ycd.us-west-1.rds.amazonaws.com'
-<<<<<<< HEAD
-=======
->>>>>>> jpak
-=======
->>>>>>> jpak
 
 mysql = MySQL()
 mysql.init_app(app)
@@ -25,15 +16,7 @@ conn = mysql.connect()
 cursor = conn.cursor()
 # end sql config
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 # home page
-=======
-
->>>>>>> jpak
-=======
-# home page
->>>>>>> jpak
 @app.route("/")
 def home():
     cursor.execute("SELECT list_title, suggest_price, image, list_id \
@@ -74,29 +57,6 @@ def search():
         print("item: ", searchItem)
         print("filter: ", filterCategory)
         if filterCategory=="all":   #case where only item provided, will search for item in any category
-<<<<<<< HEAD
-<<<<<<< HEAD
-            cursor.execute("SELECT *\
-                FROM Listing L \
-                WHERE L.list_title LIKE %s\
-                OR L.list_category LIKE %s\
-                OR L.list_desc LIKE %s", \
-                (("%" + searchItem + "%"), ("%" + searchItem + "%"), ("%" + searchItem + "%")))
-        else:   #case where item and narrowed category is selected.
-            cursor.execute("SELECT * \
-                FROM Listing L \
-                WHERE L.list_category=%s \
-                    AND L.list_title LIKE %s \
-                    OR L.list_category LIKE %s", \
-                    (filterCategory, ('%' + searchItem + '%'), filterCategory))
-        conn.commit()
-        data = cursor.fetchall()
-        if len(data) == 0: # no item provided. lists all items
-            cursor.execute("SELECT * \
-                FROM Listing L")
-=======
-=======
->>>>>>> jpak
             cursor.execute("\
                 SELECT list_title,image, list_id, suggest_price\
                 FROM Trademart.Listing \
@@ -121,10 +81,6 @@ def search():
         if len(data) == 0: # no item provided. lists all items
             cursor.execute("\
                 SELECT list_title,image, list_id, suggest_price FROM Trademart.Listing")
-<<<<<<< HEAD
->>>>>>> jpak
-=======
->>>>>>> jpak
             conn.commit()
             data = cursor.fetchall()
             for listing in data:
