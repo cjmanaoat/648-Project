@@ -1,28 +1,43 @@
 from flask import Flask, redirect, url_for, render_template, request
 from flaskext.mysql import MySQL
+import sys
 
 app = Flask(__name__)
 
+# sql config
 app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'trademartadmin'
 app.config['MYSQL_DATABASE_DB'] = 'Trademart'
 app.config['MYSQL_DATABASE_HOST'] = 'trademart.c9x2rihy8ycd.us-west-1.rds.amazonaws.com'
 
-
 mysql = MySQL()
 mysql.init_app(app)
 conn = mysql.connect()
 cursor = conn.cursor()
+# end sql config
 
+# home page
 @app.route("/")
 def home():
-    return render_template("index.html")
+    cursor.execute("SELECT list_title, suggest_price, image, list_id \
+                FROM Trademart.Listing \
+                WHERE approval_status=1\
+                order by list_date desc \
+                limit 3")
+    conn.commit()
+    data = cursor.fetchall()
+    for listing in data:
+        blob2Img(listing)
+    pathPrefix = "static/listing_images/"
+    return render_template("index.html", data=data, pathPrefix=pathPrefix)
 
+# main about page
 @app.route("/aboutHome/")
 def aboutHome():
     #print("in main home")
     return render_template("/aboutHome/aboutHome.html")
 
+# about page per member
 @app.route("/aboutHome/<aboutName>")
 def aboutPage(aboutName):
     #print("in separate about page")
@@ -31,24 +46,54 @@ def aboutPage(aboutName):
     # print(url)
     return render_template(url)
 
+#search page
 @app.route('/search', methods=['GET', 'POST'])
+@app.route('/*/search', methods=['GET', 'POST'])
 def search():
     if request.method == "POST":
-        print("inpost")
-        searchItem = request.form['item']
-        filter1 = request.form['category-select']
+        #print("in post")
+        searchItem = request.form['item'].lower()
+        filterCategory = request.form['category-select'].lower()
         print("item: ", searchItem)
-        print("filter: ", filter1)
-        cursor.execute("SELECT * FROM Category")
+        print("filter: ", filterCategory)
+        if filterCategory=="all":   #case where only item provided, will search for item in any category
+            cursor.execute("SELECT *\
+                FROM Listing L \
+                WHERE L.list_title LIKE %s\
+                OR L.list_category LIKE %s\
+                OR L.list_desc LIKE %s", \
+                (("%" + searchItem + "%"), ("%" + searchItem + "%"), ("%" + searchItem + "%")))
+        else:   #case where item and narrowed category is selected.
+            cursor.execute("SELECT * \
+                FROM Listing L \
+                WHERE L.list_category=%s \
+                    AND L.list_title LIKE %s \
+                    OR L.list_category LIKE %s", \
+                    (filterCategory, ('%' + searchItem + '%'), filterCategory))
         conn.commit()
         data = cursor.fetchall()
-        # all in the search box will return all the tuples
-        if len(data) == 0: 
-            cursor.execute("SELECT * FROM Category")
+        if len(data) == 0: # no item provided. lists all items
+            cursor.execute("SELECT * \
+                FROM Listing L")
             conn.commit()
             data = cursor.fetchall()
         return render_template('search.html', data=data)
     return render_template('search.html')
+
+# home page
+@app.route("/captchatest")
+def captcha():
+    return render_template("captchaTest.html")
+
+
+def blob2Img(listing):
+    fileName = str(listing[3]) + ".jpg"
+    path = "static/listing_images/"+fileName
+    # print(path)
+    # size = sys.getsizeof(listing[11])
+    # print(size)
+    with open(path, "wb") as file:
+        file.write(listing[2])
 
 
 if __name__ == '__main__':
