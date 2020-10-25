@@ -60,8 +60,9 @@ def search():
             cursor.execute("SELECT list_title, suggest_price, image, list_id\
                 FROM Listing L\
                 WHERE L.list_title LIKE %s\
-                    OR L.list_category LIKE %s\OR L.list_desc LIKE %s", \
-                    (("%" + searchItem + "%"), ("%" + searchItem + "%"), ("%" + searchItem + "%"))
+                    OR L.list_category LIKE %s\
+                    OR L.list_desc LIKE %s", \
+                    (("%" + searchItem + "%"), ("%" + searchItem + "%"), ("%" + searchItem + "%")))
         else:   #case where item and narrowed category is selected.
             cursor.execute("SELECT list_title, suggest_price, image, list_id\
                 FROM Listing L\
