@@ -63,13 +63,19 @@ def search():
                     OR L.list_category LIKE %s\
                     OR L.list_desc LIKE %s", \
                     (("%" + searchItem + "%"), ("%" + searchItem + "%"), ("%" + searchItem + "%")))
-        else:   #case where item and narrowed category is selected.
-            cursor.execute("SELECT list_title, suggest_price, image, list_id\
+        else:   #case where category is selected.
+            if searchItem == "":        #empty search item but category selected
+                cursor.execute("SELECT list_title, suggest_price, image, list_id\
                 FROM Listing L\
-                WHERE L.list_category=%s\
-                    AND L.list_title LIKE %s\
-                    OR L.list_desc LIKE %s", \
-                    (filterCategory, ('%' + searchItem + '%'), ('%' + searchItem + '%')))
+                WHERE L.list_category=%s", \
+                    (filterCategory))
+            else:    #category and item selected
+                cursor.execute("SELECT list_title, suggest_price, image, list_id\
+                    FROM Listing L\
+                    WHERE L.list_category=%s\
+                        AND L.list_title LIKE %s\
+                        OR L.list_desc LIKE %s", \
+                        (filterCategory, ('%' + searchItem + '%'), ('%' + searchItem + '%')))
         conn.commit()
         data = cursor.fetchall()
         for listing in data:
