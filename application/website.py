@@ -57,28 +57,46 @@ def search():
         print("item: ", searchItem)
         print("filter: ", filterCategory)
         if filterCategory=="all":   #case where only item provided, will search for item in any category
-            cursor.execute("SELECT *\
-                FROM Listing L \
+            cursor.execute("SELECT list_title, suggest_price, image, list_id\
+                FROM Listing L\
                 WHERE L.list_title LIKE %s\
-                OR L.list_category LIKE %s\
-                OR L.list_desc LIKE %s", \
-                (("%" + searchItem + "%"), ("%" + searchItem + "%"), ("%" + searchItem + "%")))
+                    OR L.list_category LIKE %s\
+                    OR L.list_desc LIKE %s", \
+                    (("%" + searchItem + "%"), ("%" + searchItem + "%"), ("%" + searchItem + "%")))
         else:   #case where item and narrowed category is selected.
-            cursor.execute("SELECT * \
-                FROM Listing L \
-                WHERE L.list_category=%s \
-                    AND L.list_title LIKE %s \
+            cursor.execute("SELECT list_title, suggest_price, image, list_id\
+                FROM Listing L\
+                WHERE L.list_category=%s\
+                    AND L.list_title LIKE %s\
                     OR L.list_category LIKE %s", \
                     (filterCategory, ('%' + searchItem + '%'), filterCategory))
         conn.commit()
         data = cursor.fetchall()
+        for listing in data:
+            blob2Img(listing)
         if len(data) == 0: # no item provided. lists all items
-            cursor.execute("SELECT * \
-                FROM Listing L")
+            cursor.execute("SELECT list_title, suggest_price, image, list_id FROM Trademart.Listing")
             conn.commit()
             data = cursor.fetchall()
+            for listing in data:
+                blob2Img(listing)
         return render_template('search.html', data=data)
     return render_template('search.html')
+    
+# home page
+@app.route("/captchatest")
+def captcha():
+    return render_template("captchaTest.html")
+
+
+def blob2Img(listing):
+    fileName = str(listing[3]) + ".jpg"
+    path = "static/listing_images/"+fileName
+    # print(path)
+    # size = sys.getsizeof(listing[11])
+    # print(size)
+    with open(path, "wb") as file:
+        file.write(listing[2])
 
 # home page
 @app.route("/captchatest")
