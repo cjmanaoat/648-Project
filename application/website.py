@@ -68,8 +68,8 @@ def search():
                 FROM Listing L\
                 WHERE L.list_category=%s\
                     AND L.list_title LIKE %s\
-                    OR L.list_category LIKE %s", \
-                    (filterCategory, ('%' + searchItem + '%'), filterCategory))
+                    OR L.list_desc LIKE %s", \
+                    (filterCategory, ('%' + searchItem + '%'), ('%' + searchItem + '%')))
         conn.commit()
         data = cursor.fetchall()
         for listing in data:
@@ -97,7 +97,6 @@ def blob2Img(listing):
     # print(size)
     with open(path, "wb") as file:
         file.write(listing[2])
-
 
 if __name__ == '__main__':
     app.run(debug = True)
