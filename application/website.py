@@ -94,6 +94,14 @@ def search():
 def captcha():
     return render_template("captchaTest.html")
 
+# register
+@app.route("/register")
+def register():
+    return render_template("register.html")
+
+@app.route("/listing")
+def listing():
+    return render_template("listing.html")
 
 def blob2Img(listing):
     fileName = str(listing[3]) + ".jpg"

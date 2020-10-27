@@ -53,8 +53,8 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <form class="form-inline my-2 my-lg-0" method="post" action="/search">
                         <div id=category-dropdown>
-                            <select name="category-select">
-                                <option selected>All</option>
+                            <select name="category-select" id="categorySelect">
+                                <option selected value="all">All</option>
                                 <option value="books">Books</option>
                                 <option value="editing">Editing</option>
                                 <option value="electronics">Electronics</option>
@@ -63,7 +63,7 @@
                             </select>
                         </div>
                         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
-                            style="width: 320px;" name="item">
+                            name="item" id="searchBar">
                         <button id="example" type="submit" class="btn my-2 my-sm-0" style="background-color: orange;">
                             Search
                         </button>
@@ -73,15 +73,15 @@
 
             <!-- side buttons -->
             <div class="row ml-auto">
-                <li class="nav-item mx-auto">
+                <div class="nav-item mx-auto">
                     <a class="nav-link" href="#" style="color: white; font-size: 25px">Create Listing</a>
-                </li>
-                <li class="nav-item mx-auto">
-                    <a class="nav-link" href="#" style="color: white; font-size: 25px">Sign In/Register</a>
-                </li>
-                <li class="nav-item mx-auto">
+                </div>
+                <div class="nav-item mx-auto">
+                    <a class="nav-link" href="/register" style="color: white; font-size: 25px">Sign In/Register</a>
+                </div>
+                <div class="nav-item mx-auto">
                     <a class="nav-link" href="#" style="color: white; font-size: 25px">Notifications</a>
-                </li>
+                </div>
             </div>
         </div>
     </nav>
@@ -98,7 +98,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
-
 </body>
 
 </html>
