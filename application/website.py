@@ -99,6 +99,11 @@ def captcha():
 def register():
     return render_template("register.html")
 
+# sign in
+@app.route("/signIn")
+def signIn():
+    return render_template("signIn.html")
+
 @app.route("/listing")
 def listing():
     return render_template("listing.html")
