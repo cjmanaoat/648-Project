@@ -44,8 +44,8 @@ def update_blob(list_id, filename):
         conn.close()
 
 # read blob data to a file so we can actually use the image
-def read_blob:
-    query "SELECT image FROM Listing WHERE id = %s"
+def read_blob(list_id, path):
+    query = "SELECT image FROM Listing WHERE id = %s"
 
     db_config = read_db_config()
 
