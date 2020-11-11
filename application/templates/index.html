@@ -34,46 +34,57 @@
           <li data-target="#homeCarousel" data-slide-to="2" id="2"></li>
         </ol> -->
         <div class="carousel-inner">
+          <!-- {{limit}} -->
+          {% set listing = data[0] %}
+          {% set fileName = listing[3]|string %}
+          {% set path = pathPrefix + fileName+".jpg" %}
+          
+          <!-- first listing -->
           <div class="carousel-item active">
-            {% set listing = data[0] %}
+            <img class="d-block w-100" src="{{path}}">
+            <div class="carousel-caption d-none d-md-block" style="color: black;">
+            </div>
+            <center>
+              <form method="POST" action="listing">
+                <h1>
+                  <input type="hidden" name="listingId" value="{{listing[3]}}">
+                  <button style="background: none; border: none;">{{listing[0]}}</button>
+                </h1>
+                {% set price = '$' + listing[1]|string %}
+                <h2>{{price}}</h2>
+              </form>
+            </center>
+          </div>
+          <!-- end first listing -->
+
+          <!-- rest of the listings -->
+          {% for counter in range(limit-1) %}
+            {% set listing = data[counter] %}
             {% set fileName = listing[3]|string %}
             {% set path = pathPrefix + fileName+".jpg" %}
             <!-- {{path}} -->
-            <img class="d-block w-100" src="{{path}}" alt=" First slide">
-            <div class="carousel-caption d-none d-md-block" style="color: black;">
+            <div class="carousel-item">
+              <!-- {{loop.index}} -->
+              {% set listing = data[loop.index] %}
+              {% set fileName = listing[3]|string %}
+              {% set path = pathPrefix + fileName+".jpg" %}
+              <img class="d-block w-100" src="{{path}}"">
+              <div class="carousel-caption d-none d-md-block" style="color: black;">
+              </div>
+              <center>
+                <form method="POST" action="listing">
+                  <h1>
+                    <input type="hidden" name="listingId" value="{{listing[3]}}">
+                    <button style="background: none; border: none;">{{listing[0]}}</button>
+                  </h1>
+                  {% set price = '$' + listing[1]|string %}
+                  <h2>{{price}}</h2>
+                </form>
+              </center>
             </div>
-            <center>
-              <h1>{{listing[0]}}</h1>
-              {% set price = '$' + listing[1]|string %}
-              <h2>{{price}}</h2>
-            </center>
-          </div>
-          <div class="carousel-item">
-            {% set listing = data[1] %}
-            {% set fileName = listing[3]|string %}
-            {% set path = pathPrefix + fileName+".jpg" %}
-            <img class="d-block w-100" src="{{path}}" alt="Second slide">
-            <div class="carousel-caption d-none d-md-block" style="color: black;">
-            </div>
-            <center>
-              <h1>{{listing[0]}}</h1>
-              {% set price = '$' + listing[1]|string %}
-              <h2>{{price}}</h2>
-            </center>
-          </div>
-          <div class="carousel-item">
-            {% set listing = data[2] %}
-            {% set fileName = listing[3]|string %}
-            {% set path = pathPrefix + fileName+".jpg" %}
-            <img class="d-block w-100" src="{{path}}" alt="Third slide">
-            <div class="carousel-caption d-none d-md-block" style="color: black;">
-            </div>
-            <center>
-              <h1>{{listing[0]}}</h1>
-              {% set price = '$' + listing[1]|string %}
-              <h2>{{price}}</h2>
-            </center>
-          </div>
+          {% endfor %}
+          <!-- end rest of the listings -->
+
         </div>
         <a class="carousel-control-prev" href="#homeCarousel" role="button" data-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -89,6 +100,6 @@
   </div>
 </div>
 <!-- end listing contents -->
-
+<script type="text/javascript" src="../static/javascript/basicFunctions.js"></script>
 <!-- end contents -->
 {% endblock %}

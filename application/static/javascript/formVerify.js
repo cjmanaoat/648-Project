@@ -43,3 +43,7 @@ function emptyFieldCheck() {
   const passCreated = document.getElementById('passInit').value;
   const passVerify = document.getElementById('passVerify').value;
 }
+
+function captchaCallback() {
+  document.getElementById('submitButton').removeAttribute('disabled');
+}

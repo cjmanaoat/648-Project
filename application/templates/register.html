@@ -5,7 +5,7 @@
         <h1>Register Account</h1>
     </center>
 
-    <form name="registrationForm" href="#" onsubmit="emptyFieldCheck()">
+    <form name="registrationForm" href="#" onsubmit="emptyFieldCheck(), captchaCheck()">
         <center>
             <p>* = Required</p>
         </center>
@@ -89,7 +89,7 @@
 
             <div class="col">
                 <center>
-                    <div class="g-recaptcha" data-sitekey="6LdFBdoZAAAAAFns5dEaiL5uZ9iVWuy5nWrqJA4g" required>
+                    <div class="g-recaptcha" data-sitekey="6LdFBdoZAAAAAFns5dEaiL5uZ9iVWuy5nWrqJA4g" data-callback="captchaCallback">
                     </div>
                 </center>
             </div>
@@ -110,7 +110,7 @@
                         <button type="button" class="btn btn-primary">Cancel</button>
                     </div>
                     <div class="btn-group" role="group" aria-label="submit">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary" disabled id="submitButton">Submit</button>
                     </div>
                 </div>
             </div>
