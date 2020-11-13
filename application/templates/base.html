@@ -51,7 +51,7 @@
             <!-- end about button -->
 
             <!-- search -->
-            <form class="form-inline my-2 my-lg-0 mx-auto" method="post" action="/search">
+            <form class="form-inline my-2 my-lg-0 mx-auto" method="post" action="/search" id="searchForm" onsubmit="return alphaNumericCheck('searchBar')">
                 <div id=category-dropdown>
                     <select name="category-select" id="categorySelect">
                         <option selected value="all">All</option>
@@ -64,7 +64,7 @@
                 </div>
                 <input class="form-control mr-sm-2" type="search" value='{{searchItem}}' placeholder="Search" aria-label="Search" name="item"
                     id="searchBar" style="width: 40vw;" maxlength="40">
-                <button id="example" type="submit" class="btn my-2 my-sm-0" style="background-color: orange;">
+                <button id="searchButton" type="submit" class="btn my-2 my-sm-0" style="background-color: orange;">
                     <img src="../static/bootstrapIcons/search.svg" alt="searchIcon" width="25" height="25"
                         title="searchIcon">
                 </button>
@@ -118,6 +118,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="../static/javascript/formVerify.js"></script>
 </body>
 
 </html>
