@@ -19,17 +19,18 @@ cursor = conn.cursor()
 # home page
 @app.route("/")
 def home():
+    limit = 3
     cursor.execute("SELECT list_title, suggest_price, image, list_id \
                 FROM Trademart.Listing \
                 WHERE approval_status=1\
                 order by list_date desc \
-                limit 3")
+                limit %s", limit)
     conn.commit()
     data = cursor.fetchall()
     for listing in data:
         blob2Img(listing)
     pathPrefix = "static/listing_images/"
-    return render_template("index.html", data=data, pathPrefix=pathPrefix)
+    return render_template("index.html", data=data, pathPrefix=pathPrefix, limit=limit)
 
 # main about page
 @app.route("/aboutHome/")
@@ -59,7 +60,8 @@ def search():
         if filterCategory=="all":   #case where only item provided, will search for item in any category
             cursor.execute("SELECT list_title, suggest_price, image, list_id\
                 FROM Listing L\
-                WHERE L.list_title LIKE %s\
+                WHERE approval_status=1 \
+                    AND L.list_title LIKE %s\
                     OR L.list_category LIKE %s\
                     OR L.list_desc LIKE %s", \
                     (("%" + searchItem + "%"), ("%" + searchItem + "%"), ("%" + searchItem + "%")))
@@ -67,12 +69,14 @@ def search():
             if searchItem == "":        #empty search item but category selected
                 cursor.execute("SELECT list_title, suggest_price, image, list_id\
                 FROM Listing L\
-                WHERE L.list_category=%s", \
+                WHERE approval_status=1\
+                    AND L.list_category=%s", \
                     (filterCategory))
             else:    #category and item selected
                 cursor.execute("SELECT list_title, suggest_price, image, list_id\
                     FROM Listing L\
-                    WHERE L.list_category=%s\
+                    WHERE approval_status=1\
+                        AND L.list_category=%s\
                         AND L.list_title LIKE %s\
                         OR L.list_desc LIKE %s", \
                         (filterCategory, ('%' + searchItem + '%'), ('%' + searchItem + '%')))
@@ -81,12 +85,12 @@ def search():
         for listing in data:
             blob2Img(listing)
         if len(data) == 0: # no item provided. lists all items
-            cursor.execute("SELECT list_title, suggest_price, image, list_id FROM Trademart.Listing")
+            cursor.execute("SELECT list_title, suggest_price, image, list_id FROM Trademart.Listing WHERE approval_status=1")
             conn.commit()
             data = cursor.fetchall()
             for listing in data:
                 blob2Img(listing)
-        return render_template('search.html', data=data)
+        return render_template('search.html', data=data, searchItem=searchItem)
     return render_template('search.html')
     
 # home page
@@ -94,15 +98,43 @@ def search():
 def captcha():
     return render_template("captchaTest.html")
 
+# register
+@app.route("/register")
+def register():
+    return render_template("register.html")
+
+# sign in
+@app.route("/signIn")
+def signIn():
+    return render_template("signIn.html")
+
+@app.route("/listing", methods=["POST", "GET"])
+def listing():
+    if request.method == "POST":
+        listingId = request.form['listingId']
+        print(listingId)
+        cursor.execute("SELECT list_title, suggest_price, image, list_id \
+                FROM Trademart.Listing \
+                WHERE approval_status=1\
+                AND list_id=%s\
+                order by list_date desc", listingId)
+        conn.commit()
+        data = cursor.fetchall()
+        return render_template('listing.html', data=data)
+    return render_template("listing.html")
 
 def blob2Img(listing):
     fileName = str(listing[3]) + ".jpg"
     path = "static/listing_images/"+fileName
-    # print(path)
+    #print(path)
     # size = sys.getsizeof(listing[11])
     # print(size)
-    with open(path, "wb") as file:
-        file.write(listing[2])
+    #print(listing[2])
+    if listing[2]:  #checks if image exists
+        #print("exists")
+        with open(path, "wb") as file:
+            file.write(listing[2])
+            file.close()
 
 if __name__ == '__main__':
     app.run(debug = True)

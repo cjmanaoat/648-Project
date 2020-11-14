@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container" style="height: 80vh;">
+    <center>
+        <h1>Sign In</h1>
+    </center>
+
+    <div class="d-flex justify-content-center align-items-center" style="height:inherit;">
+        <div class="p-2" style="height:max-content; width:50%">
+            <!-- form -->
+            <form name="signInForm" href="#" onsubmit="">
+                <!-- email -->
+                <div>
+                    <label for="emailAddress">* Email address</label> <br>
+                    <input type="text" id="emailAddress" name="emailAddress" onblur="emailCheck()"
+                        onfocus="emailCheck()" style="width: 100%;" required>
+                    <label for="emailAddress" id="emailError"></label>
+                    <br>
+                    <label class="text-muted" for="emailAddress">We'll never share your email with anyone
+                        else</label>
+                    <br>
+                </div>
+                <!-- end email -->
+
+                <!-- password -->
+                <div>
+                    <label for="password">Password</label> <br>
+                    <input type="password" id="password" name="password" style="width: 100%;" required>
+                </div>
+                <!-- end password -->
+
+                <!-- cancel/submit button -->
+                <div class="d-flex justify-content-center" style="width: 100%;">
+                    <div class="p-2">
+                        <div class="btn-toolbar justify-content-between">
+                            <div class="btn-group" role="group" aria-label="submit">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end cancel/submit button -->
+
+                <div class="d-flex justify-content-between" style="width: 100%;">
+                    <div class="p-2">
+                        <a href="">
+                            <h6>Forgot your password</h6>
+                        </a>
+                    </div>
+                    <div class="p-2">
+                        <a href="/register">
+                            <h6>Create An Account</h6>
+                        </a>
+                    </div>
+                </div>
+            </form>
+            <!-- end form -->
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../static/javascript/formVerify.js"></script>
+{% endblock %}
