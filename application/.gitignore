@@ -1,7 +1,10 @@
 #folders
 venv/
-#static/*
-#!static/.gitkeep
+node_modules/
+templates(original)
+static/listing_images/*
 
 #individual files
-templates/base.html
+templates/oldcode.html
+templates/captchaTest.html
+!static/listing_images/sql_upload.py

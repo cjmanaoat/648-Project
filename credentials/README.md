@@ -12,28 +12,28 @@
 3. SSH password or key: uploaded to folder
     <br> If a ssh key is used please upload the key to the credentials folder.
 4. Database URL or IP and port used: 
-    <br>DB URL: team7db.c9x2rihy8ycd.us-west-1.rds.amazonaws.com
+    <br>DB URL: trademart.c9x2rihy8ycd.us-west-1.rds.amazonaws.com
     <br>Port: 3306
     <br><strong> NOTE THIS DOES NOT MEAN YOUR DATABASE NEEDS A PUBLIC FACING PORT.</strong> But knowing the IP and port number will help with SSH tunneling into the database. The default port is more than sufficient for this class.
-5. Database username: admin
-6. Database password: admin123
-7. Database name (basically the name that contains all your tables): team 7 db
+5. Database username: root
+6. Database password: trademartadmin
+7. Database name (basically the name that contains all your tables): Trademart
 8. Instructions on how to use the above information.
     <br><strong>To connect to the Server:</strong>
     <br>1. Open up the terminal
     <br>2. Go into same directory that contains the ssh key file
-    <br>3. Use this command to ssh into the server (as root user): ssh -i team7server.pem ubuntu@ec2-54-183-187-39.us-west-1.compute.amazonaws.com
+    <br>3. Use this command to ssh into the server (as root user): ssh -i "team7server.pem" ubuntu@ec2-54-183-187-39.us-west-1.compute.amazonaws.com
 
     <br><strong>To connect to the database:</strong>
     <br>1. Open up MySQL Workbench
     <br>2. Click the + symbol next to MySQL Connections to add a new database
     <br>3. Enter these credentials:
-           <blockquote>Connection Name: team 7 db
+           <blockquote>Connection Name: Trademart DB
            <br>Connection Method: Standard (TCP/IP)
-           <br>Hostname: team7db.c9x2rihy8ycd.us-west-1.rds.amazonaws.com
+           <br>Hostname: trademart.c9x2rihy8ycd.us-west-1.rds.amazonaws.com
            <br>Port: 3306
-           <br>Username: admin
-           <br>Password: > click "Store in Vault..." and enter admin123
+           <br>Username: root
+           <br>Password: > click "Store in Vault..." and enter trademartadmin
            <br>Click "OK"
 	   <blockquote>
 

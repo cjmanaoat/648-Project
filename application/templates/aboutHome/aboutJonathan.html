@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid" style="background-color: rgba(0,0,255,.1)">
+    <h1>
+        <!--Change name here-->
+        <center>About Jonathan</center>
+        <br><br><br>
+    </h1>
+</div>
+
+<div class="container-fluid" style="background-color:antiquewhite; height: 100vh">
+    <div class="row">
+        <!--place images in static folder
+                use same format ../static/name of picture-->
+        <div class="mx-auto">
+            <img src="../static/aboutPictures/jonathanPic.jpg" class="img-thumbnail"
+                style="background-color: rgba(0,0,255,.1);width:100px; height: 100px;">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="mx-auto">
+            Hello, my name is Jonathan Pak and I am currently a 1st year graduate student at SFSU.
+            I completed my undergraduate studies at Santa Clara University where I got my Bacherlors in Computer Science
+            with an emphasis in Data Science.
+            I hope to be able to graduate within 2 years and find a job within the Data Science or Software Enginnering
+            field.
+            During my free time, I like playing videos games, watching sports such as football and soccer or
+            coooking/eating food.
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="container">
+            <a class="btn btn-primary" href="/aboutHome" role="button">Back to about page</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

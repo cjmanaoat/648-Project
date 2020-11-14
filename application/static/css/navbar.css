@@ -1,0 +1,7 @@
+#category-dropdown select {
+  height: 40px;
+}
+
+#category-dropdown select:focus {
+  height: 40px;
+}
