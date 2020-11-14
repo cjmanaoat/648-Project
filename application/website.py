@@ -29,7 +29,7 @@ def home():
     data = cursor.fetchall()
     for listing in data:
         blob2Img(listing)
-    pathPrefix = "static/listing_images/"
+    pathPrefix = "/home/dasfiter/CSC648/application/static/listing_images/"
     return render_template("index.html", data=data, pathPrefix=pathPrefix, limit=limit)
 
 # main about page
@@ -125,7 +125,7 @@ def listing():
 
 def blob2Img(listing):
     fileName = str(listing[3]) + ".jpg"
-    path = "static/listing_images/"+fileName
+    path = "/home/dasfiter/CSC648/application/static/listing_images/"+fileName
     #print(path)
     # size = sys.getsizeof(listing[11])
     # print(size)
