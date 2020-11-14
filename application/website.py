@@ -29,7 +29,7 @@ def home():
     data = cursor.fetchall()
     for listing in data:
         blob2Img(listing)
-    pathPrefix = "/home/dasfiter/CSC648/application/static/listing_images/"
+    pathPrefix = "static/listing_images/"
     return render_template("index.html", data=data, pathPrefix=pathPrefix, limit=limit)
 
 # main about page
