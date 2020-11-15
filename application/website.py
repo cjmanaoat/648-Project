@@ -95,8 +95,8 @@ def search():
             data = cursor.fetchall()
             for listing in data:
                 blob2Img(listing)
-        return render_template('search.html', data=data, searchItem=searchItem)
-    return render_template('search.html')    
+         return render_template('search.html', data=data, searchItem=searchItem)
+    return render_template('search.html') 
 # home page
 @app.route("/captchatest")
 def captcha():
