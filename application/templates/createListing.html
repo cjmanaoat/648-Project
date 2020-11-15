@@ -2,7 +2,7 @@
 {% block content %}
 <div class="container">
     <center>
-        Create A Listing
+        <h1>Create A Listing</h1>
     </center>
 
     <form name="createListingForm" href="#" onsubmit="captchaCheck()">
@@ -58,6 +58,7 @@
             </div>
             <div class="col">
                 <input type="number" name="price" id="price" required>
+                <br>
                 <input type="checkbox" name="fixedPrice" id="fixedPrice" value="Fixed">
                 <label for="fixedPrice">Make this price fixed</label>
             </div>
@@ -74,6 +75,16 @@
                     <option value="bookstore">Outside Bookstore</option>
                     <option value="gym">Wellness Center</option>
                 </select>
+            </div>
+        </div>
+
+        <!-- listing description -->
+        <div class="row">
+            <div class="col">
+                <label for="description">Description</label>
+            </div>
+            <div class="col">
+                <input type="text" name="description" id="description">
             </div>
         </div>
 
@@ -96,7 +107,7 @@
                         <button type="button" class="btn btn-primary">Cancel</button>
                     </div>
                     <div class="btn-group" role="group" aria-label="contact">
-                        <button type="contact" class="btn btn-primary" disabled id="contactButton">Contact</button>
+                        <button type="submit" class="btn btn-primary" disabled id="submitButton">Contact</button>
                     </div>
                 </div>
             </div>
@@ -106,3 +117,4 @@
         </div>
     </form>
 </div>
+{% endblock %}

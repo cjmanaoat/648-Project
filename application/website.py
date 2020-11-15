@@ -128,6 +128,10 @@ def contact():
         return render_template('contact.html', data=data)
     return render_template('contact.html')
 
+@app.route("/createListing")
+def createListing():
+    return render_template("createListing.html")
+
 @app.route("/listing", methods=["POST", "GET"])
 def listing():
     if request.method == "POST":
