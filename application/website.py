@@ -37,6 +37,18 @@ def aboutHome():
     #print("in main home")
     return render_template("/aboutHome/aboutHome.html")
 
+# class resource page
+@app.route("/classResource/")
+def classResource():
+    #print("in main home")
+    return render_template("/classResource.html")
+
+# dashboard page
+@app.route("/dashboard/")
+def dashboard():
+    #print("in main home")
+    return render_template("/dashboard.html")
+
 # about page per member
 @app.route("/aboutHome/<aboutName>")
 def aboutPage(aboutName):
@@ -92,11 +104,15 @@ def captcha():
 def blob2Img(listing):
     fileName = str(listing[3]) + ".jpg"
     path = "static/listing_images/"+fileName
-    # print(path)
+    #print(path)
     # size = sys.getsizeof(listing[11])
     # print(size)
-    with open(path, "wb") as file:
-        file.write(listing[2])
+    #print(listing[2])
+    if listing[2]:  #checks if image exists
+        #print("exists")
+        with open(path, "wb") as file:
+            file.write(listing[2])
+            file.close()
 
 if __name__ == '__main__':
     app.run(debug = True)
