@@ -112,6 +112,22 @@ def register():
 def signIn():
     return render_template("signIn.html")
 
+# contact listing owner
+@app.route("/contact", methods=["POST", "GET"])
+def contact():
+    if request.method == "POST":
+        listingId = request.form['listingId']
+        cursor.execute("SELECT list_id, list_desc, image, list_title, \
+                condition, pref_location, suggest_price, offer_type \
+                FROM Trademart.Listing \
+                WHERE approval_status=1 \
+                AND list_id=%s\
+                order by list_date desc", listingId)
+        conn.commit()
+        data = cursor.fetchall()
+        return render_template('contact.html', data=data)
+    return render_template('contact.html')
+
 @app.route("/listing", methods=["POST", "GET"])
 def listing():
     if request.method == "POST":
@@ -129,7 +145,7 @@ def listing():
 
 def blob2Img(listing):
     fileName = str(listing[3]) + ".jpg"
-    path = "/home/dasfiter/CSC648/application/static/listing_images/"+fileName
+    path = "/home/student/Desktop/csc648-03-fa20-team07/application/static/listing_images/"+fileName
     sizes = [(120,120), (720,720)]
     #print(path)
     # size = sys.getsizeof(listing[11])
@@ -142,10 +158,10 @@ def blob2Img(listing):
             file.close()
 
         for size in sizes:
-            im = Image.open("/home/dasfiter/CSC648/application/static/listing_images/%s" % fileName)
+            im = Image.open("/home/student/Desktop/csc648-03-fa20-team07/application/static/listing_images/%s" % fileName)
             im.thumbnail(size)
             first, second = size
-            im.save("/home/dasfiter/CSC648/application/static/listing_images/thumbnail_%s_res_%d.jpg" % (fileName[:-4], first))
+            im.save("/home/student/Desktop/csc648-03-fa20-team07/application/static/listing_images/thumbnail_%s_res_%d.jpg" % (fileName[:-4], first))
         
 
 if __name__ == '__main__':

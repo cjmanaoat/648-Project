@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <center>
+        <h1>Contact</h1>
+    </center>
+    {% for listing in data %}
+    {% set fileName = listing[3]|string %}
+    {% set path = "static/listing_images/" + fileName+".jpg" %}
+    
+    <form name="contactForm" href="#" onsubmit="captchaCheck()">
+    <td><img src = "{{path}}" width="100" height="100"></td>
+    <br>
+    <p>Listing ID: {{listing[0]}}</p> 
+    <br>   
+    <p>Description</p>
+    <br>
+    <p>{{listing[1]}}</p>
+    <br>
+    <p>Listing Title: {{listing[3]}}</p>
+    <br>
+    <p>Condition: {{listing[4]}}</p>
+    <br>
+    <p>Seller's preferred location: {{listing[5]}}</p>
+    <br>
+    <h2><em>OR</em></h2>
+    <br>
+    <p>Your preferred location: </p>
+    <select name="user_pref_location" id="user_pref_location">
+        <option value="library">Library</option>
+        <option value="bookstore">Outside Bookstore</option>
+        <option value="gym">Wellness Center</option>
+    </select>
+    <br>
+    <p>Pick-up Time: </p>
+    <input type="time" name="user_time" id="user_time">
+    <br>
+    <p>Suggested Price: {{listing[6]}}</p>
+    <br>
+    <h2><em>OR</em></h2>
+    {% if listing[7] == "bid" %}
+        <p>Make an Offer: </p>
+        <input type="text" name="offer" id="offer">
+        <br>
+    {% endif %}
+    <p>Message: </p>
+    <input type="text" name="message" id="message">
+    <br>
+    <div class="row">
+        <div class="col">
+        </div>
+        <div class="col">
+            <div class="btn-toolbar justify-content-between">
+                <div class="btn-group" role="group" aria-label="cancel">
+                    <button type="button" class="btn btn-primary">Cancel</button>
+                </div>
+                <div class="btn-group" role="group" aria-label="contact">
+                    <button type="contact" class="btn btn-primary" disabled id="contactButton">Contact</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+        </div>
+    </div>
+    </form>
+    
+</div>
