@@ -9,43 +9,49 @@
     {% set path = "static/listing_images/" + fileName+".jpg" %}
     
     <form name="contactForm" href="#" onsubmit="captchaCheck()">
+    <div class="row">
+    <div class="col">    
     <td><img src = "{{path}}" width="100" height="100"></td>
     <br>
-    <p>Listing ID: {{listing[0]}}</p> 
+    <label>Listing ID: {{listing[0]}}</label> 
     <br>   
-    <p>Description</p>
+    <label>Description</label>
     <br>
-    <p>{{listing[1]}}</p>
+    <label>{{listing[1]}}</label>
     <br>
-    <p>Listing Title: {{listing[3]}}</p>
+    </div>
+    <div class="col">
+    <label>Listing Title: {{listing[3]}}</label>
     <br>
-    <p>Condition: {{listing[4]}}</p>
+    <label for="condition">Condition: {{listing[4]}}</label>
     <br>
-    <p>Seller's preferred location: {{listing[5]}}</p>
+    <label for="seller_pref_location">Seller's preferred location: {{listing[5]}}</label>
     <br>
     <h2><em>OR</em></h2>
     <br>
-    <p>Your preferred location: </p>
+    <label for="user_pref_location">Your preferred location: </label>
     <select name="user_pref_location" id="user_pref_location">
         <option value="library">Library</option>
         <option value="bookstore">Outside Bookstore</option>
         <option value="gym">Wellness Center</option>
     </select>
     <br>
-    <p>Pick-up Time: </p>
+    <label for="user_time">Pick-up Time: </label>
     <input type="time" name="user_time" id="user_time">
     <br>
-    <p>Suggested Price: {{listing[6]}}</p>
+    <label for="suggestedPrice">Suggested Price: {{listing[6]}}</label>
     <br>
     <h2><em>OR</em></h2>
     {% if listing[7] == "bid" %}
-        <p>Make an Offer: </p>
-        <input type="text" name="offer" id="offer">
+        <label for="offer">Make an Offer: </label>
+        <input type="number" name="offer" id="offer">
         <br>
     {% endif %}
-    <p>Message: </p>
+    <label for="message">Message: </label>
     <input type="text" name="message" id="message">
     <br>
+    </div>
+    </div>
     <div class="row">
         <div class="col">
         </div>
@@ -66,3 +72,4 @@
     </form>
     
 </div>
+{% endblock %}
