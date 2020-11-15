@@ -130,22 +130,20 @@ def listing():
 def blob2Img(listing):
     fileName = str(listing[3]) + ".jpg"
     path = "/home/dasfiter/CSC648/application/static/listing_images/"+fileName
-    sizes = [(120,120), (720,720)]
     #print(path)
     # size = sys.getsizeof(listing[11])
     # print(size)
     #print(listing[2])
+    sizes = [4, 2]
     if listing[2]:  #checks if image exists
         #print("exists")
         with open(path, "wb") as file:
             file.write(listing[2])
             file.close()
-
         for size in sizes:
             im = Image.open("/home/dasfiter/CSC648/application/static/listing_images/%s" % fileName)
-            im.thumbnail(size)
-            first, second = size
-            im.save("/home/dasfiter/CSC648/application/static/listing_images/thumbnail_%s_res_%d.jpg" % (fileName[:-4], first))
+            im.thumbnail((im.width//size, im.height//size))
+            im.save("/home/dasfiter/CSC648/application/static/listing_images/thumbnail_%s_res_%d.jpg" % (fileName[:-4], im.width//size))
         
 
 if __name__ == '__main__':
