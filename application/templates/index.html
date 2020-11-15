@@ -37,11 +37,12 @@
           <!-- {{limit}} -->
           {% set listing = data[0] %}
           {% set fileName = listing[3]|string %}
-          {% set path = pathPrefix + fileName+".jpg" %}
-          
+          <!-- {% set path = pathPrefix + fileName+".jpg" %} -->
+          {% set path = pathPrefix + "thumbnail_" + fileName+"_quarter_size.jpg" %}
+
           <!-- first listing -->
           <div class="carousel-item active">
-            <img class="d-block w-100" src="{{path}}">
+            <img class="d-block w-100" src="{{path}}" style="height: 450px">
             <div class="carousel-caption d-none d-md-block" style="color: black;">
             </div>
             <center>
@@ -59,16 +60,14 @@
 
           <!-- rest of the listings -->
           {% for counter in range(limit-1) %}
-            {% set listing = data[counter] %}
-            {% set fileName = listing[3]|string %}
-            {% set path = pathPrefix + fileName+".jpg" %}
-            <!-- {{path}} -->
             <div class="carousel-item">
               <!-- {{loop.index}} -->
               {% set listing = data[loop.index] %}
               {% set fileName = listing[3]|string %}
-              {% set path = pathPrefix + fileName+".jpg" %}
-              <img class="d-block w-100" src="{{path}}"">
+              <!-- {% set path = pathPrefix + fileName+".jpg" %} -->
+              {% set path = pathPrefix + "thumbnail_" + fileName+"_quarter_size.jpg" %}
+              <!-- {{path}} -->
+              <img class="d-block w-100" src="{{path}}" style="height: 450px">
               <div class="carousel-caption d-none d-md-block" style="color: black;">
               </div>
               <center>
