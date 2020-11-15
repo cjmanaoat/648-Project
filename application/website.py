@@ -1,6 +1,10 @@
+import re
+import subprocess
+import sys
+
+from PIL import Image
 from flask import Flask, redirect, url_for, render_template, request
 from flaskext.mysql import MySQL
-import sys
 
 app = Flask(__name__)
 
@@ -126,6 +130,7 @@ def listing():
 def blob2Img(listing):
     fileName = str(listing[3]) + ".jpg"
     path = "/home/dasfiter/CSC648/application/static/listing_images/"+fileName
+    sizes = [(120,120), (720,720)]
     #print(path)
     # size = sys.getsizeof(listing[11])
     # print(size)
@@ -135,6 +140,13 @@ def blob2Img(listing):
         with open(path, "wb") as file:
             file.write(listing[2])
             file.close()
+
+        for size in sizes:
+            im = Image.open("/home/dasfiter/CSC648/application/static/listing_images/%s" % filename)
+            im.thumbnail(size)
+            first, second = size
+            im.save("/home/dasfiter/CSC648/application/static/listing_images/thumbnail_%s_res_%d.jpg" % (filename[:-4], first))
+        
 
 if __name__ == '__main__':
     app.run(debug = True)
