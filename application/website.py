@@ -142,10 +142,10 @@ def blob2Img(listing):
             file.close()
 
         for size in sizes:
-            im = Image.open("/home/dasfiter/CSC648/application/static/listing_images/%s" % filename)
+            im = Image.open("/home/dasfiter/CSC648/application/static/listing_images/%s" % fileName)
             im.thumbnail(size)
             first, second = size
-            im.save("/home/dasfiter/CSC648/application/static/listing_images/thumbnail_%s_res_%d.jpg" % (filename[:-4], first))
+            im.save("/home/dasfiter/CSC648/application/static/listing_images/thumbnail_%s_res_%d.jpg" % (fileName[:-4], first))
         
 
 if __name__ == '__main__':
