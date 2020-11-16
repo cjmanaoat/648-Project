@@ -1,17 +1,40 @@
+<!-- 
+    aboutJonathan.html
+    Description:
+    This is an about page for an individual
+
+    Contents:
+    - Team member name
+    - Optional picture
+    - Description
+    - Back button
+ -->
+
+ <!-- navbar -->
 {% extends "base.html" %}
+<!-- end navbar -->
+
+<!-- contents to be placed in -->
 {% block content %}
+<!-- page title -->
 <head>
-	    <title>About Jonathan</title>
+    <title>About Jonathan</title>
 </head>
+<!-- end page title -->
+
+<!-- about contents -->
 <div class="container-fluid" style="background-color: rgba(0,0,255,.1)">
+    <!-- title -->
     <h1>
         <!--Change name here-->
         <center>About Jonathan</center>
         <br><br><br>
     </h1>
+    <!-- end title -->
 </div>
 
 <div class="container-fluid" style="background-color:antiquewhite; height: 100vh">
+    <!-- optional picture -->
     <div class="row">
         <!--place images in static folder
                 use same format ../static/name of picture-->
@@ -20,7 +43,9 @@
                 style="background-color: rgba(0,0,255,.1);width:100px; height: 100px;">
         </div>
     </div>
+    <!-- end picture -->
 
+    <!-- description -->
     <div class="row">
         <div class="mx-auto">
             Hello, my name is Jonathan Pak and I am currently a 1st year graduate student at SFSU.
@@ -32,11 +57,17 @@
             coooking/eating food.
         </div>
     </div>
+    <!-- end description -->
 
+    <!-- back button -->
     <div class="row">
         <div class="container">
             <a class="btn btn-primary" href="/aboutHome" role="button">Back to about page</a>
         </div>
     </div>
+    <!-- end back button -->
 </div>
+<!-- end about contents -->
+
 {% endblock %}
+<!-- end contents -->

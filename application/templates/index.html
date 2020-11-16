@@ -1,9 +1,23 @@
+<!-- 
+    base.html
+    Description:
+    This page the home page a user will be greeted with upon first opening the website.
+    
+    Contents:
+    There is a class title header and a portion which shows the most current listings posted. From here one can click on the listing and that will bring 
+    you to the listing page of that item.
+ -->
+<!-- navbar -->
 {% extends "base.html" %}
+<!-- end navbar -->
+
+<!-- contents to be placed in -->
 {% block content %}
+<!-- page title -->
 <head>
-	    <title>SFSU TradeMart</title>
+  <title>SFSU Trade Mart</title>
 </head>
-<!-- contents -->
+<!-- end page title -->
 
 <!-- class title -->
 <link rel="shortcut icon" href="favicon/favicon.ico">
@@ -28,7 +42,7 @@
   </div>
   <!-- end title -->
 
-  <!-- image -->
+  <!-- carousel(listings) container-->
   <div class="row justify-content-md-center">
     <div class="column" style="height: 500px; width: 500px; margin-top: 50px;">
       <div id="homeCarousel" class="carousel slide" data-ride="carousel">
@@ -38,10 +52,9 @@
           <li data-target="#homeCarousel" data-slide-to="2" id="2"></li>
         </ol> -->
         <div class="carousel-inner">
-          <!-- {{limit}} -->
-          {% set listing = data[0] %}
+          <!-- data array passed in contains appropriate information needed -->
+          {% set listing = data[0] %} 
           {% set fileName = listing[3]|string %}
-          <!-- {% set path = pathPrefix + fileName+".jpg" %} -->
           {% set path = pathPrefix + "thumbnail_" + fileName+"_quarter_size.jpg" %}
 
           <!-- first listing -->
@@ -51,12 +64,14 @@
             </div>
             <center>
               <form method="POST" action="listing">
+                <!-- contents of listing -->
                 <h1>
                   <input type="hidden" name="listingId" value="{{listing[3]}}">
                   <button style="background: none; border: none;">{{listing[0]}}</button>
                 </h1>
                 {% set price = '$' + listing[1]|string %}
                 <h2>{{price}}</h2>
+                <!-- end of contents -->
               </form>
             </center>
           </div>
@@ -68,7 +83,6 @@
               <!-- {{loop.index}} -->
               {% set listing = data[loop.index] %}
               {% set fileName = listing[3]|string %}
-              <!-- {% set path = pathPrefix + fileName+".jpg" %} -->
               {% set path = pathPrefix + "thumbnail_" + fileName+"_quarter_size.jpg" %}
               <!-- {{path}} -->
               <img class="d-block w-100" src="{{path}}" style="height: 450px">
@@ -76,12 +90,13 @@
               </div>
               <center>
                 <form method="POST" action="listing">
+                  <!-- listing contents -->
                   <h1>
                     <input type="hidden" name="listingId" value="{{listing[3]}}">
                     <button style="background: none; border: none;">{{listing[0]}}</button>
-                  </h1>
                   {% set price = '$' + listing[1]|string %}
                   <h2>{{price}}</h2>
+                  <!-- end listing contents -->
                 </form>
               </center>
             </div>
@@ -89,6 +104,8 @@
           <!-- end rest of the listings -->
 
         </div>
+
+        <!-- buttons for navigating the listings -->
         <a class="carousel-control-prev" href="#homeCarousel" role="button" data-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="sr-only">Previous</span>
@@ -97,11 +114,13 @@
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="sr-only">Next</span>
         </a>
-
+        <!-- end navigation buttons -->
       </div>
     </div>
   </div>
+  <!-- end of carousel -->
 </div>
 <!-- end listing contents -->
-<!-- end contents -->
+
 {% endblock %}
+<!-- end contents -->

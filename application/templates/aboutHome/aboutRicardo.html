@@ -1,28 +1,59 @@
+<!-- 
+    aboutRicardo.html
+    Description:
+    This is an about page for an individual
+
+    Contents:
+    - Team member name
+    - Optional picture
+    - Description
+    - Back button
+ -->
+ <!-- navbar -->
 {% extends "base.html" %}
+<!-- end navbar -->
+
+<!-- contents to be placed in -->
 {% block content %}
+<!-- page title -->
 <head>
-	    <title>About Richardo</title>
+    <title>About Ricardo</title>
 </head>
+<!-- end page title -->
+
+<!-- about contents -->
 <div class="container-fluid">
+    <!-- title -->
     <h1>
         <!--Change name here-->
         <center>About Ricardo</center>
     </h1>
+    <!-- end title -->
 </div>
 
 <div class="container-fluid">
+    <!-- optional picture -->
     <div class="container">
         <!--place images in static folder
                 use same format ../static/name of picture-->
     </div>
+    <!-- end picture -->
+
+    <!-- description -->
     <div class="container" style="background-color: rgba(0,0,255,.1)"">
             I'm Ricardo Carretero and I'm not very fond of Frontend so I'll keep this short. I love Python, Go,
 	    and any interesting project I can find. I'm currently trying to contribute to an open source Project https://cataclysmdda.org/
         </div>
     </div>
+    <!-- end description -->
 
+    <!-- back button -->
     <div class=" container" style="background-color: rgba(0,0,255,.1)">
         <a class="btn btn-primary" href="/aboutHome" role="button">Back to about page</a>
     </div>
+    <!-- end back button -->
 </div>
+<!-- end about contents -->
+
 {% endblock %}
+<!-- end contents -->
