@@ -89,7 +89,7 @@ def search():
                 WHERE approval_status=1\
                     AND L.list_category=%s", \
                     (filterCategory))
-             else:    #category and item selected
+            else:    #category and item selected
                 cursor.execute("SELECT list_title, suggest_price, image, list_id\
                     FROM Listing L\
                     WHERE approval_status=1\
@@ -107,7 +107,7 @@ def search():
             data = cursor.fetchall()
             for listing in data:
                 blob2Img(listing)
-         return render_template('search.html', data=data, searchItem=searchItem)
+        return render_template('search.html', data=data, searchItem=searchItem)
     return render_template('search.html') 
 # home page
 @app.route("/captchatest")
