@@ -1,3 +1,16 @@
+<!-- 
+    base.html
+    Description:
+    This file contains the appropriate header and body to implement bootstrap, include javascript/styling files,
+    and serves as a base template of every page.
+    
+    Contents:
+    This page alone contains the nav bar with a drop-down menu for useful links,
+    a link to the about pages, a search bar, and links to home, creating
+    a listing and signing in/creating an account. 
+    After the navbar portion a placeholder is used in which the contents of each individual page
+    will be placed in.
+-->
 <!doctype html>
 <html lang="en">
 
@@ -27,6 +40,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
+        <!-- start of expanded navbar contents -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
             <!-- dropdown list -->
@@ -36,6 +50,11 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="/classResource">Class Resouces</a>
+                    <a class="dropdown-item" href="/dashboard">Dashboard</a>
+                    <a class="dropdown-item" href="/itempage">Item Page</a>
+                    <a class="dropdown-item" href="/contact">Contact</a>
+                    <a class="dropdown-item" href="/createListing">Create Listing</a>
                 </div>
             </div>
             <!-- end dropdown -->
@@ -50,8 +69,9 @@
             </ul>
             <!-- end about button -->
 
-            <!-- search -->
+            <!-- search bar form-->
             <form class="form-inline my-2 my-lg-0 mx-auto" method="post" action="/search" id="searchForm" onsubmit="return alphaNumericCheck('searchBar')">
+                <!-- category dropdown for search -->
                 <div id=category-dropdown>
                     <select name="category-select" id="categorySelect">
                         <option selected value="all">All</option>
@@ -62,27 +82,37 @@
                         <option value="tutoring">Tutoring</option>
                     </select>
                 </div>
+                <!-- end category drop down -->
+                <!-- input form -->
                 <input class="form-control mr-sm-2" type="search" value='{{searchItem}}' placeholder="Search" aria-label="Search" name="item"
                     id="searchBar" style="width: 40vw;" maxlength="40">
+                <!-- end input form -->
+                <!-- submit button -->
                 <button id="searchButton" type="submit" class="btn my-2 my-sm-0" style="background-color: orange;">
                     <img src="../static/bootstrapIcons/search.svg" alt="searchIcon" width="25" height="25"
                         title="searchIcon">
                 </button>
+                <!-- end submit -->
             </form>
-            <!-- end search -->
+            <!-- end search form -->
 
             <!-- side buttons -->
             <ul class="navbar-nav">
+                <!-- home button -->
                 <li class="nav-item ml-2">
                     <a class="nav-link" href="/" style="color:white">
                         <h3>SFSU Trade<br>Mart</h3>
                     </a>
                 </li>
+                <!-- end home button -->
+                <!-- Create listing button -->
                 <li class="nav-item ml-2">
                     <a class="nav-link" href="/createListing" style="color: white;">
                         <h3>Create<br>Listing</h3>
                     </a>
                 </li>
+                <!-- end create listing -->
+                <!-- sign in/register button -->
                 <li class="nav-item ml-2">
                     <div class="dropdown mr-auto">
                         <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown"
@@ -95,20 +125,20 @@
                         </div>
                     </div>
                     <!-- end dropdown -->
-
-                    <!-- <a class="nav-link" href="/register" style="color:white">
-                        <h3>Sign In/<br>Register</h3>
-                    </a> -->
                 </li>
+                <!-- end sign in/register button -->
             </ul>
             <!-- end side buttons -->
-
         </div>
+        <!-- end of expanded navbar contents -->
     </nav>
     <!-- end navbar -->
 
+    <!-- placeholder where individual page content gets placed -->
     {% block content %}{% endblock %}
+    <!-- end of placeholder -->
 
+    <!-- bootstrap includes -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
@@ -118,8 +148,11 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
+    <!-- end bootstrap includes -->
 
+    <!-- external scripts/styling -->
     <script type="text/javascript" src="{{ url_for('static', filename='/javascript/formVerify.js') }}"></script>
+    <!-- end external scripts/styling -->
 </body>
 
 </html>
