@@ -43,6 +43,18 @@ def aboutHome():
     #print("in main home")
     return render_template("/aboutHome/aboutHome.html")
 
+# class resource page
+@app.route("/classResource/")
+def classResource():
+    #print("in main home")
+    return render_template("/classResource.html")
+
+# dashboard page
+@app.route("/dashboard/")
+def dashboard():
+    #print("in main home")
+    return render_template("/dashboard.html")
+
 # about page per member
 @app.route("/aboutHome/<aboutName>")
 def aboutPage(aboutName):
@@ -125,8 +137,8 @@ def listing():
 
 def blob2Img(listing):
     fileName = str(listing[3]) + ".jpg"
-    # path = "/home/dasfiter/CSC648/application/static/listing_images/"+fileName
-    path = "static/listing_images/"+fileName
+    path = "/home/dasfiter/CSC648/application/static/listing_images/"+fileName
+    # path = "static/listing_images/"+fileName
     #print(path)
     # size = sys.getsizeof(listing[11])
     # print(size)
@@ -140,11 +152,11 @@ def blob2Img(listing):
                 file.write(listing[2])
                 file.close()
             for size, name in sizes:
-                # im = Image.open("/home/dasfiter/CSC648/application/static/listing_images/%s" % fileName)
-                im = Image.open("static/listing_images/%s" % fileName)
+                im = Image.open("/home/dasfiter/CSC648/application/static/listing_images/%s" % fileName)
+                # im = Image.open("static/listing_images/%s" % fileName)
                 im.thumbnail((im.width//size, im.height//size))
-                # im.save("/home/dasfiter/CSC648/application/static/listing_images/thumbnail_%s_%s_size.jpg" % (fileName[:-4], name))
-                im.save("static/listing_images/thumbnail_%s_%s_size.jpg" % (fileName[:-4], name))
+                im.save("/home/dasfiter/CSC648/application/static/listing_images/thumbnail_%s_%s_size.jpg" % (fileName[:-4], name))
+                # im.save("static/listing_images/thumbnail_%s_%s_size.jpg" % (fileName[:-4], name))
         
 
 if __name__ == '__main__':

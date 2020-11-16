@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1 class="text-center">Class Resource Form</h1>
+
+    <form name="classResourceForm" href="#" >
+        <p class="text-center">* = Required</p>
+
+        <!-- book title -->
+        <div class="row">
+            <div class="col">
+                <label for="firstName">* Book Title</label> <br>
+                <input type="text" id="bookTitle" name="bookTitle" required>
+            </div>
+        </div>
+        <!-- end book title -->
+
+        <!-- isbn -->
+        <div class="row">
+            <div class="col">
+                <label for="isbn">* ISBN</label> <br>
+                <input type="text" id="isbn" name="isbn" required>
+            </div>
+        </div>
+        <!-- end isbn -->
+
+        <!-- edition/version -->
+        <div class="row">
+            <div class="col">
+                <label for="editionVersion">* Edition/Version</label> <br>
+                <input type="text" id="editionVersion" name="editionVersion" required>
+				<br>
+                <label class="text-muted" for="editionVersion">Number only. Ex: 1, not 1st</label> <br>
+                <br> <br> <br>
+            </div>
+        </div>
+        <!-- end edition/version -->
+
+        <!-- term -->
+        <div class="row">
+            <div class="col">
+                <label for="term">* Term</label> <br>
+                <div id=term-dropdown>
+					<select name="term-select">
+						<option value="spring2021">Spring 2021</option>
+						<option value="fall2020">Fall 2020</option>
+						<option value="spring2020">Spring 2020</option>
+						<option value="fall2019">Fall 2019</option>
+						<option value="spring2019">Spring 2019</option>
+					</select>
+				</div>
+                <br>
+            </div>
+        </div>
+        <!-- end term -->
+		
+		<!-- department -->
+        <div class="row">
+            <div class="col">
+                <label for="term">* Department</label> <br>
+                <div id=department-dropdown>
+					<select name="department-select">
+						<option value="math">MATH</option>
+						<option value="csc">CSC</option>
+						<option value="eng">ENG</option>
+						<option value="engr">ENGR</option>
+						<option value="phys">PHYS</option>
+						<option value="art">ART</option>
+					</select>
+				</div>
+                <br>
+            </div>
+        </div>
+        <!-- end department -->
+
+		<!-- course -->
+        <div class="row">
+            <div class="col">
+                <label for="isbn">* Course</label> <br>
+                <input type="text" id="course" name="course" required>
+            </div>
+        </div>
+        <!-- end course -->
+
+		<!-- section -->
+        <div class="row">
+            <div class="col">
+                <label for="section">* Secction</label> <br>
+                <input type="text" id="section" name="section" required>
+            </div>
+        </div>
+        <!-- end  -->
+
+        <br><br>
+        <!-- cancel/submit button -->
+        <div class="row">
+            <div class="col">
+            </div>
+            <div class="col">
+                <div class="btn-toolbar justify-content-between">
+                    <div class="btn-group" role="group" aria-label="cancel">
+                        <button type="button" class="btn btn-primary">Cancel</button>
+                    </div>
+                    <div class="btn-group" role="group" aria-label="submit">
+                        <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+            </div>
+        </div>
+        <!-- end cancel/submit button -->
+    </form>
+</div>
+
+{% endblock %}

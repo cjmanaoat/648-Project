@@ -51,11 +51,17 @@ function captchaCallback() {
 function alphaNumericCheck(element) {
   const input_text = document.getElementById(element).value; //gets input text from provided element
   // alert(input_text);
-  if (!input_text.match(/^[a-z0-9]+$/i | /^+$/)) { // if input contains characters
-    alert('Please enter only alphanumerics');
-    return false;
-  } else { // input is good
+  if (
+    input_text.match(/^[a-z0-9]+$/i) ||
+    input_text.match(/\s/) ||
+    !input_text
+  ) {
+    // input is good
     // alert('correct');
     return true;
+  } else {
+    // if input contains invalid characters
+    alert('Please enter only alphanumerics');
+    return false;
   }
 }
