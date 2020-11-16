@@ -129,6 +129,26 @@ def signIn():
 def itempage():
     return render_template("itempage.html")
 
+# contact listing owner
+@app.route("/contact", methods=["POST", "GET"])
+def contact():
+    if request.method == "POST":
+        listingId = request.form['listingId']
+        cursor.execute("SELECT list_id, list_desc, image, list_title, \
+                condition, pref_location, suggest_price, offer_type \
+                FROM Trademart.Listing \
+                WHERE approval_status=1 \
+                AND list_id=%s\
+                order by list_date desc", listingId)
+        conn.commit()
+        data = cursor.fetchall()
+        return render_template('contact.html', data=data)
+    return render_template('contact.html')
+
+@app.route("/createListing")
+def createListing():
+    return render_template("createListing.html")
+
 @app.route("/listing", methods=["POST", "GET"])
 def listing():
     if request.method == "POST":
