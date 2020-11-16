@@ -1,5 +1,18 @@
+<!--
+    dashboard.html
+
+    Description: This is the user dashboard page. From a sidebar to
+    the left of the screen, the user can shift between four tabs:
+    "My Postings", "Messages Sent", "Messages Received", and "My Class Resources".
+    From these tabs they can review each item of the given tab in a table.
+-->
+
+
 {% extends "base.html" %}
 {% block content %}
+<head>
+	    <title>SFSU TradeMart</title>
+</head>
 <div class="row">
     <!-- Sidebar -->
     <div class="col-3">
@@ -21,6 +34,8 @@
             <div class="tab-pane fade show active" id="v-pills-my-postings" role="tabpanel" aria-labelledby="v-pills-my-postings-tab">
                 <h1 class="text-center">My Postings</h1>
                 <h6>3 of 3 item(s)</h6>
+
+                <!-- My Postings Item Table -->
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
@@ -79,8 +94,10 @@
                         </tr>
                     </tbody>
                 </table>
+                <!-- end My Postings Item Table -->
 
                 <!-- My Postings More Info Buttons -->
+                <!-- When the user clicks More Info, the info comes in the form of a pop-up (Info is hardcoded for now.)-->
                 <div class="modal fade" id="my-postings-1" tabindex="-1" role="dialog" aria-labelledby="my-postings-1-Title" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
@@ -160,6 +177,7 @@
                     </div>
                 </div>
                 <!-- end My Postings More Info Buttons -->
+                
             </div>
             <!-- end My Postings Tab -->
 
@@ -167,6 +185,7 @@
             <div class="tab-pane fade" id="v-pills-messages-sent" role="tabpanel" aria-labelledby="v-pills-messages-sent-tab">
                 <h1 class="text-center">Messages Sent</h1>
                 <h6>1 of 1 item(s)</h6>
+                <!-- Messages Sent Item Table-->
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
@@ -189,8 +208,10 @@
                         </tr>
                     </tbody>
                 </table>
+                <!-- end Messages Sent Item Table-->
 
                 <!-- Messages Sent View Details Buttons -->
+                <!-- When the user clicks View Details, the info comes in the form of a pop-up (Info is hardcoded for now.)-->
                 <div class="modal fade" id="messages-sent-1" tabindex="-1" role="dialog" aria-labelledby="messages-sent-1-Title" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
@@ -219,6 +240,7 @@
                     </div>
                 </div>
                 <!-- end Messages Sent View Details Buttons -->
+
             </div>
             <!-- end Messages Sent Tab -->
 
@@ -226,6 +248,8 @@
             <div class="tab-pane fade" id="v-pills-messages-received" role="tabpanel" aria-labelledby="v-pills-messages-received-tab">
                 <h1 class="text-center">Messages Received</h1>
                 <h6>1 of 1 item(s)</h6>
+
+                <!-- Messages Received Item Table -->
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
@@ -248,6 +272,8 @@
                         </tr>
                     </tbody>
                 </table>
+                <!-- end Messages Received Item Table -->
+
             </div>
             <!-- end Messages Received Tab -->
 
@@ -260,6 +286,8 @@
                 <div>
                     <h6>0 of 0 item(s)</h6>
                 </div>
+
+                <!-- My Class Resources Item Table -->
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
@@ -274,6 +302,8 @@
                         
                     </tbody>
                 </table>
+                <!-- end My Class Resources Item Table -->
+
             </div>
             <!-- end My Class Resources Tab -->
         </div>
