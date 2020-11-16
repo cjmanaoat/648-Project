@@ -1,76 +1,102 @@
+<!--
+    File: contact.html
+    Author: Chandler Cruz
+    Description: Users will access and use this form
+    when contacting sellers about a listing. They can view
+    the item's title, image, and description while creating
+    their own offer on price, location, etc. This page will also
+    check if the user is logged in when they contact a seller,
+    offering for them to log in or register if they aren't.
+-->
+
 {% extends "base.html" %}
 {% block content %}
+<head>
+	    <title>SFSU TradeMart</title>
+</head>
 <div class="container">
     <center>
         <h1>Contact</h1>
     </center>
 
     <form name="contactForm" href="#" onsubmit="captchaCheck()">
+        <!-- Table for contact form -->
+        <table class="table">
+            <tr>
+                <td rowspan="5" colspan="2">
+                    <img src="static/listing_images/12381.jpg" class="img-fluid"></td>
+                <td><label for="title">Listing<br>Title:</label></td>
+                <td><p name="title" id="title">Name of Object</p></td>
+            </tr>
+            <tr>
+                <td><label for="condition">Condition:</label></td>
+                <td><p name="condition" id="condition">Fair</p></td>
+            </tr>
+            <tr>
+                <td><label for="seller_pref_location">Seller's<br>preferred<br>location:</label></td>
+                <td><p name="seller_pref_location" id="seller_pref_location">Outside bookstore</p></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <h2><em>OR</em></h2>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="user_pref_location">Your<br>preferred<br>location:</label></td>
+                <td>
+                    <select name="user_pref_location" id="user_pref_location">
+                        <option value="library">Library</option>
+                        <option value="bookstore">Outside Bookstore</option>
+                        <option value="gym">Wellness Center</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">Listing ID: 1234567890</td>
+                <td><label for="user_time">Pick-up<br>Time:</label></td>
+                <td><input type="time" name="user_time" id="user_time"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <center><label for="description">Description</label></center>
+                </td>
+                <td><label for="suggestedPrice">Suggested Price:</label></td>
+                <td><p name="suggestedPrice" id="suggestedPrice">$10</p></td>
+            </tr>
+            <tr>
+                <td rowspan="3" colspan="2">
+                    <p name="description" id="description">Description: A description of the item that will be stored in the database</p>
+                </td>
+                <td></td>
+                <td>
+                    <h2><em>OR</em></h2>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="offer">Make an<br>Offer:</label></td>
+                <td><input type="number" name="offer" id="offer"></td>
+            </tr>
+            <tr>
+                <td><label for="message">Message: </label></td>
+                <td><input type="text" name="message" id="message"></td>
+            </tr>
+        </table>
         <div class="row">
-        <div class="col text-right">    
-        <td><img src = "{{path}}" width="100" height="100"></td>
-        <br>
-        <label for="listingId">Listing ID:</label>
-        <input type="number" name="listingId" id="listingId"> 
-        <br>   
-        <center><label for="description">Description</label></center>
-        <br>
-        <input type="text" name="description" id="description">
-        <br>
-        </div>
-        <div class="col">
-        <label for="title">Listing Title:</label>
-        <input name="title" id="title">
-        <br>
-        <label for="condition">Condition:</label>
-        <input type="text" name="condition" id="condition">
-        <br>
-        <label for="seller_pref_location">Seller's preferred location:</label>
-        <input type="text" name="seller_pref_location" id="seller_pref_location">
-        <br>
-        <h2><em>OR</em></h2>
-        <br>
-        <label for="user_pref_location">Your preferred location: </label>
-        <select name="user_pref_location" id="user_pref_location">
-            <option value="library">Library</option>
-            <option value="bookstore">Outside Bookstore</option>
-            <option value="gym">Wellness Center</option>
-        </select>
-        <br>
-        <label for="user_time">Pick-up Time: </label>
-        <input type="time" name="user_time" id="user_time">
-        <br>
-        <label for="suggestedPrice">Suggested Price:</label>
-        <input type="number" name="suggestedPrice" id="suggestedPrice">
-        <br>
-        <h2><em>OR</em></h2>
-            <label for="offer">Make an Offer: </label>
-            <input type="number" name="offer" id="offer">
-            <br>
-        <label for="message">Message: </label>
-        <input type="text" name="message" id="message">
-        <br>
-        </div>
-        </div>
-        <div class="row">
-            <div class="col">
-            </div>
             <div class="col">
                 <div class="btn-toolbar justify-content-between">
                     <div class="btn-group" role="group" aria-label="cancel">
                         <button type="button" class="btn btn-primary">Cancel</button>
                     </div>
                     <div class="btn-group" role="group" aria-label="contact">
-                        <button type="button" class="btn btn-primary" id="contactButton" data-toggle="modal" data-target="#lazy-registration">Contact</button>
+                        <button type="button" class="btn btn-primary" id="contactButton" data-toggle="modal"
+                            data-target="#lazy-registration">Contact</button>
                     </div>
                 </div>
             </div>
-    
-            <div class="col">
-            </div>
         </div>
-
-        <div class="modal" id="lazy-registration" role="form" aria-labelledby="lazy-registration-window" aria-hidden="true">
+        <div class="modal" id="lazy-registration" role="form" aria-labelledby="lazy-registration-window"
+            aria-hidden="true">
             <div class="modal-form" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -93,11 +119,11 @@
                         </div>
                     </div>
                 </div>
-            
-            </div>
 
+
+            </div>
         </div>
-        </form>
+    </form>
 
     <!--
     {% for listing in data %}
@@ -168,6 +194,6 @@
     </form>
     {% endfor %}
     -->
-    
+
 </div>
 {% endblock %}
