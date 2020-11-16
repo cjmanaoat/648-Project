@@ -107,7 +107,7 @@ def search():
             data = cursor.fetchall()
             for listing in data:
                 blob2Img(listing)
-        return render_template('search.html', data=data, searchItem=searchItem)
+        return render_template('search.html', data=data, searchItem=request.form['item'])
     return render_template('search.html')
 
 # register
