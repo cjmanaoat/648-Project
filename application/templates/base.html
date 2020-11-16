@@ -23,17 +23,17 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-    <!-- css files -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/navbar.css') }}">
+     <!-- css files -->
+     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/navbar.css') }}">
 
-    <!-- google reCaptcha  -->
+        <!-- google reCaptcha  -->
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 </head>
 
 <body>
     <!-- navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: midnightblue;">
+    <nav class="navbar navbar-expand-sm navbar-light" style="background-color: midnightblue;">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
             style="background-color: orange;">
@@ -44,9 +44,9 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
             <!-- dropdown list -->
-            <div class="dropdown mr-auto">
+            <div class="dropdown">
                 <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false" style="background-color: aliceblue;">
+                    aria-expanded="false" style="width:56px; height: 40px; background-color: aliceblue;">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -63,14 +63,15 @@
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="/aboutHome" style="color:white">
-                        <h2>About</h2>
+                        <h2 class="responsive-nav-links">About</h2>
                     </a>
                 </li>
             </ul>
             <!-- end about button -->
 
             <!-- search bar form-->
-            <form class="form-inline my-2 my-lg-0 mx-auto" method="post" action="/search" id="searchForm" onsubmit="return alphaNumericCheck('searchBar')">
+            <form class="form-inline my-2 my-lg-0 mx-auto" method="post" action="/search" id="searchForm" onsubmit="return alphaNumericCheck('searchBar')"
+                style="flex-wrap: nowrap;">
                 <!-- category dropdown for search -->
                 <div id=category-dropdown>
                     <select name="category-select" id="categorySelect">
@@ -97,27 +98,27 @@
             <!-- end search form -->
 
             <!-- side buttons -->
-            <ul class="navbar-nav">
+            <ul class="navbar-nav justify-content-end ">
                 <!-- home button -->
-                <li class="nav-item ml-2">
+                <li class="nav-item">
                     <a class="nav-link" href="/" style="color:white">
-                        <h3>SFSU Trade<br>Mart</h3>
+                        <h3 class="responsive-nav-links" style="white-space: nowrap;">SFSU Trade<br>Mart</h3>
                     </a>
                 </li>
                 <!-- end home button -->
                 <!-- Create listing button -->
-                <li class="nav-item ml-2">
+                <li class="nav-item">
                     <a class="nav-link" href="/createListing" style="color: white;">
-                        <h3>Create<br>Listing</h3>
+                        <h3 class="responsive-nav-links">Create<br>Listing</h3>
                     </a>
                 </li>
                 <!-- end create listing -->
                 <!-- sign in/register button -->
-                <li class="nav-item ml-2">
-                    <div class="dropdown mr-auto">
+                <li class="nav-item">
+                    <div class="dropdown">
                         <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <h3 style="color:white">Sign In/<br>Register</h3>
+                            aria-haspopup="true" aria-expanded="false" style="padding-left: 0px;">
+                            <h3 class="responsive-nav-links" style="color:white; white-space: nowrap;">Sign In/<br>Register</h3>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="/signIn">Sign In</a>
