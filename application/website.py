@@ -107,13 +107,8 @@ def search():
             data = cursor.fetchall()
             for listing in data:
                 blob2Img(listing)
-        return render_template('search.html', data=data, searchItem=searchItem)
+        return render_template('search.html', data=data, searchItem=request.form['item'])
     return render_template('search.html')
-    
-# home page
-@app.route("/captchatest")
-def captcha():
-    return render_template("captchaTest.html")
 
 # register
 @app.route("/register")
@@ -124,6 +119,11 @@ def register():
 @app.route("/signIn")
 def signIn():
     return render_template("signIn.html")
+
+# item page
+@app.route("/itempage")
+def itempage():
+    return render_template("itempage.html")
 
 # contact listing owner
 @app.route("/contact", methods=["POST", "GET"])
@@ -163,6 +163,7 @@ def listing():
 def blob2Img(listing):
     fileName = str(listing[3]) + ".jpg"
     path = "/home/dasfiter/CSC648/application/static/listing_images/"+fileName
+    # path = "static/listing_images/"+fileName
     #print(path)
     # size = sys.getsizeof(listing[11])
     # print(size)
@@ -177,8 +178,10 @@ def blob2Img(listing):
                 file.close()
             for size, name in sizes:
                 im = Image.open("/home/dasfiter/CSC648/application/static/listing_images/%s" % fileName)
+                # im = Image.open("static/listing_images/%s" % fileName)
                 im.thumbnail((im.width//size, im.height//size))
                 im.save("/home/dasfiter/CSC648/application/static/listing_images/thumbnail_%s_%s_size.jpg" % (fileName[:-4], name))
+                # im.save("static/listing_images/thumbnail_%s_%s_size.jpg" % (fileName[:-4], name))
         
 
 if __name__ == '__main__':
