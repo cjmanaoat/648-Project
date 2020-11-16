@@ -97,11 +97,6 @@ def search():
                 blob2Img(listing)
         return render_template('search.html', data=data, searchItem=searchItem)
     return render_template('search.html')
-    
-# home page
-@app.route("/captchatest")
-def captcha():
-    return render_template("captchaTest.html")
 
 # register
 @app.route("/register")
