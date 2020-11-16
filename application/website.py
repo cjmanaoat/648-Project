@@ -1,3 +1,4 @@
+import pathlib
 import re
 import subprocess
 import sys
@@ -41,6 +42,18 @@ def home():
 def aboutHome():
     #print("in main home")
     return render_template("/aboutHome/aboutHome.html")
+
+# class resource page
+@app.route("/classResource/")
+def classResource():
+    #print("in main home")
+    return render_template("/classResource.html")
+
+# dashboard page
+@app.route("/dashboard/")
+def dashboard():
+    #print("in main home")
+    return render_template("/dashboard.html")
 
 # about page per member
 @app.route("/aboutHome/<aboutName>")
@@ -149,23 +162,23 @@ def listing():
 
 def blob2Img(listing):
     fileName = str(listing[3]) + ".jpg"
-    path = "/home/student/Desktop/csc648-03-fa20-team07/application/static/listing_images/"+fileName
-    sizes = [(120,120), (720,720)]
+    path = "/home/dasfiter/CSC648/application/static/listing_images/"+fileName
     #print(path)
     # size = sys.getsizeof(listing[11])
     # print(size)
     #print(listing[2])
-    if listing[2]:  #checks if image exists
+    sizes = [(4, "quarter"), (2, "half")]
+    if listing[2]:  #checks if pulled image from DB isn't empty
+        test_path = pathlib.Path(path)
+        if not test_path.exists():
         #print("exists")
-        with open(path, "wb") as file:
-            file.write(listing[2])
-            file.close()
-
-        for size in sizes:
-            im = Image.open("/home/student/Desktop/csc648-03-fa20-team07/application/static/listing_images/%s" % fileName)
-            im.thumbnail(size)
-            first, second = size
-            im.save("/home/student/Desktop/csc648-03-fa20-team07/application/static/listing_images/thumbnail_%s_res_%d.jpg" % (fileName[:-4], first))
+            with open(path, "wb") as file:
+                file.write(listing[2])
+                file.close()
+            for size, name in sizes:
+                im = Image.open("/home/dasfiter/CSC648/application/static/listing_images/%s" % fileName)
+                im.thumbnail((im.width//size, im.height//size))
+                im.save("/home/dasfiter/CSC648/application/static/listing_images/thumbnail_%s_%s_size.jpg" % (fileName[:-4], name))
         
 
 if __name__ == '__main__':
