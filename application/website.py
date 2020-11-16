@@ -174,8 +174,8 @@ def listing():
                 order by list_date desc", listingId) #query to get data
         conn.commit()
         data = cursor.fetchall() # gets data from query
-        return render_template('listing.html', data=data) # load listing page
-    return render_template("listing.html") # load listing page
+        return render_template('itempage.html', data=data) # load listing page
+    return render_template("itempage.html") # load listing page
 
 # this function converts a blob to an image of type jpg
 def blob2Img(listing):
