@@ -7,7 +7,7 @@
 
 # Below is a list of items required. Missing items will causes points to be deducted from multiple milestone submissions.
 
-1. Server URL: ec2-54-183-187-39.us-west-1.compute.amazonaws.com
+1. Server URL: ec2-52-53-215-116.us-west-1.compute.amazonaws.com
 2. SSH username: ubuntu
 3. SSH password or key: uploaded to folder
     <br> If a ssh key is used please upload the key to the credentials folder.
@@ -22,7 +22,7 @@
     <br><strong>To connect to the Server:</strong>
     <br>1. Open up the terminal
     <br>2. Go into same directory that contains the ssh key file
-    <br>3. Use this command to ssh into the server (as root user): ssh -i "team7server.pem" ubuntu@ec2-54-183-187-39.us-west-1.compute.amazonaws.com
+    <br>3. Use this command to ssh into the server (as root user): ssh -i "team7server.pem" ubuntu@ec2-52-53-215-116.us-west-1.compute.amazonaws.com
 
     <br><strong>To connect to the database:</strong>
     <br>1. Open up MySQL Workbench
