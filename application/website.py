@@ -33,6 +33,11 @@ conn = mysql.connect()
 cursor = conn.cursor()
 # end sql config
 
+# route for favicon
+@app.route('/favicon/favicon.ico')
+def favicon():
+    return redirect(url_for('static', filename='favicon.ico'))
+
 # home page
 @app.route("/")
 def home():

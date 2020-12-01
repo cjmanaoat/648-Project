@@ -26,8 +26,12 @@
      <!-- css files -->
      <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/navbar.css') }}">
 
-        <!-- google reCaptcha  -->
+    <!-- google reCaptcha  -->
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
 
 </head>
 
@@ -43,69 +47,74 @@
         <!-- start of expanded navbar contents -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-            <!-- dropdown list -->
-            <div class="dropdown">
-                <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false" style="width:56px; height: 40px; background-color: aliceblue;">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="/classResource">Class Resouces</a>
-                    <a class="dropdown-item" href="/dashboard">Dashboard</a>
-                    <a class="dropdown-item" href="/itempage">Item Page</a>
-                    <a class="dropdown-item" href="/contact">Contact</a>
-                    <a class="dropdown-item" href="/createListing">Create Listing</a>
-                </div>
-            </div>
-            <!-- end dropdown -->
-
-            <!-- about button -->
+            <!-- home button -->
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/aboutHome" style="color:white">
-                        <h2 class="responsive-nav-links">About</h2>
+                    <a class="nav-link" href="/" target="_blank" style="color:white">
+                        <h3 class="responsive-nav-links" style="white-space: nowrap;">SFSU Trade<br>Mart</h3>
                     </a>
+            
                 </li>
             </ul>
             <!-- end about button -->
+            
+            <!-- container for search bar and class title -->
+            <div class="container mx-auto">
+               <div class="row">
+                   <!-- class title -->
+                    <div class="row justify-content-center" style="color: aliceblue; width: 100%;">
+                        <center>
+                            Software Engineering class SFSU
+                            Fall 2020
+                            Section 3
+                            Team 7
+                        </center>
+                    </div>
+                    <!-- end class title -->
 
-            <!-- search bar form-->
-            <form class="form-inline my-2 my-lg-0 mx-auto" method="post" action="/search" id="searchForm" onsubmit="return alphaNumericCheck('searchBar')"
-                style="flex-wrap: nowrap;">
-                <!-- category dropdown for search -->
-                <div id=category-dropdown>
-                    <select name="category-select" id="categorySelect">
-                        <option selected value="all">All</option>
-                        <option value="books">Books</option>
-                        <option value="editing">Editing</option>
-                        <option value="electronics">Electronics</option>
-                        <option value="furniture">Furniture</option>
-                        <option value="tutoring">Tutoring</option>
-                    </select>
+                    <!-- search form -->
+                    <div class="row mx-auto">
+                        <form class="form-inline my-2 my-lg-0 mx-auto" method="post" action="/search" id="searchForm"
+                            onsubmit="return alphaNumericCheck('searchBar')" style="flex-wrap: nowrap;">
+                            <!-- category dropdown for search -->
+                            <div id="category-dropdown">
+                                <select name="category-select" id="categorySelect">
+                                    <option selected="" value="all">All</option>
+                                    <option value="books">Books</option>
+                                    <option value="editing">Editing</option>
+                                    <option value="electronics">Electronics</option>
+                                    <option value="furniture">Furniture</option>
+                                    <option value="tutoring">Tutoring</option>
+                                </select>
+                            </div>
+                            <!-- end category drop down -->
+                            <!-- input form -->
+                            <input class="form-control mr-sm-2" type="search" value="" placeholder="Search" aria-label="Search"
+                                name="item" id="searchBar" style="width: 40vw;" maxlength="40">
+                            <!-- end input form -->
+                            <!-- submit button -->
+                            <button id="searchButton" type="submit" class="btn my-2 my-sm-0" style="background-color: orange;">
+                                <img src="../static/bootstrapIcons/search.svg" alt="searchIcon" title="searchIcon" width="25"
+                                    height="25">
+                            </button>
+                            <!-- end submit -->
+                        </form>
+                        <!-- end search form -->
+                    </div>
                 </div>
-                <!-- end category drop down -->
-                <!-- input form -->
-                <input class="form-control mr-sm-2" type="search" value='{{searchItem}}' placeholder="Search" aria-label="Search" name="item"
-                    id="searchBar" style="width: 40vw;" maxlength="40">
-                <!-- end input form -->
-                <!-- submit button -->
-                <button id="searchButton" type="submit" class="btn my-2 my-sm-0" style="background-color: orange;">
-                    <img src="../static/bootstrapIcons/search.svg" alt="searchIcon" width="25" height="25"
-                        title="searchIcon">
-                </button>
-                <!-- end submit -->
-            </form>
-            <!-- end search form -->
+            </div>
+
 
             <!-- side buttons -->
             <ul class="navbar-nav justify-content-end ">
-                <!-- home button -->
-                <li class="nav-item">
-                    <a class="nav-link" href="/" style="color:white">
-                        <h3 class="responsive-nav-links" style="white-space: nowrap;">SFSU Trade<br>Mart</h3>
+                <!-- about button -->
+                <li class="nav-item ">
+                    <a class="nav-link" href="/aboutHome" target="_blank" style="color:white">
+                        <h2 class="responsive-nav-links">About</h2>
                     </a>
                 </li>
-                <!-- end home button -->
+                <!-- end button -->
+
                 <!-- Create listing button -->
                 <li class="nav-item">
                     <a class="nav-link" href="/createListing" style="color: white;">
@@ -113,6 +122,7 @@
                     </a>
                 </li>
                 <!-- end create listing -->
+
                 <!-- sign in/register button -->
                 <li class="nav-item">
                     <div class="dropdown">
@@ -121,17 +131,35 @@
                             <h3 class="responsive-nav-links" style="color:white; white-space: nowrap;">Sign In/<br>Register</h3>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="/signIn">Sign In</a>
-                            <a class="dropdown-item" href="/register">Register</a>
+                            <a class="dropdown-item" href="/signIn" target="_blank">Sign In</a>
+                            <a class="dropdown-item" href="/register" target="_blank">Register</a>
                         </div>
                     </div>
                     <!-- end dropdown -->
                 </li>
                 <!-- end sign in/register button -->
+
+                <!-- drop down -->
+                <li style="flex-direction: column;" class="nav-item d-flex justify-content-center">
+                    <div class="dropdown">
+                        <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false" style="width:56px; height: 40px; background-color: aliceblue;">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <!-- <a class="dropdown-item" href="/classResource">Class Resouces</a>
+                            <a class="dropdown-item" href="/dashboard">Dashboard</a>
+                            <a class="dropdown-item" href="/itempage">Item Page</a>
+                            <a class="dropdown-item" href="/contact">Contact</a>
+                            <a class="dropdown-item" href="/createListing">Create Listing</a> -->
+                        </div>
+                    </div>
+                </li>
+                <!-- end dropdown -->
             </ul>
             <!-- end side buttons -->
         </div>
-        <!-- end of expanded navbar contents -->
+        <!-- end side buttons -->
     </nav>
     <!-- end navbar -->
 

@@ -70,7 +70,7 @@
                 <label for="emailAddress">* Email address</label> <br>
                 <input type="text" id="emailAddress" name="emailAddress" onblur="emailCheck()" onfocus="emailCheck()"
                     required>
-                <label for="emailAddress" id="emailError"></label>
+                <label for="emailAddress" id="emailError" style="color: red;"></label>
                 <br>
                 <label class="text-muted" for="emailAddress">Only accepts SFSU email</label> <br>
             </div>
@@ -102,7 +102,9 @@
             <div class="col">
                 <div class="form-group form-check">
                     <input type="checkbox" class="form-check-input" id="agreeBox" required>
-                    <label class="form-check-label" for="agreeBox">I accept the Terms of Service</label>
+                    <label class="form-check-label" for="agreeBox">
+                        <a href="#" style="text-decoration: underline;">I accept the Terms of Service</a>
+                    </label>
                 </div>
             </div>
         </div>
