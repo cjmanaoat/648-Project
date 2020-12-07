@@ -162,7 +162,7 @@ def listing():
 
 def blob2Img(listing):
     fileName = str(listing[3]) + ".jpg"
-    path = "/home/dasfiter/CSC648/application/static/listing_images/"+fileName
+    path = "/home/student/Desktop/csc648-03-fa20-team07/application/static/listing_images/"+fileName
     # path = "static/listing_images/"+fileName
     #print(path)
     # size = sys.getsizeof(listing[11])
@@ -177,10 +177,10 @@ def blob2Img(listing):
                 file.write(listing[2])
                 file.close()
             for size, name in sizes:
-                im = Image.open("/home/dasfiter/CSC648/application/static/listing_images/%s" % fileName)
+                im = Image.open("/home/student/Desktop/csc648-03-fa20-team07/application/static/listing_images/%s" % fileName)
                 # im = Image.open("static/listing_images/%s" % fileName)
                 im.thumbnail((im.width//size, im.height//size))
-                im.save("/home/dasfiter/CSC648/application/static/listing_images/thumbnail_%s_%s_size.jpg" % (fileName[:-4], name))
+                im.save("/home/student/Desktop/csc648-03-fa20-team07/application/static/listing_images/thumbnail_%s_%s_size.jpg" % (fileName[:-4], name))
                 # im.save("static/listing_images/thumbnail_%s_%s_size.jpg" % (fileName[:-4], name))
         
 

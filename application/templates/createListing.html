@@ -49,7 +49,7 @@
         <!-- listing condition -->
         <div class="row">
             <div class="col text-right">
-                <label for="condition">* Rating (condition)</label>
+                <label for="condition">* Rating</label>
             </div>
             <div class="col">
                 <select name="condition" id="condition" required>
@@ -117,7 +117,7 @@
                         <button type="button" class="btn btn-primary">Cancel</button>
                     </div>
                     <div class="btn-group" role="group" aria-label="contact">
-                        <button type="button" class="btn btn-primary" id="submitButton" data-toggle="modal" data-target="#lazy-registration">Create Listing</button>
+                        <button type="button" class="btn btn-primary" id="submitButton" data-toggle="modal" data-target="#lazy-registration">Create Listing**</button>
                     </div>
                 </div>
             </div>
@@ -126,26 +126,33 @@
             </div>
         </div>
 
-        <div class="modal" id="lazy-registration" role="form" aria-labelledby="lazy-registration-window" aria-hidden="true">
-            <div class="modal-form" role="document">
+        <div class="row">
+            <div class="col">
+                <p><center>**It will take up to 24 horus to approve listing</center></p>
+            </div>
+        </div>
+
+        <div class="modal" id="lazy-registration" tabindex="-1" role="form" aria-labelledby="lazy-registration-window" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1>You must have an account to create a listing</h1>
+                        <h1><center>You must have an account to create a listing</center></h1>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <h2>LOG IN</h2>
-                        <label for="username">Username: </label>
-                        <input type="text" name="username" id="username">
+                        <center><label for="username">Username: </label>
+                        <input type="text" name="username" id="username"></center>
                         <br>
-                        <label for="password">Password: </label>
-                        <input type="password" name="password" id="password">
-                        <br><br>
+                        <center><label for="password">Password: </label>
+                        <input type="password" name="password" id="password"></center>
+                        <center><a href="" class="nav-link" id="forgotPassword">Forgot Password</a></center>
+                        <br>
                         <h2>OR</h2>
                         <div class="nav-item">
-                            <a href="/register" class="nav-link" id="registerButton">Create an Account</a>
+                            <center><a href="/register" class="nav-link" id="registerButton">Create an Account</a></center>
                         </div>
                     </div>
                 </div>
