@@ -19,11 +19,43 @@
 </head>
 <!-- end page title -->
 
+
+<!-- this is a popup to show the status of account creation (success) -->
+<!-- {{popUp}} -->
+{% if popUp == "True" %}
+<script>
+  $(window).on('load', function () {
+    $('#myModal').modal('show');
+  });
+</script>
+
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <center>
+          {{message}}
+        </center>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary mx-auto" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+<!-- end popup -->
+
+
+
+
+
 <!-- class title -->
 <link rel="shortcut icon" href="favicon/favicon.ico">
-<div class="" style="background-color: rgba(0,0,255,.1); width: 100vw;">
+<div class="" style="background-color: rgba(0,0,255,.1);">
   <h1>
-    <center> Welcome to SFSU Trademart
+    <center>
+      Welcome to SFSU Trademart
     </center>
   </h1>
 </div>
@@ -32,9 +64,11 @@
 <!-- listing contents -->
 <div class="container" style="border-style: none; height: 100vh; border-top: 0;">
   <!-- title -->
-  <div class="row justify-content-md-center">
-    <div class="column">
-      <a style="font-size: 50px; font-weight: bold;">New Listings</a>
+  <div class="row justify-content-md-center justify-content-center">
+    <div class="column"> 
+      <a style="font-size: 50px; font-weight: bold;">
+          New Listings
+      </a>
     </div>
   </div>
   <!-- end title -->

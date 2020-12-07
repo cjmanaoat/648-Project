@@ -10,7 +10,7 @@
   font-size: 1.5vw;
 }
 
-@media screen and (max-width: 574px) {
+@media screen and (max-width: 575px) {
   .responsive-nav-links {
     font-size: 1.5rem;
   }

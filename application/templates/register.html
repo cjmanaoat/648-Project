@@ -31,7 +31,33 @@
         <h1>Register Account</h1>
     </center>
 
-    <form name="registrationForm" href="#" onsubmit="captchaCheck()">
+    <!-- this is a popup to show the status of account creation (error or success) -->
+    <!-- {{popUp}} -->
+    {% if popUp == "True" %}
+        <script>
+        $(window).on('load',function(){
+            $('#myModal').modal('show');        
+        });
+        </script>
+
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <center>
+                            {{message}}
+                        </center>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary mx-auto" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <!-- end popup -->
+
+    <form name="registrationForm" href="/register" method="POST" >
         <center>
             <p>* = Required</p>
         </center>
@@ -40,7 +66,7 @@
         <div class="row">
             <div class="col">
                 <label for="firstName">* First Name</label> <br>
-                <input type="text" id="firstName" name="firstName" required>
+                <input type="text" id="firstName" name="firstName" maxlength="45" required>
             </div>
         </div>
         <!-- end first name -->
@@ -49,7 +75,7 @@
         <div class="row">
             <div class="col">
                 <label for="lastName">* Last Name</label> <br>
-                <input type="text" id="lastName" name="lastName" required>
+                <input type="text" id="lastName" name="lastName" maxlength="45" required>
             </div>
         </div>
         <!-- end last name -->
@@ -58,7 +84,7 @@
         <div class="row">
             <div class="col">
                 <label for="userName">* Username</label> <br>
-                <input type="text" id="userName" name="userName" required>
+                <input type="text" id="userName" name="userName" maxlength="45" required>
                 <br> <br> <br>
             </div>
         </div>
@@ -68,8 +94,7 @@
         <div class="row">
             <div class="col">
                 <label for="emailAddress">* Email address</label> <br>
-                <input type="text" id="emailAddress" name="emailAddress" onblur="emailCheck()" onfocus="emailCheck()"
-                    required>
+                <input type="text" id="emailAddress" name="emailAddress" onblur="emailCheck()" onfocus="emailCheck()" maxlength="45" required>
                 <label for="emailAddress" id="emailError" style="color: red;"></label>
                 <br>
                 <label class="text-muted" for="emailAddress">Only accepts SFSU email</label> <br>
@@ -81,7 +106,7 @@
         <div class="row">
             <div class="col">
                 <label for="passInit">* Enter Password</label> <br>
-                <input type="password" id="passInit" name="passInit" required>
+                <input type="password" id="passInit" name="passInit" maxlength="45" required>
             </div>
         </div>
         <!-- end create password -->
@@ -90,8 +115,8 @@
         <div class="row">
             <div class="col">
                 <label for="passConfirm">* Confirm Password</label> <br>
-                <input type="password" id="passConfirm" name="passConfirm" onblur="passVerify()" required>
-                <label for="passConfirm" id="passError" onblur="passVerify()"></label>
+                <input type="password" id="passConfirm" name="passConfirm" onblur="passVerify()" maxlength="45" required>
+                <label for="passConfirm" id="passError" style="color:red" onblur="passVerify()"></label>
                 <br> <br>
             </div>
         </div>
