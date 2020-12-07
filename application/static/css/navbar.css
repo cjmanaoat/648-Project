@@ -5,3 +5,13 @@
 #category-dropdown select:focus {
   height: 40px;
 }
+
+.responsive-nav-links {
+  font-size: 1.5vw;
+}
+
+@media screen and (max-width: 574px) {
+  .responsive-nav-links {
+    font-size: 1.5rem;
+  }
+}

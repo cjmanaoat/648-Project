@@ -1,5 +1,31 @@
+<!-- 
+    register.html
+    Description:
+    This page is where a user can make an account for the website.
+
+    Contents:
+    This page contains a form where a user can input their information necessary when creating a profile
+        Fields used:
+        -First and last name
+        -User name
+        -Email (verified that it is a SFSU account)
+        -Password (verified that it matches after confirming password)
+        -Terms agreement
+        -Captcha verification
+ -->
+ <!-- navbar -->
 {% extends "base.html" %}
+<!-- end navbar -->
+
+<!-- contents to be placed in -->
 {% block content %}
+<!-- page title -->
+<head>
+    <title>Register</title>
+</head>
+<!-- end page title -->
+
+<!-- form containter -->
 <div class="container">
     <center>
         <h1>Register Account</h1>
@@ -86,7 +112,11 @@
         <div class="row">
             <div class="col">
             </div>
-
+<!-- page title -->
+<head>
+    <title>About Chandler</title>
+</head>
+<!-- end pag
             <div class="col">
                 <center>
                     <div class="g-recaptcha" data-sitekey="6LdFBdoZAAAAAFns5dEaiL5uZ9iVWuy5nWrqJA4g" data-callback="captchaCallback">
@@ -114,13 +144,14 @@
                     </div>
                 </div>
             </div>
-
+            
             <div class="col">
             </div>
         </div>
         <!-- end cancel/submit button -->
     </form>
 </div>
-
+<!-- end form container -->
 
 {% endblock %}
+<!-- end contents -->

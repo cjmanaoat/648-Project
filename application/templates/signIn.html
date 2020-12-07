@@ -1,9 +1,31 @@
+<!-- 
+    signIn.html
+    Description:
+    This page is where a user can sign into their account.
+
+    Contents: A form is provided for the user to input their login credentials to the website. There is an option to create an account and 
+    a link which will assist a user if they forgot their password. User email is verified to make sure it is of the correct form.
+ -->
+
+<!-- navbar -->
 {% extends "base.html" %}
+<!-- end navbar -->
+
+<!-- contents to be placed in -->
 {% block content %}
+<!-- page title -->
+<head>
+    <title>Sign In</title>
+</head>
+<!-- end page title -->
+
+<!-- page contents -->
 <div class="container" style="height: 80vh;">
+    <!-- Form title -->
     <center>
         <h1>Sign In</h1>
     </center>
+    <!-- end form title -->
 
     <div class="d-flex justify-content-center align-items-center" style="height:inherit;">
         <div class="p-2" style="height:max-content; width:50%">
@@ -41,6 +63,7 @@
                 </div>
                 <!-- end cancel/submit button -->
 
+                <!-- forgot password and register button -->
                 <div class="d-flex justify-content-between" style="width: 100%;">
                     <div class="p-2">
                         <a href="">
@@ -53,11 +76,13 @@
                         </a>
                     </div>
                 </div>
+                <!-- end forgot password and register -->
             </form>
             <!-- end form -->
         </div>
     </div>
 </div>
-
+<!-- end page contents -->
 
 {% endblock %}
+<!-- end contents -->

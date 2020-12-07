@@ -1,5 +1,24 @@
+<!-- 
+    aboutHome.html
+    Description:
+    This is the main home page which a user can click on a button to go to a team member's about page
+
+    Contents:
+    A button to go to each about page
+ -->
+
+ <!-- navbar -->
 {% extends "base.html" %}
+<!-- end navbar -->
+
+<!-- contents to be placed in -->
 {% block content %}
+<!-- page title -->
+<head>
+    <title>About Us</title>
+</head>
+<!-- end page title -->
+
 <!-- about info -->
 <div class="container-fluid" style="background-color:antiquewhite; height: 100vh">
     <!-- title -->
@@ -21,6 +40,7 @@
         </div>
     </div>
 
+    <!-- all links to individual abouts -->
     <div class="row">
         <!--name your html in format aboutName.html
       fill out about text also -->
@@ -33,5 +53,9 @@
             <a class="btn btn-primary" href="aboutJonathan.html" role="button">About Jonathan</a>
         </div>
     </div>
+    <!-- end user links -->
 </div>
+<!-- end about info -->
+
 {% endblock %}
+<!-- end contents -->
