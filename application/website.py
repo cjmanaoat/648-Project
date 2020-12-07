@@ -20,6 +20,7 @@ import random
 from PIL import Image
 from flask import Flask, redirect, url_for, render_template, request, session
 from flaskext.mysql import MySQL
+from db_tools.hashing_test import hash_password, verify_password
 # end imports
 
 app = Flask(__name__)
@@ -277,9 +278,11 @@ def register():
         # print(userId)
 
         # at this point all user data is verified (no repeating username or email address)
+        hashedPass = hash_password(userId, passwordConfirm)
+        #print(hashedPass)
         accCreated = cursor.execute('INSERT INTO Trademart.User\
             (user_id, user_email, fname, lname, user_name, user_pass, reg_status)\
-            VALUES(%s, %s, %s, %s, %s, %s, %s) ', (userId, email, firstname, lastname, username, passwordConfirm, '0'))
+            VALUES(%s, %s, %s, %s, %s, %s, %s) ', (userId, email, firstname, lastname, username, hashedPass, '0'))
         conn.commit()
         if accCreated:
             message = 'Account successfully created!'
@@ -298,22 +301,37 @@ def signIn():
     and 'password' in request.form): # checks if there is an email abd password provided 
         loginEmail = request.form['loginEmail'] # gets email
         password = request.form['password'] # gets password
-        # print('email: ' + loginEmail + ' password: ' + password)
-        cursor.execute('SELECT *\
+        print('email: ' + loginEmail + ' password: ' + password)
+        
+        cursor.execute('SELECT user_pass\
                         FROM Trademart.User\
                         WHERE user_email= % s\
-                            AND user_pass= % s\
-                            AND reg_status= 1', (loginEmail, password)) # query to get account info
+                            AND reg_status=1 ', loginEmail) # query to get account info
         conn.commit() # commits query
-        account=cursor.fetchone()  # grabs query result
-        # print(account)
-        
-        if account: # if the account exists
-            # print('account found')
-            session['loggedIn'] = True # variable for user logged in
-            session['id'] = account[0] # user id linked to session
-            session['username'] = account[5]  # username for session
-            return redirect(url_for('home')) # redirects home
+        hashPassResult=cursor.fetchone()  # grabs query result
+        # print(hashPassResult)
+        if hashPassResult: # ensures data was returned from db
+            hashedPass = hashPassResult[0] # gets pass from db query value
+            # print(hashedPass)
+            passVerify = verify_password(password, hashedPass) # verifies password
+            if passVerify: # if the password is correct
+                cursor.execute('SELECT *\
+                            FROM Trademart.User\
+                            WHERE user_email= % s\
+                                AND reg_status= 1', loginEmail) # query to get account info
+                conn.commit() # commits query
+                account=cursor.fetchone()  # grabs query result
+                # print(account)
+            
+                if account: # if the account exists
+                    # print('account found')
+                    session['loggedIn'] = True # variable for user logged in
+                    session['id'] = account[0] # user id linked to session
+                    session['username'] = account[5]  # username for session
+                    return redirect(url_for('home'))  # redirects home
+            else: # passwords dont match
+                message = 'Incorrect email/password!'
+                return render_template('signIn.html', message=message, popUp='True') # loads sign in page with error
         else: # one field empty or incorrect email and/or password
             message = 'Incorrect email/password!'
             return render_template('signIn.html', message=message, popUp='True') # loads sign in page with error
