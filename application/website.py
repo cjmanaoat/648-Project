@@ -21,6 +21,7 @@ from PIL import Image
 from flask import Flask, redirect, url_for, render_template, request, session
 from flaskext.mysql import MySQL
 from db_tools.hashing_test import hash_password, verify_password
+# from db_tools.encrypt_tools import encrypt_password, get_plain_password
 # end imports
 
 app = Flask(__name__)
@@ -31,6 +32,7 @@ app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'trademartadmin'
 app.config['MYSQL_DATABASE_DB'] = 'Trademart'
 app.config['MYSQL_DATABASE_HOST'] = 'trademart.c9x2rihy8ycd.us-west-1.rds.amazonaws.com'
+# app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 
 mysql = MySQL()
 mysql.init_app(app)
@@ -278,8 +280,9 @@ def register():
         # print(userId)
 
         # at this point all user data is verified (no repeating username or email address)
-        hashedPass = hash_password(userId, passwordConfirm)
-        #print(hashedPass)
+        preHashPass = passwordConfirm+'CSC675'
+        hashedPass = hash_password(userId, preHashPass)
+        # print(hashedPass)
         accCreated = cursor.execute('INSERT INTO Trademart.User\
             (user_id, user_email, fname, lname, user_name, user_pass, reg_status)\
             VALUES(%s, %s, %s, %s, %s, %s, %s) ', (userId, email, firstname, lastname, username, hashedPass, '0'))
@@ -301,7 +304,8 @@ def signIn():
     and 'password' in request.form): # checks if there is an email abd password provided 
         loginEmail = request.form['loginEmail'] # gets email
         password = request.form['password'] # gets password
-        print('email: ' + loginEmail + ' password: ' + password)
+        
+        # print('email: ' + loginEmail + ' password: ' + password)
         
         cursor.execute('SELECT user_pass\
                         FROM Trademart.User\
@@ -313,7 +317,8 @@ def signIn():
         if hashPassResult: # ensures data was returned from db
             hashedPass = hashPassResult[0] # gets pass from db query value
             # print(hashedPass)
-            passVerify = verify_password(password, hashedPass) # verifies password
+            prePassVerify = password+'CSC675'
+            passVerify = verify_password(prePassVerify, hashedPass) # verifies password
             if passVerify: # if the password is correct
                 cursor.execute('SELECT *\
                             FROM Trademart.User\
@@ -330,11 +335,9 @@ def signIn():
                     session['username'] = account[5]  # username for session
                     return redirect(url_for('home'))  # redirects home
             else: # passwords dont match
-                message = 'Incorrect email/password!'
-                return render_template('signIn.html', message=message, popUp='True') # loads sign in page with error
+                return render_template('signIn.html', message='Incorrect email/password!', popUp='True') # loads sign in page with error
         else: # one field empty or incorrect email and/or password
-            message = 'Incorrect email/password!'
-            return render_template('signIn.html', message=message, popUp='True') # loads sign in page with error
+            return render_template('signIn.html', message='Incorrect email/password!', popUp='True') # loads sign in page with error
     return render_template('signIn.html') # loads sign in page
 
 # log out route
