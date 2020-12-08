@@ -45,6 +45,7 @@ cursor = conn.cursor()
 
 # route for favicon
 @app.route('/favicon/favicon.ico')
+@app.route('/favicon.ico')
 def favicon():
     return redirect(url_for('static', filename='favicon.ico'))
 
@@ -151,34 +152,94 @@ def search():
         # print('filter: ', filterCategory)
         if filterCategory == 'all':  #case where only item provided, will search for item in any category
             # print('only item')
-            cursor.execute('SELECT list_title, suggest_price, image, list_id\
-                FROM Listing L\
-                WHERE approval_status=1 \
-                    AND L.list_title LIKE %s\
-                    OR L.list_category LIKE %s\
-                    OR L.list_desc LIKE %s', \
-                    (('%' + searchItem + '%'), ('%' + searchItem + '%'), ('%' + searchItem + '%')))  # query to grab data
-            # print('query done item only')
+            if 'filterCategory' in request.form and request.form['filterCategory'] == "Prices Low to High":
+                # print("ascend")
+                cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                    FROM Listing L\
+                    WHERE approval_status=1 \
+                        AND L.list_title LIKE %s\
+                        OR L.list_category LIKE %s\
+                        OR L.list_desc LIKE % s\
+                        ORDER BY suggest_price asc', \
+                        (('%' + searchItem + '%'), ('%' + searchItem + '%'), ('%' + searchItem + '%')))  # query to grab data
+            elif 'filterCategory' in request.form and request.form['filterCategory'] == "Prices High to low":
+                # print("descend")
+                cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                            FROM Listing L\
+                            WHERE approval_status=1 \
+                            AND L.list_title LIKE %s\
+                            OR L.list_category LIKE %s\
+                            OR L.list_desc LIKE % s\
+                            ORDER BY suggest_price desc', \
+                            (('%' + searchItem + '%'), ('%' + searchItem + '%'), ('%' + searchItem + '%')))  # query to grab data
+            else:
+                cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                    FROM Listing L\
+                    WHERE approval_status=1 \
+                        AND L.list_title LIKE %s\
+                        OR L.list_category LIKE %s\
+                        OR L.list_desc LIKE %s', \
+                        (('%' + searchItem + '%'), ('%' + searchItem + '%'), ('%' + searchItem + '%')))  # query to grab data
+                # print('query done item only')
         elif searchItem == '' or not searchItem:        #empty search item but category selected
             # print('category only')
-            cursor.execute('SELECT list_title, suggest_price, image, list_id\
-                        FROM Listing L\
-                        WHERE approval_status=1\
-                        AND L.list_category LIKE %s\
-                        OR L.list_title LIKE %s\
-                        OR L.list_desc LIKE %s', \
-                        ((filterCategory, filterCategory, filterCategory)))  # query to grab data
-            # print('query done category only')
-        else:  #category and item selected
-            # print('category and item')
-            cursor.execute('SELECT list_title, suggest_price, image, list_id\
+            if 'filterCategory' in request.form and request.form['filterCategory'] == "Prices Low to High":
+                # print("asc category")
+                cursor.execute('SELECT list_title, suggest_price, image, list_id\
                             FROM Listing L\
                             WHERE approval_status=1\
-                            AND L.list_category=%s\
-                            AND L.list_title LIKE %s\
+                            AND L.list_category LIKE %s\
+                            OR L.list_title LIKE %s\
+                            OR L.list_desc LIKE % s\
+                            ORDER BY suggest_price asc', \
+                            ((filterCategory, filterCategory, filterCategory)))  # query to grab data
+            elif 'filterCategory' in request.form and request.form['filterCategory'] == "Prices High to low":
+                # print('desc category')
+                cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                            FROM Listing L\
+                            WHERE approval_status=1\
+                            AND L.list_category LIKE %s\
+                            OR L.list_title LIKE %s\
+                            OR L.list_desc LIKE % s\
+                            ORDER BY suggest_price desc', \
+                            ((filterCategory, filterCategory, filterCategory)))  # query to grab data
+            else:
+                cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                            FROM Listing L\
+                            WHERE approval_status=1\
+                            AND L.list_category LIKE %s\
+                            OR L.list_title LIKE %s\
                             OR L.list_desc LIKE %s', \
-                            (filterCategory, ('%' + searchItem + '%'), ('%' + searchItem + '%')))  # query to grab data
-            # print('query done category and item')
+                            ((filterCategory, filterCategory, filterCategory)))  # query to grab data
+                # print('query done category only')
+        else:  #category and item selected
+            # print('category and item')
+            if 'filterCategory' in request.form and request.form['filterCategory'] == "Prices Low to High":
+                cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                                FROM Listing L\
+                                WHERE approval_status=1\
+                                AND L.list_category=%s\
+                                AND L.scdesc LIKE % s\
+                                ORDER BY suggest_price asc', \
+                                (filterCategory, ('%' + searchItem + '%'), ('%' + searchItem + '%')))  # query to grab data
+            elif 'filterCategory' in request.form and request.form['filterCategory'] == "Prices High to low":
+                cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                                FROM Listing L\
+                                WHERE approval_status=1\
+                                AND L.list_category=%s\
+                                AND L.list_title LIKE %s\
+                                OR L.list_desc LIKE % s\
+                                ORDER By suggest_price de', \
+                                (filterCategory, ('%' + searchItem + '%'), ('%' + searchItem + '%')))  # query to grab data
+            else:
+                cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                                FROM Listing L\
+                                WHERE approval_status=1\
+                                AND L.list_category=%s\
+                                AND L.list_title LIKE %s\
+                                OR L.list_desc LIKE %s', \
+                                (filterCategory, ('%' + searchItem + '%'), ('%' + searchItem + '%')))  # query to grab data
+                # print('query done category and item')
         conn.commit()
         data = cursor.fetchall() # gets all data from query
         # creates images for each listing
