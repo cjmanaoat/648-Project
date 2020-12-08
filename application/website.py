@@ -151,7 +151,7 @@ def search():
         # print('filter: ', filterCategory)
         if filterCategory == 'all':  #case where only item provided, will search for item in any category
             # print('only item')
-            cursor.execute('SELECT list_title, suggest_price, image, list_id\
+            cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, `condition`\
                 FROM Listing L\
                 WHERE approval_status=1 \
                     AND L.list_title LIKE %s\
@@ -161,7 +161,7 @@ def search():
             # print('query done item only')
         elif searchItem == '' or not searchItem:        #empty search item but category selected
             # print('category only')
-            cursor.execute('SELECT list_title, suggest_price, image, list_id\
+            cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, `condition`\
                         FROM Listing L\
                         WHERE approval_status=1\
                         AND L.list_category LIKE %s\
@@ -171,7 +171,7 @@ def search():
             # print('query done category only')
         else:  #category and item selected
             # print('category and item')
-            cursor.execute('SELECT list_title, suggest_price, image, list_id\
+            cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, `condition`\
                             FROM Listing L\
                             WHERE approval_status=1\
                             AND L.list_category=%s\
@@ -186,7 +186,7 @@ def search():
             blob2Img(listing)
         if len(data) == 0:  # no results from query. lists all items
             #print('no results')
-            cursor.execute('SELECT list_title, suggest_price, image, list_id FROM Trademart.Listing WHERE approval_status=1') #query to grab data
+            cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, `condition` FROM Trademart.Listing WHERE approval_status=1') #query to grab data
             conn.commit()
             data = cursor.fetchall() # gets all data from query
             # creates image for each listing
