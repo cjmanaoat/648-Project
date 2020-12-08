@@ -1,5 +1,6 @@
 import argparse
 import mysql.connector
+import base64
 from mysql.connector import Error
 
 from cryptography.fernet import Fernet
@@ -15,7 +16,10 @@ cipher_suite = Fernet(key)
 # takes in a plain text password and converts it to ciphered text
 # this will be stored in the database
 def encrypt_password(user_id, password):
-    ciphered_password = cipher_suite.encrypt(bytes(password, encoding = "ascii"))
+    print('key on register v')
+    print(cipher_suite)
+    cipherBytes = bytes(password, 'utf-8')
+    ciphered_password = cipher_suite.encrypt(cipherBytes)
 
     query = "UPDATE User " \
             "SET user_pass = %s " \
@@ -42,8 +46,12 @@ def encrypt_password(user_id, password):
 # takes an encrypted password and converts it into a byte literal, then
 # decodes it into plain text
 def get_plain_password(ciphered_password):
-    decrypted_password = cipher_suite.decrypt(ciphered_password)
-    return decrypted_password.decode()
+    print('key on decrypt')
+    print(cipher_suite)
+    print(ciphered_password)
+    decodedPass2 = cipher_suite.decrypt(ciphered_password)
+    decodedPass = decodedPass2.decode('utf-8')
+    return decodedPass2
 
 def main():
     e = encrypt_password(224602238, "password")
