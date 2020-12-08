@@ -20,7 +20,7 @@ import random
 from PIL import Image
 from flask import Flask, redirect, url_for, render_template, request, session
 from flaskext.mysql import MySQL
-from db_tools.hashing_test import hash_password, verify_password
+from db_tools.hashing_tools import *
 # from db_tools.encrypt_tools import encrypt_password, get_plain_password
 # end imports
 
@@ -223,11 +223,11 @@ def register():
                 message = 'Please fill out all required fields'
                 return render_template('register.html', popUp='True', message=message)
         
-        # print('firstname: ' + firstname
-        #     + ' lastname: ' + lastname
-        #     + ' username: ' + username
-        #     + ' email: ' + email
-        #     + ' pass: ' + passwordConfirm)
+        print('firstname: ' + firstname
+            + ' lastname: ' + lastname
+            + ' username: ' + username
+            + ' email: ' + email
+            + ' pass: ' + passwordConfirm)
 
         # username verification
         cursor.execute('SELECT user_name\
@@ -241,17 +241,23 @@ def register():
             return render_template('register.html', message=message, popUp='True')
 
         # email check
-        if (email.endswith('@sfsu.edu')
-            or email.endswith('@mail.sfsu.edu')): # Checks that the correct sfsu suffix is there
+        if (email.endswith('sfsu.edu')
+            or email.endswith('mail.sfsu.edu')): # Checks that the correct sfsu suffix is there
                 cursor.execute('SELECT user_email\
-                    FROM Trademart.User\
-                    WHERE user_email= % s ', email)
-                conn.commit()
-                emailCheck=cursor.fetchone()
-                if emailCheck:
-                    # print('email exists')
-                    message = 'Email aready has an account.'
-                    return render_template('register.html', message=message, popUp='True')
+                    FROM Trademart.User') # query grabs all user emails
+                conn.commit() 
+                emailResults=cursor.fetchall() # holds all emails
+                # print(emailCheck)
+                print(email)
+                emailToCheck = str(email)+'CSC675'
+                for email in emailResults:
+                    # print("printing email")
+                    # print(email[0])
+                    currEmail = email[0]
+                    if verify_hashed_info(emailToCheck, currEmail) == True:
+                        # print('email exists')
+                        message = 'Email aready has an account.'
+                        return render_template('register.html', message=message, popUp='True')
         else:
             # print('not sfsu')
             message = 'Please input a SFSU email'
@@ -280,12 +286,15 @@ def register():
         # print(userId)
 
         # at this point all user data is verified (no repeating username or email address)
-        preHashPass = passwordConfirm+'CSC675'
-        hashedPass = hash_password(userId, preHashPass)
+        emailToHash = str(email)+'CSC675'
+        hashedEmail = hash_email(userId, emailToHash)
+        print('hashed email ' + str(hashedEmail))
+        passToHash = str(passwordConfirm)+'CSC675'
+        hashedPass = hash_password(userId, passToHash)
         # print(hashedPass)
         accCreated = cursor.execute('INSERT INTO Trademart.User\
             (user_id, user_email, fname, lname, user_name, user_pass, reg_status)\
-            VALUES(%s, %s, %s, %s, %s, %s, %s) ', (userId, email, firstname, lastname, username, hashedPass, '0'))
+            VALUES(%s, %s, %s, %s, %s, %s, %s) ', (userId, hashedEmail, firstname, lastname, username, hashedPass, '0'))
         conn.commit()
         if accCreated:
             message = 'Account successfully created!'
@@ -304,40 +313,55 @@ def signIn():
     and 'password' in request.form): # checks if there is an email abd password provided 
         loginEmail = request.form['loginEmail'] # gets email
         password = request.form['password'] # gets password
+        accountFound = False
         
-        # print('email: ' + loginEmail + ' password: ' + password)
+        print('email: ' + loginEmail + ' password: ' + password)
         
-        cursor.execute('SELECT user_pass\
+        cursor.execute('SELECT user_pass, user_email\
                         FROM Trademart.User\
-                        WHERE user_email= % s\
-                            AND reg_status=1 ', loginEmail) # query to get account info
+                        WHERE reg_status=1') # query to get account info
         conn.commit() # commits query
-        hashPassResult=cursor.fetchone()  # grabs query result
-        # print(hashPassResult)
-        if hashPassResult: # ensures data was returned from db
-            hashedPass = hashPassResult[0] # gets pass from db query value
-            # print(hashedPass)
-            prePassVerify = password+'CSC675'
-            passVerify = verify_password(prePassVerify, hashedPass) # verifies password
-            if passVerify: # if the password is correct
+        queryResult=cursor.fetchall()  # grabs query result
+        print("login email out")
+        print(loginEmail)
+        # print(queryResult)
+        for entry in queryResult:
+            import pdb; pdb.set_trace()
+            currEmail = entry[1]  # current email from data object
+            print(currEmail)
+            print('login email in')
+            print(loginEmail)
+            emailToCheck = str(loginEmail)+'CSC675' # makes email to check
+            hashEmailCheck = verify_hashed_info(emailToCheck, currEmail) # checks the email
+            print('email' +str(hashEmailCheck))
+
+            currPass = entry[0] # current pass from data object
+            passToCheck = str(password)+'CSC675' # makes pass to check
+            passCheck = verify_hashed_info(passToCheck, currPass)  # checks the pass
+            
+            # print('pass' + str(passCheck))
+
+            if (hashEmailCheck == True and passCheck == True): # user account was found
+                print('account found')
                 cursor.execute('SELECT *\
                             FROM Trademart.User\
                             WHERE user_email= % s\
-                                AND reg_status= 1', loginEmail) # query to get account info
+                                AND reg_status= 1', currEmail) # query to get account info
                 conn.commit() # commits query
                 account=cursor.fetchone()  # grabs query result
                 # print(account)
             
                 if account: # if the account exists
                     # print('account found')
+                    accountFound = True
                     session['loggedIn'] = True # variable for user logged in
                     session['id'] = account[0] # user id linked to session
                     session['username'] = account[5]  # username for session
                     return redirect(url_for('home'))  # redirects home
-            else: # passwords dont match
-                return render_template('signIn.html', message='Incorrect email/password!', popUp='True') # loads sign in page with error
-        else: # one field empty or incorrect email and/or password
-            return render_template('signIn.html', message='Incorrect email/password!', popUp='True') # loads sign in page with error
+        
+        if accountFound == False:
+            return render_template('signIn.html', message='Incorrect email/password!', popUp='True')  # loads sign in page with error    
+        
     return render_template('signIn.html') # loads sign in page
 
 # log out route
@@ -407,8 +431,8 @@ def listing():
 # this function converts a blob to an image of type jpg
 def blob2Img(listing):
     fileName = str(listing[3]) + '.jpg' # the file name using listing id
-    path = '/home/dasfiter/CSC648/application/static/listing_images/'+fileName # path to image
-    # path = 'static/listing_images/'+fileName # path to image
+    # path = '/home/dasfiter/CSC648/application/static/listing_images/'+fileName # path to image
+    path = 'static/listing_images/'+fileName # path to image
     #print(path)
     # size = sys.getsizeof(listing[11])
     # print(size)
@@ -423,11 +447,11 @@ def blob2Img(listing):
                 file.close()
             # loop to create thumbnails
             for size, name in sizes:
-                im = Image.open('/home/dasfiter/CSC648/application/static/listing_images/%s' % fileName) # opens image
-                # im = Image.open('static/listing_images/%s' % fileName) # opens image
+                # im = Image.open('/home/dasfiter/CSC648/application/static/listing_images/%s' % fileName) # opens image
+                im = Image.open('static/listing_images/%s' % fileName) # opens image
                 im.thumbnail((im.width//size, im.height//size)) # creates thumbnail
-                im.save('/home/dasfiter/CSC648/application/static/listing_images/thumbnail_%s_%s_size.jpg' % (fileName[:-4], name)) #saves image
-                # im.save('static/listing_images/thumbnail_%s_%s_size.jpg' % (fileName[:-4], name)) #saves image
+                # im.save('/home/dasfiter/CSC648/application/static/listing_images/thumbnail_%s_%s_size.jpg' % (fileName[:-4], name)) #saves image
+                im.save('static/listing_images/thumbnail_%s_%s_size.jpg' % (fileName[:-4], name)) #saves image
         
 
 if __name__ == '__main__':
