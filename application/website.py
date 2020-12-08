@@ -318,12 +318,13 @@ def signIn():
         password = request.form['password'] # gets password
         accountFound = False
 
-        #print('email: ' + loginEmail + ' password: ' + password)
+        # print('email: ' + loginEmail + ' password: ' + password)
         
         key = load_key()
         f = Fernet(key)
         cursor.execute('SELECT user_email, user_pass\
-                        FROM Trademart.User')
+                        FROM Trademart.User\
+                        WHERE reg_status=1')
         conn.commit()
         emailResults=cursor.fetchall()
         # print(emailResults)
@@ -331,7 +332,12 @@ def signIn():
             for result in emailResults: # iterates through list of results
                 currEmail = result[0] # gets current email from result
                 currPass = result[1] # gets current password from result
-                passToCheck = str(password)+'CSC675' # adds suffix to pass to check hash
+                passToCheck = str(password) + 'CSC675'  # adds suffix to pass to check hash
+                # plainEmail = get_plain_email(currEmail, f)
+                # print("login " + str(loginEmail))
+                # print("plain " +str(plainEmail))
+                # print(loginEmail == get_plain_email(currEmail, f))
+                # print(verify_hashed_info(passToCheck, currPass))
                 if (loginEmail == get_plain_email(currEmail, f)
                     and verify_hashed_info(passToCheck, currPass)): # if the login email and password match
                     # print("account correct")
@@ -353,6 +359,7 @@ def signIn():
                         return redirect(url_for('home'))  # redirects home
                     else:
                         return render_template('signIn.html', message="Please try again later.", popUp='True')
+                # print("after result")
             if accountFound == False:
                 return render_template('signIn.html', message="Incorrect email/password.", popUp='True')
         else:

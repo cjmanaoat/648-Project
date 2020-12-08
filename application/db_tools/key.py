@@ -9,4 +9,5 @@ def write_key():
 
 # call everytime you need to get the key
 def load_key():
-    return open("key.key", "rb").read()
+    return open("/home/dasfiter/CSC648/credentials/key.key", "rb").read
+    # return open("../credentials/key.key", "rb").read()
