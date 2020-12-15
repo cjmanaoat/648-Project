@@ -5,69 +5,85 @@
      in the search results page. By choosing a specific item, the information will 
      be retrieved from the DB and be displayed on this page. The content should 
      be formatted so that it will display according to the resolution of the screen.
--->     
+-->
 {% extends "base.html" %}
 {% block content %}
+
 <head>
-	    <title>SFSU TradeMart</title>
+    <title>SFSU TradeMart</title>
 </head>
 <style>
     /* Will keep the text centered in the text column */
-    p {text-align: center;}
+    p {
+        text-align: center;
+    }
+
     /* All images will be formatted to fit the browser */
-    img {
-  width: 100%;
-  height: auto;}
-    </style>
+    .listingImg {
+        width: 100%;
+        height: auto;
+    }
+</style>
 <div class="row">
-	<!-- Container used to hold images -->
+    {% set listingData = listingdata[0] %}
+    {% set userData = userData[0] %}
+    {% set fileName = listingData[3]|string %}
+    {% set path = pathPrefix + "thumbnail_" + fileName+"_half_size.jpg" %}
+    <!-- Container used to hold images -->
     <div class="col-sm-8">
-    <p><img src = "static/listing_images/12381.jpg" width="750" height="750"> </p>
-    </div>    
-    <div class="col-sm-4">
-	<!-- Container to display information of the product from the DB -->
-        <br>
-        <br>
-	<!-- Font size used to adjust size of text based off broswer size -->
-   <p style="font-size: 1.5vw;"> <b>Name of product</b> </p>
-     <br>
-   <p>From:User2343 (4.5/5 14 Reviews)</p> 
-   <br>
-    <p>Quality: Fair </p>
-    <br>
-    <p style="font-size: 2vw;">Suggested Price:</p>
-    <div>
-    <p style="font-size: 2.5vw;"><b>$50.00</b></p>
+        <p><img class="" src="{{path}}" width="750" height="750"> </p>
     </div>
-    <br>
-
-    <p style="font-size: 1.25vw;">Description: A description of the item that will be stored in the database</p>
-    <br>
-
-    <div class="row">
-        <div class="col">
+    <div class="col-sm-4">
+        <!-- Container to display information of the product from the DB -->
+        <br>
+        <br>
+        {% set listingTitle = listingData[0] %}
+        <!-- Font size used to adjust size of text based off broswer size -->
+        <p style="font-size: 1.5vw;"> <b>{{listingTitle}}</b> </p>
+        <br>
+        <!-- TODO: user reviews-->
+        {% set userName = userData[0]%}
+        {% set userRating = userData[1] %}
+        <p>From:{{userName}} ({{userRating}}/5 14 Reviews)</p>
+        <br>
+        {% set listingQuality = listingData[6] %}
+        <p>Quality: {{listingQuality}} </p>
+        <br>
+        <p style="font-size: 2vw;">Suggested Price:</p>
+        {% set listingPrice = listingData[1] %}
+        <div>
+            <p style="font-size: 2.5vw;"><b>${{listingPrice}}</b></p>
         </div>
+        <br>
+
+        {% set listingDesc = listingData[4] %}
+        <p style="font-size: 1.25vw;">Description: {{listingDesc}}</p>
+        <br>
+
+        <div class="row">
+            <div class="col">
+            </div>
             <!-- Make Offer Button -->
             <div class="btn-toolbar justify-content-between">
                 <div class="btn-group" role="group" aria-label="Make Offer">
                     <button type="button" class="btn btn-primary">Make Offer</button>
                 </div>
             </div>
-        <div class="col">
+            <div class="col">
+            </div>
         </div>
-    </div>
- <br>
-    <div class="row">
-        <div class="col">
-        </div>
+        <br>
+        <div class="row">
+            <div class="col">
+            </div>
             <!-- Return Button -->
             <div class="btn-toolbar justify-content-between">
                 <div class="btn-group" role="group" aria-label="Return">
                     <button type="button" class="btn btn-primary">Return</button>
                 </div>
             </div>
-        <div class="col">
+            <div class="col">
+            </div>
         </div>
-    </div>
 
-{% endblock %}
+        {% endblock %}

@@ -41,7 +41,7 @@ conn = mysql.connect()
 cursor = conn.cursor()
 # end sql config
 
-# write_key()
+loggedInUsers = 0
 
 # route for favicon
 @app.route('/favicon/favicon.ico')
@@ -154,7 +154,7 @@ def search():
         if filterCategory == 'all':  #case where only item provided, will search for item in any category
             # print('only item')
             if 'filterCategory' in request.form:
-                if request.form['filterCategory'] == 'Prices Low to High':
+                if request.form['filterCategory'] == 'Price (Low to High)':
                     sort = 'priceAscSort'
                     # print('ascend')
                     cursor.execute('SELECT list_title, suggest_price, image, list_id\
@@ -165,7 +165,7 @@ def search():
                                         OR L.list_desc LIKE %s)\
                                         ORDER BY suggest_price asc', \
                                         (('%' + searchItem + '%'), ('%' + searchItem + '%'), ('%' + searchItem + '%')))  # query to grab data
-                elif request.form['filterCategory'] == 'Prices High to Low':
+                elif request.form['filterCategory'] == 'Price (High to Low)':
                     # print('descend')
                     sort = 'priceDescSort'
                     cursor.execute('SELECT list_title, suggest_price, image, list_id\
@@ -228,7 +228,7 @@ def search():
         elif searchItem == '' or not searchItem:        #empty search item but category selected
             # print('category only')
             if 'filterCategory' in request.form:
-                if request.form['filterCategory'] == 'Prices Low to High':
+                if request.form['filterCategory'] == 'Price (Low to High)':
                     sort = 'priceAscSort'
                     # print('asc category')
                     cursor.execute('SELECT list_title, suggest_price, image, list_id\
@@ -239,7 +239,7 @@ def search():
                                 OR L.list_desc LIKE %s)\
                                 ORDER BY suggest_price asc', \
                                 ((filterCategory, ('%' + filterCategory + '%'), ('%' + filterCategory + '%'))))  # query to grab data
-                elif request.form['filterCategory'] == 'Prices High to Low':
+                elif request.form['filterCategory'] == 'Price (High to Low)':
                     # print('desc category')
                     sort = 'priceDescSort'
                     cursor.execute('SELECT list_title, suggest_price, image, list_id\
@@ -306,7 +306,7 @@ def search():
         else:  #category and item selected
             print('category and item')
             if 'filterCategory' in request.form:
-                if request.form['filterCategory'] == 'Prices Low to High':
+                if request.form['filterCategory'] == 'Price (Low to High)':
                     sort = 'priceAscSort'
                     cursor.execute('SELECT list_title, suggest_price, image, list_id\
                                 FROM Listing L\
@@ -316,7 +316,7 @@ def search():
                                 OR L.list_desc LIKE % s)\
                                 ORDER BY suggest_price asc', \
                                 (filterCategory, ('%' + searchItem + '%'), ('%' + searchItem + '%')))  # query to grab data
-                elif request.form['filterCategory'] == 'Prices High to Low':
+                elif request.form['filterCategory'] == 'Price (High to Low)':
                     sort = 'priceDescSort'
                     cursor.execute('SELECT list_title, suggest_price, image, list_id\
                                 FROM Listing L\
@@ -546,12 +546,13 @@ def signIn():
                     account=cursor.fetchone()  # grabs query result
                     # print(account)
                             
-                    if account: # if the account exists
+                    if account and loggedInUsers <= 50: # if the account exists
                         # print('can log in')
                         accountFound = True
                         session['loggedIn'] = True # variable for user logged in
                         session['id'] = account[0] # user id linked to session
                         session['username'] = account[5]  # username for session
+                        loggedInUsers = loggedInUsers + 1
                         return redirect(url_for('home'))  # redirects home
                     else:
                         return render_template('signIn.html', message='Please try again later.', popUp='True')
@@ -565,15 +566,18 @@ def signIn():
 # log out route
 @app.route('/logOut')
 def logOut():
-    session.pop('loggedIn', None) # lets server know current client is logging out
-    session.pop('id', None) # removes signed in user from list
-    session.pop('username', None) # removes username from list
-    return redirect(url_for('home')) # redirect home
+    if 'loggedIn' in session: # checks if user is logged in
+        session.pop('loggedIn', None) # lets server know current client is logging out
+        session.pop('id', None) # removes signed in user from list
+        session.pop('username', None)  # removes username from list
+        loggedInUsers = loggedInUsers - 1
+    return redirect(url_for('home'))  # redirect home
 
-# item page
-@app.route('/itempage')
-def itempage():
-    return render_template('itempage.html') # loads item page
+
+# # item page
+# @app.route('/itempage')
+# def itempage():
+#     return render_template('itempage.html') # loads item page
 
 # contact listing owner
 @app.route('/contact', methods=['POST', 'GET'])
@@ -616,14 +620,27 @@ def listing():
     if request.method == 'POST':
         listingId = request.form['listingId'] # gets listing id
         # print(listingId)
-        cursor.execute('SELECT list_title, suggest_price, image, list_id \
-                FROM Trademart.Listing \
+        cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, user_id, listing_condition\
+                FROM Trademart.Listing\
                 WHERE approval_status=1\
                 AND list_id=%s\
                 order by list_date desc', listingId) #query to get data
+                #TODO: get user
         conn.commit()
-        data = cursor.fetchall() # gets data from query
-        return render_template('itempage.html', data=data, username=username) # load listing page
+        listingdata=cursor.fetchall()  # gets data from query
+        userId = 0
+        for listing in listingdata:
+            blob2Img(listing)
+            userId = listing[5]
+        print(userId)
+        cursor.execute('SELECT user_name, user_rating\
+                        FROM Trademart.User\
+                        WHERE user_id= % s ', userId)
+        conn.commit()
+        userData=cursor.fetchall()
+        pathPrefix = 'static/listing_images/'
+        return render_template('itempage.html', listingdata=listingdata, pathPrefix=pathPrefix, userData=userData, username=username)  # load listing page
+    print("not post")
     return render_template('itempage.html') # load listing page
 
 # this function converts a blob to an image of type jpg
