@@ -545,14 +545,16 @@ def signIn():
                     conn.commit() # commits query
                     account=cursor.fetchone()  # grabs query result
                     # print(account)
-                            
-                    if account and loggedInUsers <= 50: # if the account exists
+                    global loggedInUsers
+                    loggedInUsersLocal = loggedInUsers                
+                    if account and loggedInUsersLocal <= 50:  # if the account exists
                         # print('can log in')
                         accountFound = True
                         session['loggedIn'] = True # variable for user logged in
                         session['id'] = account[0] # user id linked to session
                         session['username'] = account[5]  # username for session
-                        loggedInUsers = loggedInUsers + 1
+                        loggedInUsers = loggedInUsersLocal + 1
+                        print(loggedInUsers)
                         return redirect(url_for('home'))  # redirects home
                     else:
                         return render_template('signIn.html', message='Please try again later.', popUp='True')
@@ -570,7 +572,10 @@ def logOut():
         session.pop('loggedIn', None) # lets server know current client is logging out
         session.pop('id', None) # removes signed in user from list
         session.pop('username', None)  # removes username from list
-        loggedInUsers = loggedInUsers - 1
+        global loggedInUsers
+        loggedInUsersLocal = loggedInUsers 
+        loggedInUsers = loggedInUsersLocal - 1
+        print(loggedInUsers)
     return redirect(url_for('home'))  # redirect home
 
 
