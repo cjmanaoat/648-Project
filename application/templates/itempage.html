@@ -41,10 +41,9 @@
         <!-- Font size used to adjust size of text based off broswer size -->
         <p style="font-size: 1.5vw;"> <b>{{listingTitle}}</b> </p>
         <br>
-        <!-- TODO: user reviews-->
         {% set userName = userData[0]%}
         {% set userRating = userData[1] %}
-        <p>From:{{userName}} ({{userRating}}/5 14 Reviews)</p>
+        <p>From:{{userName}} (Rating: {{userRating}}/5)</p>
         <br>
         {% set listingQuality = listingData[6] %}
         <p>Quality: {{listingQuality}} </p>
