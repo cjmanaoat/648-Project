@@ -71,6 +71,11 @@ function captchaCallback() {
 function alphaNumericCheck(element) {
   const input_text = document.getElementById(element).value; //gets input text from provided element
   // alert(input_text);
+  if (input_text.match(/[\s~`!@#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?()\._]/)) {
+    // console.log('no');
+    alert('Please enter only alphanumerics');
+    return false;
+  }
   if (
     input_text.match(/^[a-z0-9]+$/i) ||
     input_text.match(/\s/) ||
