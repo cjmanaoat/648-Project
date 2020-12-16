@@ -514,53 +514,14 @@ def signIn():
         password = request.form['password'] # gets password
         accountFound = False
 
+        returnData = []
         # print('email: ' + loginEmail + ' password: ' + password)
-        
-        key = load_key()
-        f = Fernet(key)
-        cursor.execute('SELECT user_email, user_pass\
-                        FROM Trademart.User\
-                        WHERE reg_status=1')
-        conn.commit()
-        emailResults=cursor.fetchall()
-        # print(emailResults)
-        if emailResults: # if data was returned from query
-            for result in emailResults: # iterates through list of results
-                currEmail = result[0] # gets current email from result
-                currPass = result[1] # gets current password from result
-                passToCheck = str(password) + 'CSC675'  # adds suffix to pass to check hash
-                # plainEmail = get_plain_email(currEmail, f)
-                # print('login ' + str(loginEmail))
-                # print('plain ' +str(plainEmail))
-                # print(loginEmail == get_plain_email(currEmail, f))
-                # print(verify_hashed_info(passToCheck, currPass))
-                if (loginEmail == get_plain_email(currEmail, f)
-                    and verify_hashed_info(passToCheck, currPass)): # if the login email and password match
-                    # print('account correct')
-                
-                    cursor.execute('SELECT *\
-                                    FROM Trademart.User\
-                                    WHERE user_email= % s\
-                                    AND reg_status= 1', currEmail) # query to get account info
-                    conn.commit() # commits query
-                    account=cursor.fetchone()  # grabs query result
-                    # print(account)
-                    global loggedInUsers
-                    loggedInUsersLocal = loggedInUsers                
-                    if account and loggedInUsersLocal <= 50:  # if the account exists
-                        # print('can log in')
-                        accountFound = True
-                        session['loggedIn'] = True # variable for user logged in
-                        session['id'] = account[0] # user id linked to session
-                        session['username'] = account[5]  # username for session
-                        loggedInUsers = loggedInUsersLocal + 1
-                        print(loggedInUsers)
-                        return redirect(url_for('home'))  # redirects home
-                    else:
-                        return render_template('signIn.html', message='Please try again later.', popUp='True')
-                # print('after result')
-            if accountFound == False:
-                return render_template('signIn.html', message='Incorrect email/password.', popUp='True')
+        # print("outside func")
+        returnData = signInFunc(loginEmail, password)
+        if (returnData[0] == True and returnData[1] == 'home'):
+            return redirect(url_for('home'))  # redirects home     
+        elif(returnData[0] == False and returnData[1] == 'cred error'):
+            return render_template('signIn.html', message='Incorrect email/password.', popUp='True')
         else:
             return render_template('signIn.html', message='Please try again later.', popUp='True')
     return render_template('signIn.html') # loads sign in page
@@ -673,6 +634,65 @@ def blob2Img(listing):
                 im.save('/home/dasfiter/CSC648/application/static/listing_images/thumbnail_%s_%s_size.jpg' % (fileName[:-4], name)) #saves image
                 # im.save('static/listing_images/thumbnail_%s_%s_size.jpg' % (fileName[:-4], name)) #saves image
         
+def signInFunc(email, password):
+    accountFound = False
+    returnData = []
+    key = load_key()
+    f = Fernet(key)
+    # print("in func")
+    cursor.execute('SELECT user_email, user_pass\
+                        FROM Trademart.User\
+                        WHERE reg_status=1')
+    conn.commit()
+    emailResults=cursor.fetchall()
+    # print(emailResults)
+    if emailResults: # if data was returned from query
+        for result in emailResults: # iterates through list of results
+            currEmail = result[0] # gets current email from result
+            currPass = result[1] # gets current password from result
+            passToCheck = str(password) + 'CSC675'  # adds suffix to pass to check hash
+            plainEmail = get_plain_email(currEmail, f)
+            # print('login ' + str(email))
+            # print('plain ' +str(plainEmail))
+            # print(email == get_plain_email(currEmail, f))
+            # print(verify_hashed_info(passToCheck, currPass))
+            if (email == get_plain_email(currEmail, f)
+                and verify_hashed_info(passToCheck, currPass)): # if the login email and password match
+                # print('account correct')
+                
+                cursor.execute('SELECT *\
+                                FROM Trademart.User\
+                                WHERE user_email= % s\
+                                AND reg_status= 1', currEmail) # query to get account info
+                conn.commit() # commits query
+                account=cursor.fetchone()  # grabs query result
+                # print(account)
+                global loggedInUsers
+                loggedInUsersLocal = loggedInUsers                
+                if account and loggedInUsersLocal <= 50:  # if the account exists
+                    # print('can log in')
+                    accountFound = True
+                    session['loggedIn'] = True # variable for user logged in
+                    session['id'] = account[0] # user id linked to session
+                    session['username'] = account[5]  # username for session
+                    loggedInUsers = loggedInUsersLocal + 1
+                    print(loggedInUsers)
+                    returnData.append(True)
+                    returnData.append('home')
+                    return returnData
+                else:
+                    returnData.append(False)
+                    returnData.append('try again')
+                    return returnData
+            # print('after result')
+        if accountFound == False:
+            returnData.append(False)
+            returnData.append('cred error')
+            return returnData
+        else:
+            returnData.append(False)
+            returnData.append('try again')
+            return returnData
 
 if __name__ == '__main__':
     app.run(debug = True)

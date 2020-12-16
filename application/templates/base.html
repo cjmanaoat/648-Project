@@ -108,13 +108,14 @@
 
                                 <!-- {{filter}} -->
                                 <!-- this script makes the category dropdown persistent -->
+                                {% if filter %}
                                 <script>
                                     var filterSelect = '{{filter}}filter' // makes the id of the category selected
                                     // console.log(filterSelect)
                                     var optionSelected = document.getElementById(filterSelect) // gets the appropriate element
                                     optionSelected.setAttribute('selected', '') // adds the selected attribute to have the option chosen persistent
                                 </script>
-
+                                {% endif %}
                                 <!-- this script gets the width of the text and resizes the dropdown box accordingly
                                 the idea of this script is from João Pimentel Ferreira's answer on
                                 https://stackoverflow.com/questions/294040/how-to-expand-select-option-width-after-the-user-wants-to-select-an-option/55343177#55343177 
