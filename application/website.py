@@ -651,8 +651,8 @@ def listing():
 # this function converts a blob to an image of type jpg
 def blob2Img(listing):
     fileName = str(listing[3]) + '.jpg' # the file name using listing id
-    # path = '/home/dasfiter/CSC648/application/static/listing_images/'+fileName # path to image
-    path = 'static/listing_images/'+fileName # path to image
+    path = '/home/dasfiter/CSC648/application/static/listing_images/'+fileName # path to image
+    # path = 'static/listing_images/'+fileName # path to image
     #print(path)
     # size = sys.getsizeof(listing[11])
     # print(size)
@@ -667,11 +667,11 @@ def blob2Img(listing):
                 file.close()
             # loop to create thumbnails
             for size, name in sizes:
-                # im = Image.open('/home/dasfiter/CSC648/application/static/listing_images/%s' % fileName) # opens image
-                im = Image.open('static/listing_images/%s' % fileName) # opens image
+                im = Image.open('/home/dasfiter/CSC648/application/static/listing_images/%s' % fileName) # opens image
+                # im = Image.open('static/listing_images/%s' % fileName) # opens image
                 im.thumbnail((im.width//size, im.height//size)) # creates thumbnail
-                # im.save('/home/dasfiter/CSC648/application/static/listing_images/thumbnail_%s_%s_size.jpg' % (fileName[:-4], name)) #saves image
-                im.save('static/listing_images/thumbnail_%s_%s_size.jpg' % (fileName[:-4], name)) #saves image
+                im.save('/home/dasfiter/CSC648/application/static/listing_images/thumbnail_%s_%s_size.jpg' % (fileName[:-4], name)) #saves image
+                # im.save('static/listing_images/thumbnail_%s_%s_size.jpg' % (fileName[:-4], name)) #saves image
         
 def signInFunc(email, password):
     accountFound = False
