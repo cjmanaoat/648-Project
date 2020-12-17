@@ -11,4 +11,5 @@ def write_key():
 def load_key():
     with open("D:/Code/csc648-03-fa20-team07/credentials/key.key", "rb") as file_load:
         return file_load.read()
-    # return open("../credentials/key.key", "rb").read()
+    # with open("../credentials/key.key", "rb") as file_load:
+    #     return file_load.read()

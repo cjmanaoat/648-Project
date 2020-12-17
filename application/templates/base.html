@@ -14,158 +14,175 @@
 <!doctype html>
 <html lang="en">
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+            integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-    <!-- jquery include -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>    
+        <!-- jquery include -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
 
-     <!-- css files -->
-     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/navbar.css') }}">
+        <!-- css files -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/navbar.css') }}">
 
-    <!-- google reCaptcha  -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <!-- google reCaptcha  -->
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-    <!-- favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <!-- favicon -->
+        <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
 
-</head>
+    </head>
 
-<body>
-    <!-- navbar -->
-    <nav class="navbar navbar-expand-sm navbar-light" style="background-color: midnightblue;">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
-            style="background-color: orange;">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <body>
+        <div>
+            <center>
+                <label>
+                    SFSU Software Engineering Project CSC 648-848, Fall 2020. For Demonstration Only
+                </label>
+            </center>
+        </div>
 
-        <!-- start of expanded navbar contents -->
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- navbar -->
+        <nav class="navbar navbar-expand-sm navbar-light" style="background-color: midnightblue;">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                style="background-color: orange;">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-            <!-- home button -->
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/" target="_blank" style="color:white">
-                        <h3 class="responsive-nav-links" style="white-space: nowrap;">SFSU Trade<br>Mart</h3>
-                    </a>
-            
-                </li>
-            </ul>
-            <!-- end about button -->
-            
-            <!-- container for search bar and class title -->
-            <div class="container mx-auto">
-               <div class="row">
-                   <!-- class title -->
-                    <div class="justify-content-md-center justify-content-center" style="color: aliceblue; width: 100%;">
-                        <h3 class="responsive-nav-links">
-                            <center>
-                                Software Engineering class SFSU
-                                Fall 2020
-                                Section 3
-                                Team 7
-                            </center>
-                        </h3>
-                    </div>
-                    <!-- end class title -->
+            <!-- start of expanded navbar contents -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-                    <!-- search form -->
-                    <div class="row mx-auto">
-                        <form class="form-inline my-2 my-lg-0 mx-auto" method="post" action="/search" id="searchForm"
-                            onsubmit="return alphaNumericCheck('searchBar')" style="flex-wrap: nowrap;">
-                    
-                            <!-- category dropdown for search -->
-                            <div id="category-dropdown">
-                                <select name="category-select" id="categorySelect">
-                                    <option id="allfilter" value="all">All</option>
-                                    <option id="booksfilter" value="books">Books</option>
-                                    <option id="editingfilter" value="editing">Editing</option>
-                                    <option id="electronicsfilter" value="electronics">Electronics</option>
-                                    <option id="furniturefilter" value="furniture">Furniture</option>
-                                    <option id="tutoringfilter" value="tutoring">Tutoring</option>
-                                </select>
-                            </div>
-                            
-                            <!-- {{filter}} -->
-                            <!-- this script makes the category dropdown persistent -->
-                            <script>
-                                var filterSelect = '{{filter}}filter' // makes the id of the category selected
-                                // console.log(filterSelect)
-                                var optionSelected = document.getElementById(filterSelect) // gets the appropriate element
-                                optionSelected.setAttribute('selected', '') // adds the selected attribute to have the option chosen persistent
-                            </script>
-    
-                            <!-- this script gets the width of the text and resizes the dropdown box accordingly
+                <!-- home button -->
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/" target="_blank" style="color:white">
+                            <h3 class="responsive-nav-links" style="white-space: nowrap;">SFSU Trade<br>Mart</h3>
+                        </a>
+
+                    </li>
+                </ul>
+                <!-- end about button -->
+
+                <!-- container for search bar and class title -->
+                <div class="container mx-auto">
+                    <div class="row">
+                        <!-- class title -->
+                        <div class="justify-content-md-center justify-content-center"
+                            style="color: aliceblue; width: 100%;">
+                            <h3 class="responsive-nav-links">
+                                <center>
+                                    Software Engineering class SFSU
+                                    Fall 2020
+                                    Section 3
+                                    Team 7
+                                </center>
+                            </h3>
+                        </div>
+                        <!-- end class title -->
+
+                        <!-- search form -->
+                        <div class="row mx-auto">
+                            <form class="form-inline my-2 my-lg-0 mx-auto" method="post" action="/search"
+                                id="searchForm" onsubmit="return alphaNumericCheck('searchBar')"
+                                style="flex-wrap: nowrap;">
+
+                                <!-- category dropdown for search -->
+                                <div id="category-dropdown">
+                                    <select name="category-select" id="categorySelect">
+                                        <option id="allfilter" value="all">All</option>
+                                        <option id="booksfilter" value="books">Books</option>
+                                        <option id="editingfilter" value="editing">Editing</option>
+                                        <option id="electronicsfilter" value="electronics">Electronics</option>
+                                        <option id="furniturefilter" value="furniture">Furniture</option>
+                                        <option id="tutoringfilter" value="tutoring">Tutoring</option>
+                                    </select>
+                                </div>
+
+                                <!-- {{filter}} -->
+                                <!-- this script makes the category dropdown persistent -->
+                                {% if filter %}
+                                <script>
+                                    var filterSelect = '{{filter}}filter' // makes the id of the category selected
+                                    // console.log(filterSelect)
+                                    var optionSelected = document.getElementById(filterSelect) // gets the appropriate element
+                                    optionSelected.setAttribute('selected', '') // adds the selected attribute to have the option chosen persistent
+                                </script>
+                                {% endif %}
+                                <!-- this script gets the width of the text and resizes the dropdown box accordingly
                                 the idea of this script is from João Pimentel Ferreira's answer on
                                 https://stackoverflow.com/questions/294040/how-to-expand-select-option-width-after-the-user-wants-to-select-an-option/55343177#55343177 
                             -->
-                            <script>
-                                $('select').change(function () {
-                                    var text = $(this).find('option:selected').text()  
-                                    var $selectedOption = $('<select/>').append($('<option/>').text(text))
-                                    $(this).after($selectedOption)
-                                    $(this).width($selectedOption.width())
-                                    $selectedOption.remove()
-                                }).change()
-                            </script>
-                            <!-- end category drop down -->
-                    
-                            <!-- input form -->
-                            <input class="form-control mr-sm-2 searchBar" type="search" value="{{searchItem}}" placeholder="Search" aria-label="Search" name="item"
-                                id="searchBar" style="width: 40vw;" maxlength="40">
-                            <!-- end input form -->
-                            <!-- submit button -->
-                            <button id="searchButton" type="submit" class="btn my-2 my-sm-0" style="background-color: orange;">
-                                <img src="../static/bootstrapIcons/search.svg" alt="searchIcon" title="searchIcon" width="25" height="25">
-                            </button>
-                            <!-- end submit -->
-                        </form>
-                        <!-- end search form -->
+                                <script>
+                                    $('select').change(function () {
+                                        var text = $(this).find('option:selected').text()
+                                        var $selectedOption = $('<select/>').append($('<option/>').text(text))
+                                        $(this).after($selectedOption)
+                                        $(this).width($selectedOption.width())
+                                        $selectedOption.remove()
+                                    }).change()
+                                </script>
+                                <!-- end category drop down -->
+
+                                <!-- input form -->
+                                <input class="form-control mr-sm-2 searchBar" type="search" value="{{searchItem}}"
+                                    placeholder="Search" aria-label="Search" name="item" id="searchBar"
+                                    style="width: 40vw;" maxlength="40">
+                                <!-- end input form -->
+                                <!-- submit button -->
+                                <button id="searchButton" type="submit" class="btn my-2 my-sm-0"
+                                    style="background-color: orange;">
+                                    <img src="../static/bootstrapIcons/search.svg" alt="searchIcon" title="searchIcon"
+                                        width="25" height="25">
+                                </button>
+                                <!-- end submit -->
+                            </form>
+                            <!-- end search form -->
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- side buttons -->
-            <ul class="navbar-nav justify-content-end ">
-                <!-- about button -->
-                <li class="nav-item ">
-                    <a class="nav-link" href="/aboutHome" target="_blank" style="color:white">
-                        <h3 class="responsive-nav-links">About</h3>
-                    </a>
-                </li>
-                <!-- end button -->
+                <!-- side buttons -->
+                <ul class="navbar-nav justify-content-end ">
+                    <!-- about button -->
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/aboutHome" target="_blank" style="color:white">
+                            <h3 class="responsive-nav-links">About</h3>
+                        </a>
+                    </li>
+                    <!-- end button -->
 
-                <!-- Create listing button -->
-                <li class="nav-item">
-                    <a class="nav-link" href="/createListing" target="_blank" style="color: white;">
-                        <h3 class="responsive-nav-links">Create<br>Listing</h3>
-                    </a>
-                </li>
-                <!-- end create listing -->
+                    <!-- Create listing button -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/createListing" target="_blank" style="color: white;">
+                            <h3 class="responsive-nav-links">Create<br>Listing</h3>
+                        </a>
+                    </li>
+                    <!-- end create listing -->
 
-                <!-- user account section -->
-                <!-- <h3 style="color: white">username:  {{username}} </h3> -->
-                {% if username %} <!-- user is logged in -->
+                    <!-- user account section -->
+                    <!-- <h3 style="color: white">username:  {{username}} </h3> -->
+                    {% if username %}
+                    <!-- user is logged in -->
                     <!-- welcome dropdown with menu -->
                     <li class="nav-item">
                         <div class="dropdown">
-                            <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false" style="padding-left: 0px; display: flex">
-                                <h3 class="responsive-nav-links" style="color:white; white-space: nowrap; text-align: left;">
+                            <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false" style="padding-left: 0px; display: flex">
+                                <h3 class="responsive-nav-links"
+                                    style="color:white; white-space: nowrap; text-align: left;">
                                     Welcome,<br>
-                                    {{username}}   
+                                    {{username}}
                                 </h3>
-                                <img class="responsive-nav-links align-self-end" src="{{ url_for('static', filename='/bootstrapIcons/caret-down-fill.svg') }}" alt=""
+                                <img class="responsive-nav-links align-self-end"
+                                    src="{{ url_for('static', filename='/bootstrapIcons/caret-down-fill.svg') }}" alt=""
                                     width="20" height="20" title="logoutDropdown" style="margin-bottom: 9px;">
                             </button>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
@@ -176,13 +193,15 @@
                         <!-- end dropdown -->
                     </li>
                     <!-- end welcome dropdown with menu -->
-                {% else %} <!-- user isnt logged in-->
+                    {% else %}
+                    <!-- user isnt logged in-->
                     <!-- sign in/register button -->
                     <li class="nav-item">
                         <div class="dropdown">
                             <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false" style="padding-left: 0px;">
-                                <h3 class="responsive-nav-links" style="color:white; white-space: nowrap;">Sign In/<br>Register</h3>
+                                <h3 class="responsive-nav-links" style="color:white; white-space: nowrap;">Sign
+                                    In/<br>Register</h3>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="/signIn" target="_blank">Sign In</a>
@@ -192,11 +211,11 @@
                         <!-- end dropdown -->
                     </li>
                     <!-- end sign in/register button -->
-                {% endif %}
-                <!-- end user account section -->
+                    {% endif %}
+                    <!-- end user account section -->
 
-                <!-- drop down -->
-                <!-- <li style="flex-direction: column;" class="nav-item d-flex justify-content-center">
+                    <!-- drop down -->
+                    <!-- <li style="flex-direction: column;" class="nav-item d-flex justify-content-center">
                     <div class="dropdown">
                         <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false" style="width:56px; height: 40px; background-color: aliceblue;">
@@ -211,33 +230,33 @@
                         </div>
                     </div>
                 </li> -->
-                <!-- end dropdown -->
-            </ul>
+                    <!-- end dropdown -->
+                </ul>
+                <!-- end side buttons -->
+            </div>
             <!-- end side buttons -->
-        </div>
-        <!-- end side buttons -->
-    </nav>
-    <!-- end navbar -->
+        </nav>
+        <!-- end navbar -->
 
-    <!-- placeholder where individual page content gets placed -->
-    {% block content %}{% endblock %}
-    <!-- end of placeholder -->
+        <!-- placeholder where individual page content gets placed -->
+        {% block content %}{% endblock %}
+        <!-- end of placeholder -->
 
-    <!-- bootstrap includes -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-        crossorigin="anonymous"></script>
-    <!-- end bootstrap includes -->
+        <!-- bootstrap includes -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+            integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+            crossorigin="anonymous"></script>
+        <!-- end bootstrap includes -->
 
-    <!-- external scripts/styling -->
-    <script type="text/javascript" src="{{ url_for('static', filename='/javascript/formVerify.js') }}"></script>
-    <!-- end external scripts/styling -->
-</body>
+        <!-- external scripts/styling -->
+        <script type="text/javascript" src="{{ url_for('static', filename='/javascript/formVerify.js') }}"></script>
+        <!-- end external scripts/styling -->
+    </body>
 
 </html>

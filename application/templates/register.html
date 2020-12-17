@@ -13,13 +13,14 @@
         -Terms agreement
         -Captcha verification
  -->
- <!-- navbar -->
+<!-- navbar -->
 {% extends "base.html" %}
 <!-- end navbar -->
 
 <!-- contents to be placed in -->
 {% block content %}
 <!-- page title -->
+
 <head>
     <title>Register</title>
 </head>
@@ -34,31 +35,32 @@
     <!-- this is a popup to show the status of account creation (error or success) -->
     <!-- {{popUp}} -->
     {% if popUp == "True" %}
-        <script>
-        $(window).on('load',function(){
-            $('#myModal').modal('show');        
+    <script>
+        $(window).on('load', function () {
+            $('#myModal').modal('show');
         });
-        </script>
+    </script>
 
-        <div class="modal fade" id="myModal">
-            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <center>
-                            {{message}}
-                        </center>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary mx-auto" data-dismiss="modal">Close</button>
-                    </div>
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <center>
+                        {{message}}
+                    </center>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary mx-auto" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
+    </div>
     {% endif %}
     <!-- end popup -->
 
-    <form name="registrationForm" href="/register" method="POST" >
+    <form name="registrationForm" href="/register" method="POST">
         <center>
+            <p>Note: It may take up to one day for your account to be in the system.</p>
             <p>* = Required</p>
         </center>
 
@@ -94,7 +96,8 @@
         <div class="row">
             <div class="col">
                 <label for="emailAddress">* Email address</label> <br>
-                <input type="text" id="emailAddress" name="emailAddress" onblur="emailCheck()" onfocus="emailCheck()" maxlength="45" required>
+                <input type="text" id="emailAddress" name="emailAddress" onblur="emailCheck()" onfocus="emailCheck()"
+                    maxlength="45" required>
                 <label for="emailAddress" id="emailError" style="color: red;"></label>
                 <br>
                 <label class="text-muted" for="emailAddress">Only accepts SFSU email</label> <br>
@@ -115,7 +118,8 @@
         <div class="row">
             <div class="col">
                 <label for="passConfirm">* Confirm Password</label> <br>
-                <input type="password" id="passConfirm" name="passConfirm" onblur="passVerify()" maxlength="45" required>
+                <input type="password" id="passConfirm" name="passConfirm" onblur="passVerify()" maxlength="45"
+                    required>
                 <label for="passConfirm" id="passError" style="color:red" onblur="passVerify()"></label>
                 <br> <br>
             </div>
@@ -141,7 +145,8 @@
             </div>
             <div class="col">
                 <center>
-                    <div class="g-recaptcha" data-sitekey="6LdFBdoZAAAAAFns5dEaiL5uZ9iVWuy5nWrqJA4g" data-callback="captchaCallback">
+                    <div class="g-recaptcha" data-sitekey="6LdFBdoZAAAAAFns5dEaiL5uZ9iVWuy5nWrqJA4g"
+                        data-callback="captchaCallback">
                     </div>
                 </center>
             </div>
@@ -166,7 +171,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col">
             </div>
         </div>
