@@ -465,6 +465,19 @@ def register():
         #     + ' email: ' + email
         #     + ' pass: ' + passwordConfirm)
 
+        # this checks if there are any invalid characters in the fields
+        if (firstname.isalnum() == False
+            or lastname.isalnum() == False
+            or username.isalnum() == False
+            or passwordInit.isalnum() == False
+            or passwordConfirm.isalnum() == False):
+            return render_template('register.html', popUp='True', message='Invalid character in one of the fields')
+        
+        # this checks if there are any invalid characters in the email field
+        invalidChar = re.compile(r"[~=\!#\$%\^&\*\(\)_\+{}\":;'\[\]]")
+        if (invalidChar.findall(email)):
+            return render_template('register.html', popUp='True', message='Invalid character in email')
+        
         # username verification
         cursor.execute('SELECT user_name\
             FROM Trademart.User\
@@ -552,6 +565,16 @@ def signIn():
         loginEmail = request.form['loginEmail'] # gets email
         password = request.form['password'] # gets password
         accountFound = False
+
+        # checks for invalid characters in password
+        if (password.isalnum() == False):
+            return render_template('signIn.html', message='Invalid character in password field.', popUp='True')
+
+
+        # checks for any invalid characters in email
+        invalidChar = re.compile(r"[~=\!#\$%\^&\*\(\)_\+{}\":;'\[\]]")
+        if (invalidChar.findall(loginEmail)):
+            return render_template('signIn.html', popUp='True', message='Invalid character in email')
 
         returnData = []
         # print('email: ' + loginEmail + ' password: ' + password)

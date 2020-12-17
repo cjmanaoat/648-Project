@@ -90,3 +90,13 @@ function alphaNumericCheck(element) {
     return false;
   }
 }
+
+// this function checks for invalid characters
+function specialCharCheck(element) {
+  const input_text = document.getElementById(element).value; //gets input text from provided element
+  if (input_text.match(/[\s~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?()_]/)) {
+    // console.log('no');
+    alert('Invalid character in email');
+    return false;
+  }
+}
