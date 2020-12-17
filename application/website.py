@@ -112,9 +112,48 @@ def dashboard():
     else: # user isnt logged in
         # print('not logged in')
         username = ''
+        return redirect(url_for('home'))
+    
+    # Get all the post query contents for My Postings section of Dashboard
+    cursor.execute('SELECT list_title, list_date, approval_status, list_category, listing_condition, suggest_price, pref_location, list_desc, list_id \
+                FROM Trademart.Listing \
+                WHERE user_id=%s \
+                order by list_date desc', session['id'])   #The query to be run to grab the appropriate info
+    conn.commit()
+    posts = cursor.fetchall() # gets all the post query contents
+
+    # Get all the post query contents for Messages Sent section of Dashboard
+    cursor.execute('SELECT offer_id, seller_id, buyer_id, listing_id, offer_amount, location \
+                FROM Trademart.Offer \
+                WHERE buyer_id=%s \
+                order by listing_id desc', session['id'])
+    conn.commit()
+    messagesSentInfo = cursor.fetchall()
+
+    cursor.execute('SELECT sender_id, receiver_id, offer_id, title, text, msg_datetime \
+                FROM Trademart.Message \
+                WHERE sender_id=%s \
+                order by msg_datetime desc', session['id'])
+    conn.commit()
+    messagesSentContent = cursor.fetchall()
+
+    # Get all the post query contents for Messages Received section of Dashboard
+    cursor.execute('SELECT offer_id, seller_id, buyer_id, listing_id, offer_amount, location \
+                FROM Trademart.Offer \
+                WHERE seller_id=%s \
+                order by listing_id desc', session['id'])
+    conn.commit()
+    messagesReceivedInfo = cursor.fetchall()
+
+    cursor.execute('SELECT sender_id, receiver_id, offer_id, title, text, msg_datetime \
+                FROM Trademart.Message \
+                WHERE receiver_id=%s \
+                order by msg_datetime desc', session['id'])
+    conn.commit()
+    messagesReceivedContent = cursor.fetchall()
 
     #print('in main home')
-    return render_template('/dashboard.html', username=username) #loads dashboard page
+    return render_template('/dashboard.html', posts=posts, messagesSentInfo=messagesSentInfo, messagesSentContent=messagesSentContent, messagesReceivedInfo=messagesReceivedInfo, messagesReceivedContent=messagesReceivedContent, username=username) #loads dashboard page
 
 # about page per member
 @app.route('/aboutHome/<aboutName>')

@@ -3,7 +3,7 @@
 
     Description: This is the user dashboard page. From a sidebar to
     the left of the screen, the user can shift between four tabs:
-    "My Postings", "Messages Sent", "Messages Received", and "My Class Resources".
+    "My Postings", "Messages Sent", and "Messages Received".
     From these tabs they can review each item of the given tab in a table.
 -->
 
@@ -21,7 +21,6 @@
         <a class="nav-link active" id="v-pills-my-postings-tab" data-toggle="pill" href="#v-pills-my-postings" role="tab" aria-controls="v-pills-my-postings" aria-selected="true">My Postings</a>
         <a class="nav-link" id="v-pills-messages-sent-tab" data-toggle="pill" href="#v-pills-messages-sent" role="tab" aria-controls="v-pills-messages-sent" aria-selected="false">Messages Sent</a>
         <a class="nav-link" id="v-pills-messages-received-tab" data-toggle="pill" href="#v-pills-messages-received" role="tab" aria-controls="v-pills-messages-received" aria-selected="false">Messages Received</a>
-        <a class="nav-link" id="v-pills-my-class-resources-tab" data-toggle="pill" href="#v-pills-my-class-resources" role="tab" aria-controls="v-pills-my-class-resources" aria-selected="false">My Class Resources</a>
         </div>
     </div>
     <!-- end Sidebar -->
@@ -33,7 +32,7 @@
             <!-- My Postings Tab -->
             <div class="tab-pane fade show active" id="v-pills-my-postings" role="tabpanel" aria-labelledby="v-pills-my-postings-tab">
                 <h1 class="text-center">My Postings</h1>
-                <h6>3 of 3 item(s)</h6>
+                <h6>{{(posts|length)}} of {{(posts|length)}} item(s)</h6>
 
                 <!-- My Postings Item Table -->
                 <table class="table table-bordered table-hover">
@@ -47,135 +46,67 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">10/10/20</th>
-                            <td>Wooden Desk</td>
-                            <td>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#my-postings-1">
-                                    More Info
-                                </button>
-                            </td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="delete">
-                                    <button type="button" class="btn btn-primary">Delete</button>
-                                </div>
-                            </td>
-                            <td>Pending</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">9/9/20</th>
-                            <td>Black Chair</td>
-                            <td>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#my-postings-2">
-                                    More Info
-                                </button>
-                            </td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="delete">
-                                    <button type="button" class="btn btn-primary">Delete</button>
-                                </div>
-                            </td>
-                            <td>Pending</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">8/8/20</th>
-                            <td>Red Couch</td>
-                            <td>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#my-postings-3">
-                                    More Info
-                                </button>
-                            </td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="delete">
-                                    <button type="button" class="btn btn-primary">Delete</button>
-                                </div>
-                            </td>
-                            <td>Pending</td>
-                        </tr>
+                        {% for counter in range(posts|length) %}
+                            <tr>
+                                {% set post = posts[loop.index-1] %}
+                                <th scope="row">{{post[1]}}</th>
+                                <td>{{post[0]}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#my-postings-{{post[8]}}">
+                                        More Info
+                                    </button>
+                                </td>
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="delete">
+                                        <button type="button" class="btn btn-primary">Delete</button>
+                                    </div>
+                                </td>
+                                {% if post[2] == 1 %}
+                                    <td>Approved</td>
+                                {% else %}
+                                    <td>Pending</td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
                 <!-- end My Postings Item Table -->
 
                 <!-- My Postings More Info Buttons -->
                 <!-- When the user clicks More Info, the info comes in the form of a pop-up (Info is hardcoded for now.)-->
-                <div class="modal fade" id="my-postings-1" tabindex="-1" role="dialog" aria-labelledby="my-postings-1-Title" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="my-postings-1-Title">Wooden Desk</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p>
-                                    Post Title: Wooden Desk<br>
-                                    Category: Furniture<br>
-                                    Rating (Condition): Fair<br>
-                                    Price: $50.00<br>
-                                    Location: SFSU Library Cafe<br>
-                                    Description: It's a wooden desk.<br>
-                                    Status: Pending
-                                </p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal fade" id="my-postings-2" tabindex="-1" role="dialog" aria-labelledby="my-postings-2-Title" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="my-postings-2-Title">Black Chair</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p>
-                                    Post Title: Black Chair<br>
-                                    Category: Furniture<br>
-                                    Rating (Condition): Good<br>
-                                    Price: $75.00<br>
-                                    Location: SFSU Library Cafe<br>
-                                    Description: It's a black chair that can seat one person.<br>
-                                    Status: Pending
-                                </p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                {% for counter in range(posts|length) %}
+                    {% set post = posts[loop.index-1] %}
+                    <div class="modal fade" id="my-postings-{{post[8]}}" tabindex="-1" role="dialog" aria-labelledby="my-postings-{{post[8]}}-Title" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="my-postings-1-Title">{{post[0]}}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>
+                                        Post Title: {{post[0]}}<br>
+                                        Category: {{post[3]}}<br>
+                                        Rating (Condition): {{post[4]}}<br>
+                                        Price: ${{post[5]}}<br>
+                                        Location: {{post[6]}}<br>
+                                        Description: {{post[7]}}<br>
+                                        {% if post[2] == 1 %}
+                                            Status: Approved
+                                        {% else %}
+                                            Status: Pending
+                                        {% endif %}
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal fade" id="my-postings-3" tabindex="-1" role="dialog" aria-labelledby="my-postings-3-Title" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="my-postings-3-Title">Red Couch</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p>
-                                    Post Title: Wooden Desk<br>
-                                    Category: Furniture<br>
-                                    Rating (Condition): Fair<br>
-                                    Price: $50.00<br>
-                                    Location: SFSU Library Cafe<br>
-                                    Description: It's a red couch that can seat four people.<br>
-                                    Status: Pending
-                                </p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
                 <!-- end My Postings More Info Buttons -->
                 
             </div>
@@ -184,61 +115,65 @@
             <!-- Messages Sent Tab -->
             <div class="tab-pane fade" id="v-pills-messages-sent" role="tabpanel" aria-labelledby="v-pills-messages-sent-tab">
                 <h1 class="text-center">Messages Sent</h1>
-                <h6>1 of 1 item(s)</h6>
+                <h6>{{(messagesSentInfo|length)}} of {{(messagesSentContent|length)}} item(s)</h6>
                 <!-- Messages Sent Item Table-->
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
                             <th scope="col">Date Sent</th>
                             <th scope="col">Receiver id</th>
-                            <th scope="col">Item Title</th>
+                            <th scope="col">Message Title</th>
                             <th scope="col">Details</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">10/10/20</th>
-                            <td>12345</td>
-                            <td>Automotive Mechanics Textbook</td>
-                            <td>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#messages-sent-1">
-                                    View Details
-                                </button>
-                            </td>
-                        </tr>
+                        {% for counter in range(messagesSentInfo|length) %}
+                            <tr>
+                                {% set offer = messagesSentInfo[loop.index-1] %}
+                                {% set offer_info = messagesSentContent[loop.index-1] %}
+                                <th scope="row">{{offer_info[5]}}</th>
+                                <td>{{offer_info[1]}}</td>
+                                <td>{{offer_info[3]}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#messages-sent-{{offer_info[2]}}">
+                                        View Details
+                                    </button>
+                                </td>
+                            </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
                 <!-- end Messages Sent Item Table-->
 
                 <!-- Messages Sent View Details Buttons -->
                 <!-- When the user clicks View Details, the info comes in the form of a pop-up (Info is hardcoded for now.)-->
-                <div class="modal fade" id="messages-sent-1" tabindex="-1" role="dialog" aria-labelledby="messages-sent-1-Title" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="messages-sent-1-Title">Automotive Mechanics Textbook</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p>
-                                    Item Title: Automotive Mechanics Textbook<br>
-                                    Category: Book<br>
-                                    Rating (Condition): Used<br>
-                                    Price: $10.00<br>
-                                    Location: SFSU Library Cafe<br>
-                                    Pick-Up Time: 12:00PM><br>
-                                    Message: Hi, would you be willing to accept $10. My e-mail 
-                                    is ****@mail.sfsu.edu if you want to contact me.<br>
-                                </p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                {% for counter in range(messagesSentInfo|length) %}
+                    {% set offer = messagesSentInfo[loop.index-1] %}
+                    {% set offer_info = messagesSentContent[loop.index-1] %}
+                    <div class="modal fade" id="messages-sent-{{offer_info[2]}}" tabindex="-1" role="dialog" aria-labelledby="messages-sent-{{offer_info[2]}}-Title" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="messages-sent-1-Title">{{offer_info[3]}}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>
+                                        Message Title: {{offer_info[3]}}<br>
+                                        Price: ${{offer[4]}}<br>
+                                        Location: {{offer[5]}}<br>
+                                        Message: {{offer_info[4]}}<br>
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                {% endfor %}
                 <!-- end Messages Sent View Details Buttons -->
 
             </div>
@@ -247,65 +182,37 @@
             <!-- Messages Received Tab -->
             <div class="tab-pane fade" id="v-pills-messages-received" role="tabpanel" aria-labelledby="v-pills-messages-received-tab">
                 <h1 class="text-center">Messages Received</h1>
-                <h6>1 of 1 item(s)</h6>
+                <h6>{{(messagesReceivedInfo|length)}} of {{(messagesReceivedContent|length)}} item(s)</h6>
 
                 <!-- Messages Received Item Table -->
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
                             <th scope="col">From</th>
-                            <th scope="col">Item Title</th>
+                            <th scope="col">Message Title</th>
                             <th scope="col">Offer</th>
-                            <th scope="col">Pick-Up Time</th>
                             <th scope="col">Location</th>
                             <th scope="col">Message</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">User1532</th>
-                            <td>Software Engineering Book</td>
-                            <td>$75.00</td>
-                            <td>7/5/20 12:00PM</td>
-                            <td>Library</td>
-                            <td>I'll be at the bench near the entrance.</td>
-                        </tr>
-                    </tbody>
+                    {% for counter in range(messagesReceivedInfo|length) %}
+                        {% set offer = messagesReceivedInfo[loop.index-1] %}
+                        {% set offer_info = messagesReceivedContent[loop.index-1] %}
+                        <tbody>
+                            <tr>
+                                <th scope="row">{{offer_info[0]}}</th>
+                                <td>{{offer_info[3]}}</td>
+                                <td>${{offer[4]}}</td>
+                                <td>{{offer_info[5]}}</td>
+                                <td>{{offer[5]}}</td>
+                            </tr>
+                        </tbody>
+                    {% endfor %}
                 </table>
                 <!-- end Messages Received Item Table -->
 
             </div>
             <!-- end Messages Received Tab -->
-
-            <!-- My Class Resources Tab -->
-            <div class="tab-pane fade" id="v-pills-my-class-resources" role="tabpanel" aria-labelledby="v-pills-my-class-resources-tab">
-                <div class="text-center">
-                    <h1>My Class Resources</h1>
-                    <a class="btn btn-primary" href="/classResource" role="button">New Class Resource</a>
-                </div>
-                <div>
-                    <h6>0 of 0 item(s)</h6>
-                </div>
-
-                <!-- My Class Resources Item Table -->
-                <table class="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">Date Posted</th>
-                            <th scope="col">Class Resource</th>
-                            <th scope="col">More Info</th>
-                            <th scope="col">Delete</th>
-                            <th scope="col">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                    </tbody>
-                </table>
-                <!-- end My Class Resources Item Table -->
-
-            </div>
-            <!-- end My Class Resources Tab -->
         </div>
     </div>
     <!-- end Sidebar Tab Content -->
