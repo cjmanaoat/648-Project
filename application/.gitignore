@@ -1,10 +1,7 @@
 #folders
 venv/
 node_modules/
-templates(original)
-static/listing_images/*
+static/listing_images/*.jpg
+db_tools/__pycache__
 
 #individual files
-templates/oldcode.html
-templates/captchaTest.html
-!static/listing_images/sql_upload.py
