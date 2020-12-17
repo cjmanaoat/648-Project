@@ -382,7 +382,7 @@ def search():
             blob2Img(listing)
         if len(data) == 0:  # no results from query. lists all items
             #print('no results')
-            cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, `condition` FROM Trademart.Listing WHERE approval_status=1') #query to grab data
+            cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc FROM Trademart.Listing WHERE approval_status=1') #query to grab data
             conn.commit()
             data = cursor.fetchall() # gets all data from query
             # creates image for each listing
