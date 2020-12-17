@@ -11,14 +11,37 @@
 {% extends "base.html" %}
 {% block content %}
 <head>
-	    <title>SFSU TradeMart</title>
+	    <title>Create Listing</title>
 </head>
 <div class="container">
     <center>
         <h1>Create A Listing</h1>
     </center>
 
-    <form name="createListingForm" href="#" onsubmit="captchaCheck()">
+    {% if popUp == 'True' %}
+    <script>
+        $(window).on('load', function () {
+            $('#myModal').modal('show');
+        });
+    </script>
+
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <center>
+                        {{message}}
+                    </center>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary mx-auto" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <form name="createListingForm" href="#" method="POST" enctype="multipart/form-data">
         <center>
             <p>* = Required</p>
         </center>
@@ -40,10 +63,10 @@
             </div>
             <div class="col">
                 <select name="category" id="category" required>
-                    <option value="books">Books</option>
-                    <option value="editing">Editing</option>
-                    <option value="electronics">Electronics</option>
-                    <option value="furniture">Furniture</option>
+                    <option value="Books">Books</option>
+                    <option value="Editing">Editing</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Furniture">Furniture</option>
                     <option value="Tutoring">Tutoring</option>
                 </select>
             </div>
@@ -84,9 +107,9 @@
             </div>
             <div class="col">
                 <select name="location" id="location" required>
-                    <option value="library">Library</option>
-                    <option value="bookstore">Outside Bookstore</option>
-                    <option value="gym">Wellness Center</option>
+                    <option value="Library">Library</option>
+                    <option value="Bookstore">Outside Bookstore</option>
+                    <option value="Gym">Wellness Center</option>
                 </select>
             </div>
         </div>
@@ -119,8 +142,8 @@
                     <div class="btn-group" role="group" aria-label="cancel">
                         <button type="button" class="btn btn-primary">Cancel</button>
                     </div>
-                    <div class="btn-group" role="group" aria-label="contact">
-                        <button type="button" class="btn btn-primary" id="submitButton" data-toggle="modal" data-target="#lazy-registration">Create Listing**</button>
+                    <div class="btn-group" role="group" aria-label="submit">
+                        <button type="submit" class="btn btn-primary" id="submitButton" data-toggle="modal" data-target="#lazy-registration">Create Listing**</button>
                     </div>
                 </div>
             </div>
@@ -131,11 +154,11 @@
 
         <div class="row">
             <div class="col">
-                <p><center>**It will take up to 24 horus to approve listing</center></p>
+                <p><center>**It will take up to 24 hours to approve listing</center></p>
             </div>
         </div>
-
-        <div class="modal" id="lazy-registration" tabindex="-1" role="form" aria-labelledby="lazy-registration-window" aria-hidden="true">
+        {% if username == '' %}
+        <div class="modal" id="lazy-registration" tabindex="0" role="form" aria-labelledby="lazy-registration-window" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -146,12 +169,15 @@
                     </div>
                     <div class="modal-body">
                         <h2>LOG IN</h2>
-                        <center><label for="username">Username: </label>
-                        <input type="text" name="username" id="username"></center>
+                        <center><label for="loginEmail">Email: </label>
+                        <input type="text" name="loginEmail" id="loginEmail" required></center>
                         <br>
                         <center><label for="password">Password: </label>
-                        <input type="password" name="password" id="password"></center>
+                        <input type="password" name="password" id="password" required></center>
                         <center><a href="" class="nav-link" id="forgotPassword">Forgot Password</a></center>
+                        <center><div class="btn-group" role="group" aria-label="submit">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div></center>
                         <br>
                         <h2>OR</h2>
                         <div class="nav-item">
@@ -161,6 +187,8 @@
                 </div>
             
             </div>
+        </div>
+        {% endif %}    
     </form>
 </div>
 {% endblock %}
