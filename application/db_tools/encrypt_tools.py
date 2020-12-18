@@ -1,5 +1,6 @@
 import argparse
 import mysql.connector
+import os
 from mysql.connector import Error
 
 from cryptography.fernet import Fernet
@@ -20,10 +21,10 @@ def encrypt_email(user_id, email, f):
     args = (ciphered_email, user_id)
 
     try:
-        conn =  mysql.connector.connect(host='trademart.c9x2rihy8ycd.us-west-1.rds.amazonaws.com',
-                database='Trademart',
-                user='root',
-                password='trademartadmin')
+        conn =  mysql.connector.connect(host=os.getenv("MYSQL_DATABASE_HOST"),
+                database=os.getenv("MYSQL_DATABASE_DB"),
+                user=os.getenv("MYSQL_DATABASE_USER"),
+                password=os.getenv("MYSQL_DATABASE_PASSWORD"))
         cursor = conn.cursor()
         cursor.execute(query, args)
         conn.commit()
