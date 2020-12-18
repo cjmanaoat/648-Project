@@ -105,9 +105,12 @@
             </div>
             <div class="col">
                 <select name="location" id="location" required>
-                    <option value="Library">Library</option>
-                    <option value="Bookstore">Outside Bookstore</option>
-                    <option value="Gym">Wellness Center</option>
+                    {% for location in locations %}
+                        <option value="{{location[0]}}">{{location[0]}}</option>
+                        <!-- <option value="library">Library</option>
+                        <option value="bookstore">Outside Bookstore</option>
+                        <option value="gym">Wellness Center</option> -->
+                        {% endfor %}
                 </select>
             </div>
         </div>
