@@ -107,7 +107,7 @@ def classResource():
     return render_template('/classResource.html') #loads class resource page
 
 # dashboard page
-@app.route('/dashboard/')
+@app.route('/dashboard/', methods=['POST', 'GET'])
 def dashboard():
     if 'loggedIn' in session: # checks if user is logged in
         # print('logged in')
@@ -116,7 +116,18 @@ def dashboard():
         # print('not logged in')
         username = ''
         return redirect(url_for('home'))
-    
+
+    if request.method == "POST":
+        print(request.form)
+        print(request.args)
+        if 'deleteListID' in request.form:
+            #The query to be run to delete the appropriate listing when called
+            print("Here")
+            cursor.execute('DELETE \
+                    FROM Trademart.Listing \
+                    WHERE user_id=%s AND list_id=%s', (session['id'], request.form['deleteListID']))  
+            conn.commit() 
+
     # Get all the post query contents for My Postings section of Dashboard
     cursor.execute('SELECT list_title, list_date, approval_status, list_category, listing_condition, suggest_price, pref_location, list_desc, list_id \
                 FROM Trademart.Listing \
