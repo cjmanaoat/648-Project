@@ -62,7 +62,9 @@
                 <div class="row">
                     <div class="col">
                         <label for="emailAddress">* Email address</label> <br>
-                        <input type="text" id="emailAddress" name="loginEmail" onblur="emailCheck()" onfocus="emailCheck()" style="width: 100%" maxlength="45" required>
+                        <input type="text" id="emailAddress" name="loginEmail"
+                            onblur="emailCheck(); return specialCharCheck('emailAddress')" onfocus="emailCheck()"
+                            style="width: 100%" maxlength="45" required>
                         <label for="emailAddress" id="emailError" style="color: red;"></label>
                         <br>
                         <label class="text-muted" for="emailAddress">We'll never share your email with anyone
@@ -74,7 +76,8 @@
                 <!-- password -->
                 <div>
                     <label for="password">Password</label> <br>
-                    <input type="password" id="password" name="password" style="width: 100%;" maxlength="45" required>
+                    <input type="password" id="password" name="password" style="width: 100%;" maxlength="45" required
+                        onblur="return alphaNumericCheck('password')">
                 </div>
                 <!-- end password -->
 

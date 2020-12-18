@@ -2,12 +2,12 @@ import argparse
 import mysql.connector
 from mysql.connector import Error
 
-parser = argparse.ArgumentParser(description="Parser for updating blob images")
-parser.add_argument("user", help="Username for logging into the DB", type=str)
-parser.add_argument("password", help="DB Password", type=str)
-parser.add_argument("list_id", help="Listing ID that needs picture", type=int)
-parser.add_argument("path", help='Path to image', type=str)
-p_args = parser.parse_args()
+# parser = argparse.ArgumentParser(description="Parser for updating blob images")
+# parser.add_argument("user", help="Username for logging into the DB", type=str)
+# parser.add_argument("password", help="DB Password", type=str)
+# parser.add_argument("list_id", help="Listing ID that needs picture", type=int)
+# parser.add_argument("path", help='Path to image', type=str)
+# p_args = parser.parse_args()
 
 def read_file(filename):
     with open(filename, 'rb') as file:
@@ -32,8 +32,8 @@ def update_blob(list_id, filename):
     try:
         conn =  mysql.connector.connect(host='trademart.c9x2rihy8ycd.us-west-1.rds.amazonaws.com',
                 database='Trademart',
-                user=p_args.user,
-                password=p_args.password)
+                user='root',
+                password='trademartadmin')
         cursor = conn.cursor()
         cursor.execute(query, args)
         conn.commit()
@@ -53,10 +53,10 @@ def read_blob(list_id, path):
         # get blob data from listing
         conn =  mysql.connector.connect(host='trademart.c9x2rihy8ycd.us-west-1.rds.amazonaws.com',
                 database='Trademart',
-                user=p_args.user,
-                password=p_args.password)
+                user='root',
+                password='trademartadmin')
         cursor = conn.cursor()
-        cursor.execute(query, (p_args.list_id,))
+        cursor.execute(query, (list_id))
         image = cursor.fetchone()[0]
 
         #write blob data into a file
@@ -70,9 +70,9 @@ def read_blob(list_id, path):
         conn.close()
 
 def main():
-    update_blob(p_args.list_id, p_args.path)
+    # update_blob(p_args.list_id, p_args.path)
 
    #read_blob(19273, "converted_images\imagename.jpg")
 
-if __name__ == '__main__':
-    main()
+    if __name__ == '__main__':
+        main()
