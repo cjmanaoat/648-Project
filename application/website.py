@@ -34,7 +34,7 @@ app.secret_key = 'csc648sfsutrademart' # key for session purposes
 
 #load config file
 config =  configparser.ConfigParser()
-config.read('config.dat')
+config.read('/home/dasfiter/CSC648/application/config.dat')
 if 'credentials' in config:
     # sql config
     creds = config['credentials']
