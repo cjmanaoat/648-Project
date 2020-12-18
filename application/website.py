@@ -631,6 +631,10 @@ def contact():
         # print('not logged in')
         username = ''
 
+    cursor.execute('SELECT location_name FROM Trademart.Location')
+    conn.commit()
+    locations = cursor.fetchall() #gets all locations
+
     if request.method == 'POST':
         listingId = request.form['listingId'] # gets listing id provided
         cursor.execute('SELECT list_title, suggest_price, image, list_id, \
@@ -658,12 +662,12 @@ def contact():
             returnData = signInFunc(loginEmail, password)
             if(returnData[0] == False):
                 message = "Incorrect email/password."
-                return render_template('contact.html', data=data, username=username, message=message, popUp = 'True')
+                return render_template('contact.html', data=data, username=username, locations=locations, message=message, popUp = 'True')
 
     if request.method == 'POST':
         if(not request.form.get('user_message', False)
             and not request.form.get('user_pref_location', False)):
-            return render_template('contact.html', data=data, username=username) # loads contact owner page
+            return render_template('contact.html', data=data, username=username, locations=locations) # loads contact owner page
         
         userMessage = request.form['user_message']
         userLocation = request.form['user_pref_location']
@@ -807,7 +811,7 @@ def listing():
             blob2Img(listing)
             userId = listing[5]
         # print(userId)
-        cursor.execute('SELECT user_name, user_rating\
+        cursor.execute('SELECT user_name\
                         FROM Trademart.User\
                         WHERE user_id= % s ', userId)
         conn.commit()
@@ -820,7 +824,7 @@ def listing():
 # this function converts a blob to an image of type jpg
 def blob2Img(listing):
     fileName = str(listing[3]) + ".jpg"
-    path = "/home/dasfiter/CSC648/application/static/listing_images/"+fileName
+    path = "/home/student/Desktop/csc648-03-fa20-team07/application/static/listing_images/"+fileName
     # path = "static/listing_images/"+fileName
     #print(path)
     # size = sys.getsizeof(listing[11])
@@ -836,10 +840,10 @@ def blob2Img(listing):
                 file.close()
             # loop to create thumbnails
             for size, name in sizes:
-                im = Image.open("/home/dasfiter/CSC648/application/static/listing_images/%s" % fileName)
+                im = Image.open("/home/student/Desktop/csc648-03-fa20-team07/application/static/listing_images/%s" % fileName)
                 # im = Image.open("static/listing_images/%s" % fileName)
                 im.thumbnail((im.width//size, im.height//size))
-                im.save("/home/dasfiter/CSC648/application/static/listing_images/thumbnail_%s_%s_size.jpg" % (fileName[:-4], name))
+                im.save("/home/student/Desktop/csc648-03-fa20-team07/application/static/listing_images/thumbnail_%s_%s_size.jpg" % (fileName[:-4], name))
                 # im.save("static/listing_images/thumbnail_%s_%s_size.jpg" % (fileName[:-4], name))
         
 def signInFunc(email, password):

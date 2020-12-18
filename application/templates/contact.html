@@ -85,9 +85,12 @@
                 <td><label for="user_pref_location">Your<br>preferred<br>location:</label></td>
                 <td>
                     <select name="user_pref_location" id="user_pref_location">
-                        <option value="library">Library</option>
+                        {% for location in locations %}
+                        <option value="{{location[0]}}">{{location[0]}}</option>
+                        <!-- <option value="library">Library</option>
                         <option value="bookstore">Outside Bookstore</option>
-                        <option value="gym">Wellness Center</option>
+                        <option value="gym">Wellness Center</option> -->
+                        {% endfor %}
                     </select>
                 </td>
             </tr>
