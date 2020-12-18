@@ -1,6 +1,5 @@
 <!--
      itempage.html
-
      Description: The itempage will show the results of the item that was chosen
      in the search results page. By choosing a specific item, the information will 
      be retrieved from the DB and be displayed on this page. The content should 
@@ -43,7 +42,7 @@
         <br>
         {% set userName = userData[0]%}
         {% set userRating = userData[1] %}
-        <p>From:{{userName}} (Rating: {{userRating}}/5)</p>
+        <p>From: {{userName}} (Rating: {{userRating}}/5)</p>
         <br>
         {% set listingQuality = listingData[6] %}
         <p>Quality: {{listingQuality}} </p>
@@ -62,12 +61,13 @@
         <div class="row">
             <div class="col">
             </div>
-            <!-- Make Offer Button -->
+            <!-- Contact Seller Button -->
             <div class="btn-toolbar justify-content-between">
-                <div class="btn-group" role="group" aria-label="Make Offer">
-                    <button type="button" class="btn btn-primary">Make Offer</button>
+                <div class="btn-group" role="group" aria-label="Contact Seller">
+                  <a href="/contact" class="btn btn-info" role="button">Contact Seller</a>
+                  <!--- <button type="button" class="btn btn-primary">Contact Seller</button> -->
                 </div>
-            </div>
+              </div>
             <div class="col">
             </div>
         </div>
@@ -76,11 +76,11 @@
             <div class="col">
             </div>
             <!-- Return Button -->
-            <div class="btn-toolbar justify-content-between">
+            <!--<div class="btn-toolbar justify-content-between">
                 <div class="btn-group" role="group" aria-label="Return">
                     <button type="button" class="btn btn-primary">Return</button>
                 </div>
-            </div>
+            </div> -->
             <div class="col">
             </div>
         </div>

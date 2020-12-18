@@ -68,7 +68,8 @@
         <div class="row">
             <div class="col">
                 <label for="firstName">* First Name</label> <br>
-                <input type="text" id="firstName" name="firstName" maxlength="45" required>
+                <input type="text" id="firstName" name="firstName" maxlength="45" required
+                    onblur="return alphaNumericCheck('firstName')">
             </div>
         </div>
         <!-- end first name -->
@@ -77,7 +78,8 @@
         <div class="row">
             <div class="col">
                 <label for="lastName">* Last Name</label> <br>
-                <input type="text" id="lastName" name="lastName" maxlength="45" required>
+                <input type="text" id="lastName" name="lastName" maxlength="45" required
+                    onblur="return alphaNumericCheck('lastName')">
             </div>
         </div>
         <!-- end last name -->
@@ -86,7 +88,8 @@
         <div class="row">
             <div class="col">
                 <label for="userName">* Username</label> <br>
-                <input type="text" id="userName" name="userName" maxlength="45" required>
+                <input type="text" id="userName" name="userName" maxlength="45" required
+                    onblur="return alphaNumericCheck('userName')">
                 <br> <br> <br>
             </div>
         </div>
@@ -96,8 +99,9 @@
         <div class="row">
             <div class="col">
                 <label for="emailAddress">* Email address</label> <br>
-                <input type="text" id="emailAddress" name="emailAddress" onblur="emailCheck()" onfocus="emailCheck()"
-                    maxlength="45" required>
+                <input type="text" id="emailAddress" name="emailAddress"
+                    onblur="emailCheck(); return specialCharCheck(emailAddress)" onfocus="emailCheck()" maxlength="45"
+                    required>
                 <label for="emailAddress" id="emailError" style="color: red;"></label>
                 <br>
                 <label class="text-muted" for="emailAddress">Only accepts SFSU email</label> <br>
@@ -109,7 +113,8 @@
         <div class="row">
             <div class="col">
                 <label for="passInit">* Enter Password</label> <br>
-                <input type="password" id="passInit" name="passInit" maxlength="45" required>
+                <input type="password" id="passInit" name="passInit" maxlength="45" required
+                    onblur="return alphaNumericCheck('passInit')">
             </div>
         </div>
         <!-- end create password -->
@@ -118,9 +123,10 @@
         <div class="row">
             <div class="col">
                 <label for="passConfirm">* Confirm Password</label> <br>
-                <input type="password" id="passConfirm" name="passConfirm" onblur="passVerify()" maxlength="45"
-                    required>
-                <label for="passConfirm" id="passError" style="color:red" onblur="passVerify()"></label>
+                <input type="password" id="passConfirm" name="passConfirm"
+                    onblur="passVerify(); return alphaNumericCheck('passConfirm')" maxlength="45" required onsubmit="">
+                <label for="passConfirm" id="passError" style="color:red"
+                    onblur="passVerify(); return alphaNumericCheck('passConfirm')"></label>
                 <br> <br>
             </div>
         </div>

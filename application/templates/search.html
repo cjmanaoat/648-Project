@@ -131,7 +131,15 @@
           <img class="listingImg" src="{{path}}" width="300" height="300">
           <br>
           <center>
-            <p style="font-size: 1.5vw;"> <b>{{listing[0]}} </b> </p>
+            <form method="POST" action="listing" target="_blank">
+              <h1>
+               <input type="hidden" name="listingId" value="{{listing[3]}}">
+               <button style="background: none; border: none;" formaction="/listing">{{listing[0]}}</button>
+              </h1>  
+              </form>
+              <!--
+              <p style="font-size: 1.5vw;"> <b>{{listing[0]}}</b> </p> 
+              -->
           </center>
           <br>
         </div>
@@ -142,15 +150,14 @@
           <br>
           <p style="font-size: 1.25vw;">Quality: {{listing[5]}} </p>
           <br>
-          <form method="POST" action="contact" target="_blank">
+          <!---
           <div class="btn-toolbar justify-content-between">
-            <input type="hidden" name="listingId" value="{{listing[3]}}">
             <div class="btn-group" role="group" aria-label="Contact Seller">
-              <!-- <a href="/contact" class="btn btn-info" role="button">Contact Seller</a> -->
-              <button class="btn btn-primary" formaction="contact">Contact Seller</button>
+              <a href="/contact" class="btn btn-info" role="button">Contact Seller</a>
+               <button type="button" class="btn btn-primary">Contact Seller</button>
             </div>
           </div>
-          </form>
+           -->
         </div>
         <!--
         <div>

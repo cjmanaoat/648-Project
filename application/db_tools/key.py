@@ -12,4 +12,4 @@ def load_key():
     with open("/home/student/Desktop/csc648-03-fa20-team07/credentials/key.key", "rb") as file_load:
         return file_load.read()
     # with open("../credentials/key.key", "rb") as file_load:
-    #     return file_load.read()
+        # return file_load.read()
