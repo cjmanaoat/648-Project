@@ -1,4 +1,5 @@
 import argparse
+import os
 import mysql.connector
 from mysql.connector import Error
 
@@ -29,6 +30,7 @@ def update_blob(list_id, filename):
 
     args = (data, list_id)
 
+
     try:
         conn =  mysql.connector.connect(host=os.getenv("MYSQL_DATABASE_HOST"),
                 database=os.getenv("MYSQL_DATABASE_DB"),
@@ -37,11 +39,10 @@ def update_blob(list_id, filename):
         cursor = conn.cursor()
         cursor.execute(query, args)
         conn.commit()
-    except Error as e:
-        print(e)
-    finally:
         cursor.close()
         conn.close()
+    except Error as e:
+        print(e)
 
 # read blob data to a file so we can actually use the image
 def read_blob(list_id, path):
