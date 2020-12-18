@@ -807,7 +807,7 @@ def listing():
             blob2Img(listing)
             userId = listing[5]
         # print(userId)
-        cursor.execute('SELECT user_name, user_rating\
+        cursor.execute('SELECT user_name\
                         FROM Trademart.User\
                         WHERE user_id= % s ', userId)
         conn.commit()
