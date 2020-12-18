@@ -385,7 +385,7 @@ def search():
             blob2Img(listing)
         if len(data) == 0:  # no results from query. lists all items
             #print('no results')
-            cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, `condition` FROM Trademart.Listing WHERE approval_status=1') #query to grab data
+            cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, `listing_condition` FROM Trademart.Listing WHERE approval_status=1') #query to grab data
             conn.commit()
             data = cursor.fetchall() # gets all data from query
             # creates image for each listing
@@ -551,18 +551,80 @@ def logOut():
 # contact listing owner
 @app.route('/contact', methods=['POST', 'GET'])
 def contact():
+    if 'loggedIn' in session: # checks if user is logged in
+        # print('logged in')
+        username = session['username'] # sets appropriate login name
+    else: # user isnt logged in
+        # print('not logged in')
+        username = ''
+
+    message = ''
+    # checks if user is logged in before sending message
+    if ('loggedIn' not in session):
+        if (request.method == 'POST'
+        and 'loginEmail' in request.form
+        and 'password' in request.form):
+            loginEmail = request.form['loginEmail']
+            password = request.form['password']
+            accountFound = False
+
+            returnData = []
+            returnData = signInFunc(loginEmail, password)
+            if(returnData[0] == False):
+                message = "Incorrect email/password."
+                return render_template('createListing', message, popUp = 'True')
+
     if request.method == 'POST':
         listingId = request.form['listingId'] # gets listing id provided
-        cursor.execute('SELECT list_id, list_desc, image, list_title, \
-                condition, pref_location, suggest_price, offer_type \
+
+        cursor.execute('SELECT list_title, suggest_price, image, list_id, \
+                list_desc, listing_condition, pref_location, user_id \
                 FROM Trademart.Listing \
                 WHERE approval_status=1 \
                 AND list_id=%s\
                 order by list_date desc', listingId) # query to get data
         conn.commit()
-        data = cursor.fetchall() # gets all data from query
-        return render_template('contact.html', data=data) # loads contact owner page
-    return render_template('contact.html') # laods contact owner page
+        data = cursor.fetchall() # gets data from query
+        for listing in data:
+            blob2Img(listing)
+                    
+
+        if(not request.form.get('user_message', False)
+            and not request.form.get('user_pref_location', False)):
+            return render_template('contact.html', data=data, username=username) # loads contact owner page
+        
+        userMessage = request.form['user_message']
+        userLocation = request.form['user_pref_location']
+        idExists = True
+        offerId = random.randint(100000000, 999999998)
+        while idExists:
+            returnId = cursor.execute('SELECT user_id\
+                                        FROM Trademart.User\
+                                        WHERE user_id= % s ', listingId)
+            conn.commit()
+            if(returnId):
+                offerId = random.randint(100000000, 999999998)
+            else:
+                idExists = False           
+        now = datetime.now()
+        messageTime = now.strftime("%Y-%m-%d %H:%M:%S")
+        senderId = session['id']
+        for listing in data:
+            receiverId = listing[7]
+            listingTitle = listing[0]
+        title = "Interested in " + listing[0]
+        offerCreated = cursor.execute('INSERT INTO Trademart.Offer\
+            (offer_id, seller_id, buyer_id, listing_id, location)\
+            VALUES(%s, %s, %s, %s, %s) ', (offerId, receiverId, senderId, listingId, userLocation))
+        conn.commit()        
+        messageCreated = cursor.execute('INSERT INTO Trademart.Message\
+            (sender_id, receiver_id, offer_id, title, text, msg_datetime)\
+            VALUES(%s, %s, %s, %s, %s, %s) ', (senderId, receiverId, offerId, title, userMessage, messageTime))
+        conn.commit()
+        if offerCreated and messageCreated:
+            message = 'Message was successfully sent'
+            return redirect(url_for('home', message=message, popUp='True', username=username))
+    return render_template('contact.html', username=username) # laods contact owner page
 
 # create a listing
 @app.route("/createListing", methods=["POST", "GET"])
@@ -610,7 +672,10 @@ def createListing():
             or not price
             or not location):
                 message = 'Please fill out all required fields'
-                return render_template('createListing.html', popUp='True',message=message)
+                return render_template('createListing.html', popUp='True',message=message, username=username)
+        elif (not isinstance(price, int) and not isinstance(price, float)):
+            message = 'Please enter a number for the price'
+            return render_template('createListing.html', popUp='True', message=message, username=username)
 
         idExists = True
         listingId = random.randint(100000000, 999999998)
