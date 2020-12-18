@@ -62,12 +62,15 @@
             <div class="col">
             </div>
             <!-- Contact Seller Button -->
+            <form method="POST" action="contact" target="_blank">
             <div class="btn-toolbar justify-content-between">
+                <input type="hidden" name="listingId" value="{{listingData[3]}}">
                 <div class="btn-group" role="group" aria-label="Contact Seller">
-                  <a href="/contact" class="btn btn-info" role="button">Contact Seller</a>
-                  <!--- <button type="button" class="btn btn-primary">Contact Seller</button> -->
+                  <!-- <a href="/contact" class="btn btn-info" role="button">Contact Seller</a> -->
+                  <button class="btn btn-primary" formaction="contact">Contact Seller</button>
                 </div>
               </div>
+            </form>  
             <div class="col">
             </div>
         </div>
