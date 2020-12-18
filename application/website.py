@@ -32,10 +32,10 @@ app = Flask(__name__)
 app.secret_key = 'csc648sfsutrademart' # key for session purposes
 
 # sql config
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'trademartadmin'
-app.config['MYSQL_DATABASE_DB'] = 'Trademart'
-app.config['MYSQL_DATABASE_HOST'] = 'trademart.c9x2rihy8ycd.us-west-1.rds.amazonaws.com'
+app.config['MYSQL_DATABASE_USER'] = os.getenv('MYSQL_DATABASE_USER')
+app.config['MYSQL_DATABASE_PASSWORD'] = os.getenv('MYSQL_DATABASE_PASSWORD')
+app.config['MYSQL_DATABASE_DB'] = os.getenv('MYSQL_DATABASE_DB')
+app.config['MYSQL_DATABASE_HOST'] = os.getenv('MYSQL_DATABASE_HOST')
 # app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 
 mysql = MySQL()
@@ -143,6 +143,7 @@ def dashboard():
                 order by listing_id desc', session['id'])
     conn.commit()
     messagesSentInfo = cursor.fetchall()
+    print(messagesSentInfo)
 
     cursor.execute('SELECT sender_id, receiver_id, offer_id, title, text, msg_datetime \
                 FROM Trademart.Message \
@@ -150,6 +151,7 @@ def dashboard():
                 order by msg_datetime desc', session['id'])
     conn.commit()
     messagesSentContent = cursor.fetchall()
+    print(messagesSentContent)
 
     # Get all the post query contents for Messages Received section of Dashboard
     cursor.execute('SELECT offer_id, seller_id, buyer_id, listing_id, offer_amount, location \
