@@ -9,7 +9,7 @@ def write_key():
 
 # call everytime you need to get the key
 def load_key():
-    with open("/home/student/Desktop/csc648-03-fa20-team07/credentials/key.key", "rb") as file_load:
+    with open("/home/dasfiter/CSC648/credentials/key.key", "rb") as file_load:
         return file_load.read()
     # with open("../credentials/key.key", "rb") as file_load:
         # return file_load.read()
