@@ -702,11 +702,12 @@ def contact():
         senderId = session['id']
         for listing in data:
             receiverId = listing[7]
+            listingPrice = listing[1]
             listingTitle = listing[0]
         title = "Interested in " + listing[0]
         offerCreated = cursor.execute('INSERT INTO Trademart.Offer\
-            (offer_id, seller_id, buyer_id, listing_id, location)\
-            VALUES(%s, %s, %s, %s, %s) ', (offerId, receiverId, senderId, listingId, userLocation))
+            (offer_id, seller_id, buyer_id, listing_id, offer_amount, location)\
+            VALUES(%s, %s, %s, %s, %s, %s) ', (offerId, receiverId, senderId, listingId, listingPrice, userLocation))
         conn.commit()        
         messageCreated = cursor.execute('INSERT INTO Trademart.Message\
             (sender_id, receiver_id, offer_id, title, text, msg_datetime)\
@@ -726,6 +727,10 @@ def createListing():
     else: # user isnt logged in
         # print('not logged in')
         username = ''
+
+    cursor.execute('SELECT location_name FROM Trademart.Location')
+    conn.commit()
+    locations = cursor.fetchall() #gets all locations
     
     message = ''
     # checks if user is logged in before creating listing
@@ -741,7 +746,7 @@ def createListing():
             returnData = signInFunc(loginEmail, password)
             if(returnData[0] == False):
                 message = "Incorrect email/password."
-                return render_template('createListing', message, popUp = 'True')
+                return render_template('createListing.html', locations=locations, message=message, popUp = 'True')
 
     if (request.method == 'POST'):
         listingTitle = request.form['listingTitle']
@@ -761,10 +766,10 @@ def createListing():
             or not price
             or not location):
                 message = 'Please fill out all required fields'
-                return render_template('createListing.html', popUp='True',message=message, username=username)
+                return render_template('createListing.html', popUp='True',message=message, username=username, locations=locations)
         elif (not isinstance(price, int) and not isinstance(price, float)):
             message = 'Please enter a number for the price'
-            return render_template('createListing.html', popUp='True', message=message, username=username)
+            return render_template('createListing.html', popUp='True', message=message, username=username, locations=locations)
 
         idExists = True
         listingId = random.randint(100000000, 999999998)
@@ -794,9 +799,9 @@ def createListing():
                 update_blob(listingId, image.filename)
                 os.remove(image.filename)
             message='Listing was successfully created. It will take up to 24 hours to approve listing.'
-            return redirect(url_for('home', message=message, popUp='True', username=username))
+            return redirect(url_for('home', locations=locations, message=message, popUp='True', username=username))
 
-    return render_template("createListing.html", username=username) # loads creating a listing page
+    return render_template("createListing.html", username=username, locations=locations) # loads creating a listing page
 
 # listing
 @app.route('/listing', methods=['POST', 'GET'])
