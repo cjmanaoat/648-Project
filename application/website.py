@@ -11,6 +11,7 @@
 # TODO implement rest of the endpoints with sessions
 
 # imports
+import configparser
 import os
 import pathlib
 import re
@@ -31,15 +32,24 @@ from db_tools.key import *
 app = Flask(__name__)
 app.secret_key = 'csc648sfsutrademart' # key for session purposes
 
-# sql config
-app.config['MYSQL_DATABASE_USER'] = os.getenv('MYSQL_DATABASE_USER')
-app.config['MYSQL_DATABASE_PASSWORD'] = os.getenv('MYSQL_DATABASE_PASSWORD')
-app.config['MYSQL_DATABASE_DB'] = os.getenv('MYSQL_DATABASE_DB')
-app.config['MYSQL_DATABASE_HOST'] = os.getenv('MYSQL_DATABASE_HOST')
-# app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+#load config file
+config =  configparser.ConfigParser()
+config.read('/home/dasfiter/CSC648/application/config.dat')
+if 'credentials' in config:
+    # sql config
+    creds = config['credentials']
+    app.config['MYSQL_DATABASE_USER'] = creds['MYSQL_DATABASE_USER']
+    app.config['MYSQL_DATABASE_PASSWORD'] = creds['MYSQL_DATABASE_PASSWORD']
+    app.config['MYSQL_DATABASE_DB'] = creds['MYSQL_DATABASE_DB']
+    app.config['MYSQL_DATABASE_HOST'] = creds['MYSQL_DATABASE_HOST']
+    # app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+else:
+    print("Credentials not found, check config file?")
+    sys.exit(1)
 
 mysql = MySQL()
 mysql.init_app(app)
+
 conn = mysql.connect()
 cursor = conn.cursor()
 # end sql config
