@@ -46,6 +46,7 @@ if 'credentials' in config:
 else:
     print("Credentials not found, check config file?")
     sys.exit(1)
+
 mysql = MySQL()
 mysql.init_app(app)
 

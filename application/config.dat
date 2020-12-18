@@ -1,0 +1,5 @@
+[credentials]
+MYSQL_DATABASE_HOST = trademart.c9x2rihy8ycd.us-west-1.rds.amazonaws.com
+MYSQL_DATABASE_USER = admin
+MYSQL_DATABASE_PASSWORD = trademartadmin
+MYSQL_DATABASE_DB = Trademart
