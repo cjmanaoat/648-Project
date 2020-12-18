@@ -11,6 +11,7 @@
 # TODO implement rest of the endpoints with sessions
 
 # imports
+import configparser
 import os
 import pathlib
 import re
@@ -31,15 +32,24 @@ from db_tools.key import *
 app = Flask(__name__)
 app.secret_key = 'csc648sfsutrademart' # key for session purposes
 
-# sql config
-app.config['MYSQL_DATABASE_USER'] = os.getenv('MYSQL_DATABASE_USER')
-app.config['MYSQL_DATABASE_PASSWORD'] = os.getenv('MYSQL_DATABASE_PASSWORD')
-app.config['MYSQL_DATABASE_DB'] = os.getenv('MYSQL_DATABASE_DB')
-app.config['MYSQL_DATABASE_HOST'] = os.getenv('MYSQL_DATABASE_HOST')
-# app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+#load config file
+config =  configparser.ConfigParser()
+config.read('/home/dasfiter/CSC648/application/config.dat')
+if 'credentials' in config:
+    # sql config
+    creds = config['credentials']
+    app.config['MYSQL_DATABASE_USER'] = creds['MYSQL_DATABASE_USER']
+    app.config['MYSQL_DATABASE_PASSWORD'] = creds['MYSQL_DATABASE_PASSWORD']
+    app.config['MYSQL_DATABASE_DB'] = creds['MYSQL_DATABASE_DB']
+    app.config['MYSQL_DATABASE_HOST'] = creds['MYSQL_DATABASE_HOST']
+    # app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+else:
+    print("Credentials not found, check config file?")
+    sys.exit(1)
 
 mysql = MySQL()
 mysql.init_app(app)
+
 conn = mysql.connect()
 cursor = conn.cursor()
 # end sql config
@@ -636,6 +646,10 @@ def contact():
         # print('not logged in')
         username = ''
 
+    cursor.execute('SELECT location_name FROM Trademart.Location')
+    conn.commit()
+    locations = cursor.fetchall() #gets all locations
+
     if request.method == 'POST':
         listingId = request.form['listingId'] # gets listing id provided
         cursor.execute('SELECT list_title, suggest_price, image, list_id, \
@@ -663,12 +677,12 @@ def contact():
             returnData = signInFunc(loginEmail, password)
             if(returnData[0] == False):
                 message = "Incorrect email/password."
-                return render_template('contact.html', data=data, username=username, message=message, popUp = 'True')
+                return render_template('contact.html', data=data, username=username, locations=locations, message=message, popUp = 'True')
 
     if request.method == 'POST':
         if(not request.form.get('user_message', False)
             and not request.form.get('user_pref_location', False)):
-            return render_template('contact.html', data=data, username=username) # loads contact owner page
+            return render_template('contact.html', data=data, username=username, locations=locations) # loads contact owner page
         
         userMessage = request.form['user_message']
         userLocation = request.form['user_pref_location']
