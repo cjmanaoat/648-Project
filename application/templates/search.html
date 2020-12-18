@@ -153,6 +153,12 @@
           <br>
           <p style="font-size: 1.25vw;">Quality: {{listing[5]}} </p>
           <br>
+	  <form method="POST" action="listing" target="_blank">
+            <h1>
+             <input type="hidden" name="listingId" value="{{listing[3]}}">
+             <button class="listingbutton1" formaction="/listing">View More Details</button>
+            </h1>
+            </form>
           <!---
           <div class="btn-toolbar justify-content-between">
             <div class="btn-group" role="group" aria-label="Contact Seller">
