@@ -707,7 +707,7 @@ def contact():
         title = "Interested in " + listing[0]
         offerCreated = cursor.execute('INSERT INTO Trademart.Offer\
             (offer_id, seller_id, buyer_id, listing_id, offer_amount, location)\
-            VALUES(%s, %s, %s, %s, %s) ', (offerId, receiverId, senderId, listingId, listingPrice, userLocation))
+            VALUES(%s, %s, %s, %s, %s, %s) ', (offerId, receiverId, senderId, listingId, listingPrice, userLocation))
         conn.commit()        
         messageCreated = cursor.execute('INSERT INTO Trademart.Message\
             (sender_id, receiver_id, offer_id, title, text, msg_datetime)\
