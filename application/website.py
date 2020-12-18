@@ -346,7 +346,7 @@ def search():
                             ((filterCategory, ('%' + filterCategory + '%'), ('%' + filterCategory + '%'))))  # query to grab data
                 # print('query done category only')
         else:  #category and item selected
-            print('category and item')
+            # print('category and item')
             if 'filterCategory' in request.form:
                 if request.form['filterCategory'] == 'Price (Low to High)':
                     sort = 'priceAscSort'
@@ -468,6 +468,19 @@ def register():
         #     + ' email: ' + email
         #     + ' pass: ' + passwordConfirm)
 
+        # this checks if there are any invalid characters in the fields
+        if (firstname.isalnum() == False
+            or lastname.isalnum() == False
+            or username.isalnum() == False
+            or passwordInit.isalnum() == False
+            or passwordConfirm.isalnum() == False):
+            return render_template('register.html', popUp='True', message='Invalid character in one of the fields')
+        
+        # this checks if there are any invalid characters in the email field
+        invalidChar = re.compile(r"[~=\!#\$%\^&\*\(\)_\+{}\":;'\[\]]")
+        if (invalidChar.findall(email)):
+            return render_template('register.html', popUp='True', message='Invalid character in email')
+        
         # username verification
         cursor.execute('SELECT user_name\
             FROM Trademart.User\
@@ -556,6 +569,16 @@ def signIn():
         password = request.form['password'] # gets password
         accountFound = False
 
+        # checks for invalid characters in password
+        if (password.isalnum() == False):
+            return render_template('signIn.html', message='Invalid character in password field.', popUp='True')
+
+
+        # checks for any invalid characters in email
+        invalidChar = re.compile(r"[~=\!#\$%\^&\*\(\)_\+{}\":;'\[\]]")
+        if (invalidChar.findall(loginEmail)):
+            return render_template('signIn.html', popUp='True', message='Invalid character in email')
+
         returnData = []
         # print('email: ' + loginEmail + ' password: ' + password)
         # print("outside func")
@@ -578,7 +601,7 @@ def logOut():
         global loggedInUsers
         loggedInUsersLocal = loggedInUsers 
         loggedInUsers = loggedInUsersLocal - 1
-        print(loggedInUsers)
+        # print(loggedInUsers)
     return redirect(url_for('home'))  # redirect home
 
 
@@ -773,7 +796,7 @@ def listing():
         for listing in listingdata:
             blob2Img(listing)
             userId = listing[5]
-        print(userId)
+        # print(userId)
         cursor.execute('SELECT user_name, user_rating\
                         FROM Trademart.User\
                         WHERE user_id= % s ', userId)
@@ -851,7 +874,7 @@ def signInFunc(email, password):
                     session['id'] = account[0] # user id linked to session
                     session['username'] = account[5]  # username for session
                     loggedInUsers = loggedInUsersLocal + 1
-                    print(loggedInUsers)
+                    # print(loggedInUsers)
                     returnData.append(True)
                     returnData.append('home')
                     return returnData
