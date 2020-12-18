@@ -597,6 +597,19 @@ def contact():
         # print('not logged in')
         username = ''
 
+    if request.method == 'POST':
+        listingId = request.form['listingId'] # gets listing id provided
+        cursor.execute('SELECT list_title, suggest_price, image, list_id, \
+                list_desc, listing_condition, pref_location, user_id \
+                FROM Trademart.Listing \
+                WHERE approval_status=1 \
+                AND list_id=%s\
+                order by list_date desc', listingId) # query to get data
+        conn.commit()
+        data = cursor.fetchall() # gets data from query
+        for listing in data:
+            blob2Img(listing)        
+
     message = ''
     # checks if user is logged in before sending message
     if ('loggedIn' not in session):
@@ -611,23 +624,9 @@ def contact():
             returnData = signInFunc(loginEmail, password)
             if(returnData[0] == False):
                 message = "Incorrect email/password."
-                return render_template('createListing', message, popUp = 'True')
+                return render_template('contact.html', data=data, username=username, message=message, popUp = 'True')
 
     if request.method == 'POST':
-        listingId = request.form['listingId'] # gets listing id provided
-
-        cursor.execute('SELECT list_title, suggest_price, image, list_id, \
-                list_desc, listing_condition, pref_location, user_id \
-                FROM Trademart.Listing \
-                WHERE approval_status=1 \
-                AND list_id=%s\
-                order by list_date desc', listingId) # query to get data
-        conn.commit()
-        data = cursor.fetchall() # gets data from query
-        for listing in data:
-            blob2Img(listing)
-                    
-
         if(not request.form.get('user_message', False)
             and not request.form.get('user_pref_location', False)):
             return render_template('contact.html', data=data, username=username) # loads contact owner page
@@ -787,7 +786,7 @@ def listing():
 # this function converts a blob to an image of type jpg
 def blob2Img(listing):
     fileName = str(listing[3]) + ".jpg"
-    path = "/home/dasfiter/CSC648/application/static/listing_images/"+fileName
+    path = "/home/student/Desktop/csc648-03-fa20-team07/application/static/listing_images/"+fileName
     # path = "static/listing_images/"+fileName
     #print(path)
     # size = sys.getsizeof(listing[11])
@@ -803,10 +802,10 @@ def blob2Img(listing):
                 file.close()
             # loop to create thumbnails
             for size, name in sizes:
-                im = Image.open("/home/dasfiter/CSC648/application/static/listing_images/%s" % fileName)
+                im = Image.open("/home/student/Desktop/csc648-03-fa20-team07/application/static/listing_images/%s" % fileName)
                 # im = Image.open("static/listing_images/%s" % fileName)
                 im.thumbnail((im.width//size, im.height//size))
-                im.save("/home/dasfiter/CSC648/application/static/listing_images/thumbnail_%s_%s_size.jpg" % (fileName[:-4], name))
+                im.save("/home/student/Desktop/csc648-03-fa20-team07/application/static/listing_images/thumbnail_%s_%s_size.jpg" % (fileName[:-4], name))
                 # im.save("static/listing_images/thumbnail_%s_%s_size.jpg" % (fileName[:-4], name))
         
 def signInFunc(email, password):
