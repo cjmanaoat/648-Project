@@ -32,10 +32,10 @@ app = Flask(__name__)
 app.secret_key = 'csc648sfsutrademart' # key for session purposes
 
 # sql config
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'trademartadmin'
-app.config['MYSQL_DATABASE_DB'] = 'Trademart'
-app.config['MYSQL_DATABASE_HOST'] = 'trademart.c9x2rihy8ycd.us-west-1.rds.amazonaws.com'
+app.config['MYSQL_DATABASE_USER'] = os.getenv('MYSQL_DATABASE_USER')
+app.config['MYSQL_DATABASE_PASSWORD'] = os.getenv('MYSQL_DATABASE_PASSWORD')
+app.config['MYSQL_DATABASE_DB'] = os.getenv('MYSQL_DATABASE_DB')
+app.config['MYSQL_DATABASE_HOST'] = os.getenv('MYSQL_DATABASE_HOST')
 # app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 
 mysql = MySQL()
