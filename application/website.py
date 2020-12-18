@@ -212,7 +212,7 @@ def search():
                 if request.form['filterCategory'] == 'Price (Low to High)':
                     sort = 'priceAscSort'
                     # print('ascend')
-                    cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                    cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, listing_condition\
                                     FROM Listing L\
                                     WHERE approval_status=1 \
                                         AND (L.list_title LIKE %s\
@@ -223,7 +223,7 @@ def search():
                 elif request.form['filterCategory'] == 'Price (High to Low)':
                     # print('descend')
                     sort = 'priceDescSort'
-                    cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                    cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, listing_condition\
                                     FROM Listing L\
                                     WHERE approval_status=1 \
                                     AND (L.list_title LIKE %s\
@@ -233,7 +233,7 @@ def search():
                                     (('%' + searchItem + '%'), ('%' + searchItem + '%'), ('%' + searchItem + '%')))  # query to grab data
                 elif request.form['filterCategory'] == 'Listing Title (A-Z)':
                     sort = 'titleAscSort'
-                    cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                    cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, listing_condition\
                                     FROM Listing L\
                                     WHERE approval_status=1 \
                                     AND (L.list_title LIKE %s\
@@ -243,7 +243,7 @@ def search():
                                     (('%' + searchItem + '%'), ('%' + searchItem + '%'), ('%' + searchItem + '%')))  # query to grab data
                 elif request.form['filterCategory'] == 'Listing Title (Z-A)':
                     sort = 'titleDescSort'
-                    cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                    cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, listing_condition\
                                     FROM Listing L\
                                     WHERE approval_status=1 \
                                     AND (L.list_title LIKE %s\
@@ -253,7 +253,7 @@ def search():
                                     (('%' + searchItem + '%'), ('%' + searchItem + '%'), ('%' + searchItem + '%')))  # query to grab data
                 elif request.form['filterCategory'] == 'Date Posted (Latest First)':
                     sort = 'dateDescSort'
-                    cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                    cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, listing_condition\
                                     FROM Listing L\
                                     WHERE approval_status=1 \
                                     AND (L.list_title LIKE %s\
@@ -263,7 +263,7 @@ def search():
                                     (('%' + searchItem + '%'), ('%' + searchItem + '%'), ('%' + searchItem + '%')))  # query to grab data
                 elif request.form['filterCategory'] == 'Date Posted (Oldest First)':
                     sort = 'dateAscSort'
-                    cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                    cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, listing_condition\
                                     FROM Listing L\
                                     WHERE approval_status=1 \
                                     AND (L.list_title LIKE %s\
@@ -272,7 +272,7 @@ def search():
                                     ORDER BY list_date asc, list_time asc', \
                                     (('%' + searchItem + '%'), ('%' + searchItem + '%'), ('%' + searchItem + '%')))  # query to grab data
             else: # no sort filter
-                cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, listing_condition\
                     FROM Listing L\
                     WHERE approval_status=1 \
                         AND (L.list_title LIKE %s\
@@ -286,7 +286,7 @@ def search():
                 if request.form['filterCategory'] == 'Price (Low to High)':
                     sort = 'priceAscSort'
                     # print('asc category')
-                    cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                    cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, listing_condition\
                                 FROM Listing L\
                                 WHERE approval_status=1\
                                 AND (L.list_category LIKE %s\
@@ -297,7 +297,7 @@ def search():
                 elif request.form['filterCategory'] == 'Price (High to Low)':
                     # print('desc category')
                     sort = 'priceDescSort'
-                    cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                    cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, listing_condition\
                                 FROM Listing L\
                                 WHERE approval_status=1\
                                 AND (L.list_category LIKE %s\
@@ -308,7 +308,7 @@ def search():
                 elif request.form['filterCategory'] == 'Listing Title (A-Z)':
                     # print('asc category')
                     sort = 'titleAscSort'
-                    cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                    cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, listing_condition\
                                 FROM Listing L\
                                 WHERE approval_status=1\
                                 AND (L.list_category LIKE %s\
@@ -319,7 +319,7 @@ def search():
                 elif request.form['filterCategory'] == 'Listing Title (Z-A)':
                     # print('desc category')
                     sort = 'titleDescSort'
-                    cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                    cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, listing_condition\
                                 FROM Listing L\
                                 WHERE approval_status=1\
                                 AND (L.list_category LIKE %s\
@@ -330,7 +330,7 @@ def search():
                 elif request.form['filterCategory'] == 'Date Posted (Latest First)':
                     # print('desc category')
                     sort = 'dateDescSort'
-                    cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                    cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, listing_condition\
                                 FROM Listing L\
                                 WHERE approval_status=1\
                                 AND (L.list_category LIKE %s\
@@ -341,7 +341,7 @@ def search():
                 elif request.form['filterCategory'] == 'Date Posted (Oldest First)':
                     # print('asc category')
                     sort = 'dateAscSort'
-                    cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                    cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, listing_condition\
                                 FROM Listing L\
                                 WHERE approval_status=1\
                                 AND (L.list_category LIKE %s\
@@ -350,7 +350,7 @@ def search():
                                 ORDER BY list_date asc, list_time asc', \
                                 ((filterCategory, ('%' + filterCategory + '%'), ('%' + filterCategory + '%'))))  # query to grab data
             else: # no sort filter
-                cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, listing_condition\
                             FROM Listing L\
                             WHERE approval_status=1\
                             AND (L.list_category LIKE %s\
@@ -363,7 +363,7 @@ def search():
             if 'filterCategory' in request.form:
                 if request.form['filterCategory'] == 'Price (Low to High)':
                     sort = 'priceAscSort'
-                    cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                    cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, listing_condition\
                                 FROM Listing L\
                                 WHERE (approval_status=1\
                                 AND L.list_category=%s)\
@@ -373,7 +373,7 @@ def search():
                                 (filterCategory, ('%' + searchItem + '%'), ('%' + searchItem + '%')))  # query to grab data
                 elif request.form['filterCategory'] == 'Price (High to Low)':
                     sort = 'priceDescSort'
-                    cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                    cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, listing_condition\
                                 FROM Listing L\
                                 WHERE (approval_status=1\
                                 AND L.list_category=%s)\
@@ -383,7 +383,7 @@ def search():
                                 (filterCategory, ('%' + searchItem + '%'), ('%' + searchItem + '%')))  # query to grab data
                 elif request.form['filterCategory'] == 'Listing Title (A-Z)':
                     sort = 'titleAscSort'
-                    cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                    cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, listing_condition\
                                 FROM Listing L\
                                 WHERE (approval_status=1\
                                 AND L.list_category=%s)\
@@ -393,7 +393,7 @@ def search():
                                 (filterCategory, ('%' + searchItem + '%'), ('%' + searchItem + '%')))  # query to grab data
                 elif request.form['filterCategory'] == 'Listing Title (Z-A)':
                     sort = 'titleDescSort'
-                    cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                    cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, listing_condition\
                                 FROM Listing L\
                                 WHERE (approval_status=1\
                                 AND L.list_category=%s)\
@@ -403,7 +403,7 @@ def search():
                                 (filterCategory, ('%' + searchItem + '%'), ('%' + searchItem + '%')))  # query to grab data
                 elif request.form['filterCategory'] == 'Date Posted (Latest First)':
                     sort = 'dateDescSort'
-                    cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                    cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, listing_condition\
                                 FROM Listing L\
                                 WHERE (approval_status=1\
                                 AND L.list_category=%s)\
@@ -413,7 +413,7 @@ def search():
                                 (filterCategory, ('%' + searchItem + '%'), ('%' + searchItem + '%')))  # query to grab data
                 elif request.form['filterCategory'] == 'Date Posted (Oldest First)':
                     sort = 'dateAscSort'
-                    cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                    cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, listing_condition\
                                 FROM Listing L\
                                 WHERE (approval_status=1\
                                 AND L.list_category=%s)\
@@ -422,7 +422,7 @@ def search():
                                 ORDER BY list_date asc, list_time asc', \
                                 (filterCategory, ('%' + searchItem + '%'), ('%' + searchItem + '%')))  # query to grab data
             else: # no sort condition
-                cursor.execute('SELECT list_title, suggest_price, image, list_id\
+                cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, listing_condition\
                                 FROM Listing L\
                                 WHERE (approval_status=1\
                                 AND L.list_category=%s)\
@@ -437,7 +437,7 @@ def search():
             blob2Img(listing)
         if len(data) == 0:  # no results from query. lists all items
             #print('no results')
-            cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, `listing_condition` FROM Trademart.Listing WHERE approval_status=1') #query to grab data
+            cursor.execute('SELECT list_title, suggest_price, image, list_id, list_desc, listing_condition FROM Trademart.Listing WHERE approval_status=1') #query to grab data
             conn.commit()
             data = cursor.fetchall() # gets all data from query
             # creates image for each listing
@@ -633,6 +633,19 @@ def contact():
         # print('not logged in')
         username = ''
 
+    if request.method == 'POST':
+        listingId = request.form['listingId'] # gets listing id provided
+        cursor.execute('SELECT list_title, suggest_price, image, list_id, \
+                list_desc, listing_condition, pref_location, user_id \
+                FROM Trademart.Listing \
+                WHERE approval_status=1 \
+                AND list_id=%s\
+                order by list_date desc', listingId) # query to get data
+        conn.commit()
+        data = cursor.fetchall() # gets data from query
+        for listing in data:
+            blob2Img(listing)        
+
     message = ''
     # checks if user is logged in before sending message
     if ('loggedIn' not in session):
@@ -647,23 +660,9 @@ def contact():
             returnData = signInFunc(loginEmail, password)
             if(returnData[0] == False):
                 message = "Incorrect email/password."
-                return render_template('createListing', message, popUp = 'True')
+                return render_template('contact.html', data=data, username=username, message=message, popUp = 'True')
 
     if request.method == 'POST':
-        listingId = request.form['listingId'] # gets listing id provided
-
-        cursor.execute('SELECT list_title, suggest_price, image, list_id, \
-                list_desc, listing_condition, pref_location, user_id \
-                FROM Trademart.Listing \
-                WHERE approval_status=1 \
-                AND list_id=%s\
-                order by list_date desc', listingId) # query to get data
-        conn.commit()
-        data = cursor.fetchall() # gets data from query
-        for listing in data:
-            blob2Img(listing)
-                    
-
         if(not request.form.get('user_message', False)
             and not request.form.get('user_pref_location', False)):
             return render_template('contact.html', data=data, username=username) # loads contact owner page
@@ -810,7 +809,7 @@ def listing():
             blob2Img(listing)
             userId = listing[5]
         # print(userId)
-        cursor.execute('SELECT user_name, user_rating\
+        cursor.execute('SELECT user_name\
                         FROM Trademart.User\
                         WHERE user_id= % s ', userId)
         conn.commit()
