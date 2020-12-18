@@ -143,6 +143,7 @@ def dashboard():
                 order by listing_id desc', session['id'])
     conn.commit()
     messagesSentInfo = cursor.fetchall()
+    print(messagesSentInfo)
 
     cursor.execute('SELECT sender_id, receiver_id, offer_id, title, text, msg_datetime \
                 FROM Trademart.Message \
@@ -150,6 +151,7 @@ def dashboard():
                 order by msg_datetime desc', session['id'])
     conn.commit()
     messagesSentContent = cursor.fetchall()
+    print(messagesSentContent)
 
     # Get all the post query contents for Messages Received section of Dashboard
     cursor.execute('SELECT offer_id, seller_id, buyer_id, listing_id, offer_amount, location \
