@@ -199,6 +199,9 @@ def search():
         # print('not logged in')
         username = ''
 
+    if 'item' not in request.form:
+        return redirect(url_for('home'))
+
     if request.method == 'POST': #for getting info sent
         #print('in post')
         searchItem = request.form['item'].lower() #converts search item to lower
@@ -731,9 +734,7 @@ def createListing():
         category = request.form['category']
         condition = request.form['condition']
         price = request.form['price']
-        offerType='Bid'
-        if (request.form.get('fixedPrice')):
-            offerType='Fixed'
+        price = int(price)
         location = request.form['location']
         description = request.form['description']
         image = request.files['image']
@@ -770,15 +771,15 @@ def createListing():
         listTime = now.strftime("%H:%M:%S")
         listingCreated = cursor.execute('INSERT INTO Trademart.Listing\
             (list_id, user_id, list_title, list_category, pref_location, list_desc,\
-            approval_status, offer_type, list_date, list_time, suggest_price, listing_condition)\
-            VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) ',
-            (listingId, userId, listingTitle, category, location, description, '1', offerType, listDate, listTime, price, condition))
+            approval_status, list_date, list_time, suggest_price, listing_condition)\
+            VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) ',
+            (listingId, userId, listingTitle, category, location, description, '0', listDate, listTime, price, condition))
         conn.commit()
         if listingCreated:
             if image.filename != '':
                 update_blob(listingId, image.filename)
                 os.remove(image.filename)
-            message='Listing was successfully created'
+            message='Listing was successfully created. It will take up to 24 hours to approve listing.'
             return redirect(url_for('home', message=message, popUp='True', username=username))
 
     return render_template("createListing.html", username=username) # loads creating a listing page
@@ -792,6 +793,9 @@ def listing():
     else: # user isnt logged in
         # print('not logged in')
         username = ''
+
+    if 'listingId' not in request.form:
+        return redirect(url_for('home'))
 
     if request.method == 'POST':
         listingId = request.form['listingId'] # gets listing id

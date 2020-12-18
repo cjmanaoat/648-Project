@@ -19,8 +19,49 @@
 
     /* All images will be formatted to fit the browser */
     .listingImg {
-        width: 100%;
-        height: auto;
+       max-width: 100%;
+    }
+
+    .responsive-listing-title {
+        font-size: 4vw;
+    }
+
+    .responsive-listing-info {
+        font-size: 2vw;
+    }
+
+    .responsive-listing-price {
+        font-size: 3vw;
+    }
+
+    .responsive-listing-description {
+        font-size: 2vw;
+    }
+
+    @media screen and (max-width: 575px) {
+        .responsive-nav-links {
+            font-size: 1.5rem;
+        }
+
+        .responsive-table-text {
+            font-size: 3.5vw;
+        }
+
+        .responsive-listing-title {
+            font-size: 7vw;
+        }
+        
+        .responsive-listing-info {
+            font-size: 5vw;
+        }
+        
+        .responsive-listing-price {
+            font-size: 6vw;
+        }
+        
+        .responsive-listing-description {
+            font-size: 5vw;
+        }
     }
 </style>
 <div class="row">
@@ -30,32 +71,25 @@
     {% set path = pathPrefix + "thumbnail_" + fileName+"_half_size.jpg" %}
     <!-- Container used to hold images -->
     <div class="col-sm-8">
-        <p><img class="" src="{{path}}" width="750" height="750"> </p>
+        <p><img class="img-fluid" src="{{path}}" width="750" height="750"> </p>
     </div>
     <div class="col-sm-4">
         <!-- Container to display information of the product from the DB -->
-        <br>
-        <br>
         {% set listingTitle = listingData[0] %}
         <!-- Font size used to adjust size of text based off broswer size -->
-        <p style="font-size: 1.5vw;"> <b>{{listingTitle}}</b> </p>
-        <br>
+        <p class="responsive-listing-title"> <b>{{listingTitle}}</b> </p>
         {% set userName = userData[0]%}
-	<p>From: {{userName}}</p>
-        <br>
+	<p class="responsive-listing-info">From: {{userName}}</p>
         {% set listingQuality = listingData[6] %}
-        <p>Quality: {{listingQuality}} </p>
-        <br>
-        <p style="font-size: 2vw;">Suggested Price:</p>
+        <p class="responsive-listing-info">Quality: {{listingQuality}} </p>
+        <p class="responsive-listing-price">Suggested Price:</p>
         {% set listingPrice = listingData[1] %}
         <div>
-            <p style="font-size: 2.5vw;"><b>${{listingPrice}}</b></p>
+            <p class="responsive-listing-price"><b>${{listingPrice}}</b></p>
         </div>
-        <br>
 
         {% set listingDesc = listingData[4] %}
-        <p style="font-size: 1.25vw;">Description: {{listingDesc}}</p>
-        <br>
+        <p class="responsive-listing-description">Description: {{listingDesc}}</p>
 
         <div class="row">
             <div class="col">
